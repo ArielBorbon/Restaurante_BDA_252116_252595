@@ -3,6 +3,9 @@
   <persistence-unit name="com.mycompany_RestauranteDominio_jar_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>Entidades.Clientes.Cliente</class>
+    <class>Entidades.Productos.Producto</class>
+    <class>Entidades.Ingredientes.Ingrediente</class>
+    <class>Entidades.Productos.ProductoOcupaIngrediente</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/RestauranteDeshuesadero_252116_252595?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
