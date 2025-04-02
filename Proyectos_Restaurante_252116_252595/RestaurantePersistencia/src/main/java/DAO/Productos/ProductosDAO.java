@@ -105,7 +105,19 @@ public class ProductosDAO {
         }
     }
 
+        public List<Producto> mostrarListaProductos() {
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        String jpql = "SELECT p FROM Producto p";
+        TypedQuery<Producto> query = entityManager.createQuery(jpql, Producto.class);
+        return query.getResultList();
+    }
 }
+    
+    
+    
+    
+    
+
 
     
     

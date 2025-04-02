@@ -9,8 +9,10 @@ import DTOS.Productos.NuevoProductoDTO;
 import Entidades.Ingredientes.Ingrediente;
 import Entidades.Productos.Producto;
 import ManejadorConexiones.ManejadorConexiones;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -62,4 +64,24 @@ public class IngredientesDAO {
             entityManager.close();
         }
     }
+    
+    
+    
+
+    public List<Ingrediente> mostrarListaIngredientes() {
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        String jpql = "SELECT i FROM Ingrediente i";
+        TypedQuery<Ingrediente> query = entityManager.createQuery(jpql, Ingrediente.class);
+        return query.getResultList();
+    }
 }
+
+    
+    
+    
+    
+    
+    
+    
+    
+
