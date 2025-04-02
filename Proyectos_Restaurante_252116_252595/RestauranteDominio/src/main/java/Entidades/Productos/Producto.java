@@ -6,9 +6,12 @@ package Entidades.Productos;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,15 +31,16 @@ public class Producto implements Serializable {
     @Column (name = "id_producto")
     private Long id;
     
-    @Column(name = "precio")
-    private float precio;
+    @Column(name = "precio", nullable = false, length = 70)
+    private double precio;
     
     
-    @Column (name = "nombre")
+    @Column (name = "nombre", nullable = false, length = 70)
     private String nombre;
     
-    @Column (name = "tipo")
-    private String tipo;
+    @Enumerated(EnumType.STRING)
+    @Column (name = "tipo", nullable = false , length = 70)
+    private Tipo_Producto tipo;
     
     
         @OneToMany  ( mappedBy = "producto", cascade = { CascadeType.PERSIST} )         //union con productoOcupaIngrediente
@@ -45,7 +49,7 @@ public class Producto implements Serializable {
     public Producto() {
     }
 
-    public Producto(Long id, float precio, String nombre, String tipo, List<ProductoOcupaIngrediente> productos) {
+    public Producto(Long id, double precio, String nombre, Tipo_Producto tipo, List<ProductoOcupaIngrediente> productos) {
         this.id = id;
         this.precio = precio;
         this.nombre = nombre;
@@ -53,7 +57,16 @@ public class Producto implements Serializable {
         this.productos = productos;
     }
 
-    public Producto(float precio, String nombre, String tipo, List<ProductoOcupaIngrediente> productos) {
+    public Producto(Long id, double precio, String nombre, Tipo_Producto tipo) {
+        this.id = id;
+        this.precio = precio;
+        this.nombre = nombre;
+        this.tipo = tipo;
+    }
+    
+    
+
+    public Producto(double precio, String nombre, Tipo_Producto tipo, List<ProductoOcupaIngrediente> productos) {
         this.precio = precio;
         this.nombre = nombre;
         this.tipo = tipo;
@@ -68,11 +81,11 @@ public class Producto implements Serializable {
         this.id = id;
     }
 
-    public float getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
@@ -84,11 +97,11 @@ public class Producto implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getTipo() {
+    public Tipo_Producto getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(Tipo_Producto tipo) {
         this.tipo = tipo;
     }
 
@@ -98,6 +111,44 @@ public class Producto implements Serializable {
 
     public void setProductos(List<ProductoOcupaIngrediente> productos) {
         this.productos = productos;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + (int) (Double.doubleToLongBits(this.precio) ^ (Double.doubleToLongBits(this.precio) >>> 32));
+        hash = 17 * hash + Objects.hashCode(this.nombre);
+        hash = 17 * hash + Objects.hashCode(this.tipo);
+        hash = 17 * hash + Objects.hashCode(this.productos);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Producto other = (Producto) obj;
+        if (Double.doubleToLongBits(this.precio) != Double.doubleToLongBits(other.precio)) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (this.tipo != other.tipo) {
+            return false;
+        }
+        return Objects.equals(this.productos, other.productos);
     }
 
         

@@ -7,6 +7,7 @@ package Entidades.Ingredientes;
 import Entidades.Productos.ProductoOcupaIngrediente;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,7 +38,7 @@ public class Ingrediente implements Serializable {
     private String unidad_medida;
     
     @Column (name = "stock", nullable = false)
-    private int stock;
+    private double stock;
     
     
     
@@ -48,7 +49,7 @@ public class Ingrediente implements Serializable {
     public Ingrediente() {
     }
 
-    public Ingrediente(Long id, String nombre, String unidad_medida, int stock, List<ProductoOcupaIngrediente> ingredientes) {
+    public Ingrediente(Long id, String nombre, String unidad_medida, double stock, List<ProductoOcupaIngrediente> ingredientes) {
         this.id = id;
         this.nombre = nombre;
         this.unidad_medida = unidad_medida;
@@ -56,12 +57,21 @@ public class Ingrediente implements Serializable {
         this.ingredientes = ingredientes;
     }
 
-    public Ingrediente(String nombre, String unidad_medida, int stock, List<ProductoOcupaIngrediente> ingredientes) {
+    public Ingrediente(String nombre, String unidad_medida, double stock, List<ProductoOcupaIngrediente> ingredientes) {
         this.nombre = nombre;
         this.unidad_medida = unidad_medida;
         this.stock = stock;
         this.ingredientes = ingredientes;
     }
+
+    public Ingrediente(Long id, String nombre, String unidad_medida, double stock) {
+        this.id = id;
+        this.nombre = nombre;
+        this.unidad_medida = unidad_medida;
+        this.stock = stock;
+    }
+    
+    
 
     public Long getId() {
         return id;
@@ -87,11 +97,11 @@ public class Ingrediente implements Serializable {
         this.unidad_medida = unidad_medida;
     }
 
-    public int getStock() {
+    public double getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(double stock) {
         this.stock = stock;
     }
 
@@ -101,6 +111,44 @@ public class Ingrediente implements Serializable {
 
     public void setIngredientes(List<ProductoOcupaIngrediente> ingredientes) {
         this.ingredientes = ingredientes;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.nombre);
+        hash = 37 * hash + Objects.hashCode(this.unidad_medida);
+        hash = 37 * hash + (int) (Double.doubleToLongBits(this.stock) ^ (Double.doubleToLongBits(this.stock) >>> 32));
+        hash = 37 * hash + Objects.hashCode(this.ingredientes);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Ingrediente other = (Ingrediente) obj;
+        if (Double.doubleToLongBits(this.stock) != Double.doubleToLongBits(other.stock)) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.unidad_medida, other.unidad_medida)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return Objects.equals(this.ingredientes, other.ingredientes);
     }
 
         

@@ -14,4 +14,11 @@
         <exec.mainClass>com.mycompany.restaurante_persistencia.Restaurante_Persistencia</exec.mainClass>
     </properties>
     <name>RestaurantePersistencia</name>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>RestauranteDominio</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>
