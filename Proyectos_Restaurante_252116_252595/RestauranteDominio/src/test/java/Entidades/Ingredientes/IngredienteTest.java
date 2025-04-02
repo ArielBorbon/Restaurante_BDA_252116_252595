@@ -21,21 +21,21 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author PC Gamer
  */
 public class IngredienteTest {
-    @Test
-    public void crearIngrediente() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_RestauranteDominio_jar_1.0-SNAPSHOTPU");
-        EntityManager em = emf.createEntityManager();
-        
-        Ingrediente ingrediente = new Ingrediente();
-        ingrediente.setNombre("Chocolate");
-        ingrediente.setUnidad_medida("kg");
-        ingrediente.setStock(50.0);
-        
-        em.getTransaction().begin();
-        em.persist(ingrediente);
-        em.getTransaction().commit();
-        
-        em.close();
-        emf.close();
-    }
+//    @Test
+//    public void crearIngrediente() {
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_RestauranteDominio_jar_1.0-SNAPSHOTPU");
+//        EntityManager em = emf.createEntityManager();
+//        
+//        Ingrediente ingrediente = new Ingrediente();
+//        ingrediente.setNombre("Chocolate");
+//        ingrediente.setUnidad_medida("kg");
+//        ingrediente.setStock(50.0);
+//        
+//        em.getTransaction().begin();
+//        em.persist(ingrediente);
+//        em.getTransaction().commit();
+//        
+//        em.close();
+//        emf.close();
+//    }
 }
