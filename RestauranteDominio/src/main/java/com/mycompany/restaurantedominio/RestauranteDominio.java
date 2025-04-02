@@ -11,6 +11,6 @@ package com.mycompany.restaurantedominio;
 public class RestauranteDominio {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        System.out.println("Commit loco");
     }
 }
