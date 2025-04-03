@@ -23,45 +23,53 @@ import javax.persistence.TypedQuery;
  */
 public class ProductosDAO {
 
-    public List<Producto> filtrarPorNombreProducto(String nombreFiltro) {
+    public List<Producto> mostrarListaProductosDisponibles() {
+     
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
-        String jpqlQuery
-                = """
-    SELECT p FROM Producto p WHERE p.nombre LIKE :nombreFiltrador
-    """;
+        
+        String jpql = "SELECT p FROM Producto p WHERE p.estado = :estado";
+        
+        TypedQuery<Producto> query = entityManager.createQuery(jpql, Producto.class);
+        query.setParameter("estado", Estado_Producto.HABILITADO);
+        return query.getResultList();
+}
+    
+    public List<Producto> filtrarPorNombreProductoDisponibles(String nombreFiltro) {
+        
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        
+        String jpqlQuery = "SELECT p FROM Producto p WHERE p.nombre LIKE :nombreFiltrador AND p.estado = :estado";
+        
         TypedQuery<Producto> query = entityManager.createQuery(jpqlQuery, Producto.class);
         query.setParameter("nombreFiltrador", "%" + nombreFiltro + "%");
+        query.setParameter("estado", Estado_Producto.HABILITADO);
         return query.getResultList();
     }
-
-    public List<Producto> filtrarPorTipoProducto(Tipo_Producto tipoFiltro) {
+    
+    public List<Producto> filtrarPorTipoProductoDisponibles(Tipo_Producto tipoFiltro) {
+        
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
-        String jpqlQuery
-                = """                  
-        SELECT p FROM Producto p WHERE p.tipo = :tipoFiltrador;
-        """;
+        
+        String jpqlQuery = "SELECT p FROM Producto p WHERE p.tipo = :tipoFiltrador AND p.estado = :estado";
+        
         TypedQuery<Producto> query = entityManager.createQuery(jpqlQuery, Producto.class);
-
         query.setParameter("tipoFiltrador", tipoFiltro);
+        query.setParameter("estado", Estado_Producto.HABILITADO);
         return query.getResultList();
-
     }
-
-    public List<Producto> filtrarPorNombreYTipoProducto(String nombreFiltro, Tipo_Producto tipoFiltro) {
+    
+    public List<Producto> filtrarPorNombreYTipoProductoDisponibles(String nombreFiltro, Tipo_Producto tipoFiltro) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
-        String jpqlQuery
-                = """
-        SELECT p FROM Producto p WHERE p.nombre LIKE :nombreFiltrador AND p.tipo = :tipoFiltrador
-        """;
-
+        
+        String jpqlQuery = "SELECT p FROM Producto p WHERE p.nombre LIKE :nombreFiltrador AND p.tipo = :tipoFiltrador AND p.estado = :estado";
+        
         TypedQuery<Producto> query = entityManager.createQuery(jpqlQuery, Producto.class);
-
         query.setParameter("nombreFiltrador", "%" + nombreFiltro + "%");
         query.setParameter("tipoFiltrador", tipoFiltro);
-
+        query.setParameter("estado", Estado_Producto.HABILITADO);
         return query.getResultList();
-
     }
+
 
     public Producto registrarProducto(NuevoProductoDTO nuevoProducto) {
 
@@ -110,25 +118,8 @@ public void deshabilitarProducto(NuevoProductoDTO nuevoProducto) {
     }
 }
 
+            
 
-    public List<Producto> mostrarListaProductos() {
-        EntityManager entityManager = ManejadorConexiones.getEntityManager();
-        String jpql = "SELECT p FROM Producto p";
-        TypedQuery<Producto> query = entityManager.createQuery(jpql, Producto.class);
-        return query.getResultList();
-    }
-    
-    
-    
-    public List<Producto> mostrarListaProductosHabilitados() {
-        String habilitado = "HABILITADO"; 
-        EntityManager entityManager = ManejadorConexiones.getEntityManager();
-        String jpql = "SELECT p FROM Producto p WHERE p.estado = :hab"; 
-    
-        TypedQuery<Producto> query = entityManager.createQuery(jpql, Producto.class);
-        query.setParameter("hab", habilitado);
-        return query.getResultList();
-    }
     
     
     
