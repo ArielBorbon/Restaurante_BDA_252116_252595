@@ -13,6 +13,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -20,9 +23,7 @@ import javax.persistence.TypedQuery;
  */
 public class IngredientesDAO {
     
-        public Ingrediente registrarIngrediente(NuevoIngredienteDTO nuevoIngrediente) {
-         
-        
+        public Ingrediente registrarIngrediente(NuevoIngredienteDTO nuevoIngrediente) {         
     EntityManager entityManager = ManejadorConexiones.getEntityManager();
         entityManager.getTransaction().begin();
         Ingrediente ingrediente = new Ingrediente();
@@ -69,13 +70,63 @@ public class IngredientesDAO {
     
 
     public List<Ingrediente> mostrarListaIngredientes() {
+        
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         String jpql = "SELECT i FROM Ingrediente i";
         TypedQuery<Ingrediente> query = entityManager.createQuery(jpql, Ingrediente.class);
         return query.getResultList();
     }
-}
+    
+    
+    
+    
+    public void actualizarIngrediente(NuevoIngredienteDTO nuevoIngredienteDTO, double cantidad) {
+    EntityManager entityManager = ManejadorConexiones.getEntityManager();
+    try {
+        entityManager.getTransaction().begin();
 
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Ingrediente> criteriaQuery = criteriaBuilder.createQuery(Ingrediente.class);
+        Root<Ingrediente> ingredienteRoot = criteriaQuery.from(Ingrediente.class);
+
+        criteriaQuery.select(ingredienteRoot)
+                     .where(criteriaBuilder.and(
+                         criteriaBuilder.equal(ingredienteRoot.get("nombre"), nuevoIngredienteDTO.getNombre()),
+                         criteriaBuilder.equal(ingredienteRoot.get("unidad_medida"), nuevoIngredienteDTO.getUnidad_medida())
+                     ));
+
+        Ingrediente ingrediente = entityManager.createQuery(criteriaQuery)
+                                                 .getResultList()
+                                                 .stream()
+                                                 .findFirst()
+                                                 .orElse(null);
+
+        if (ingrediente != null) {
+            double nuevoStock = ingrediente.getStock() + cantidad;
+            if (nuevoStock >= 0) {
+                
+            
+            ingrediente.setStock(nuevoStock);
+            entityManager.merge(ingrediente);
+        } else {
+            System.out.println("No se puede restar más de lo disponible.");
+            }
+        }
+        
+        entityManager.getTransaction().commit();
+    } catch (Exception e) {
+        if (entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().rollback();
+        }
+        e.printStackTrace();
+    } finally {
+        entityManager.close();
+    }
+}
+}
+    
+
+    
     
     
     

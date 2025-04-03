@@ -11,12 +11,12 @@ package DTOS.Ingredientes;
 public class NuevoIngredienteDTO {
     private String nombre;
     private String unidad_medida;
-    private int stock;  
+    private double stock;  
 
     public NuevoIngredienteDTO() {
     }
 
-    public NuevoIngredienteDTO(String nombre, String unidad_medida, int stock) {
+    public NuevoIngredienteDTO(String nombre, String unidad_medida, double stock) {
         this.nombre = nombre;
         this.unidad_medida = unidad_medida;
         this.stock = stock;
@@ -38,11 +38,11 @@ public class NuevoIngredienteDTO {
         this.unidad_medida = unidad_medida;
     }
 
-    public int getStock() {
+    public double getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(double stock) {
         this.stock = stock;
     }
 

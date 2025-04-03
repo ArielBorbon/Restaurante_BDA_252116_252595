@@ -13,12 +13,30 @@ import DTOS.Ingredientes.NuevoIngredienteDTO;
 public class NuevoProductoOcupaIngredienteDTO {
 
     private String nombreIngrediente;
+    private String unidadMedida;
     private String nombreProducto;
     private double cantidadNecesariaProducto;
 
     public NuevoProductoOcupaIngredienteDTO() {
     }
 
+    public String getUnidadMedida() {
+        return unidadMedida;
+    }
+
+    public void setUnidadMedida(String unidadMedida) {
+        this.unidadMedida = unidadMedida;
+    }
+
+    public NuevoProductoOcupaIngredienteDTO(String nombreIngrediente, String unidadMedida, String nombreProducto, double cantidadNecesariaProducto) {
+        this.nombreIngrediente = nombreIngrediente;
+        this.unidadMedida = unidadMedida;
+        this.nombreProducto = nombreProducto;
+        this.cantidadNecesariaProducto = cantidadNecesariaProducto;
+    }
+
+    
+    
     
     public NuevoProductoOcupaIngredienteDTO(String nombreIngrediente, String nombreProducto, double cantidadNecesariaProducto) {
         this.nombreIngrediente = nombreIngrediente;

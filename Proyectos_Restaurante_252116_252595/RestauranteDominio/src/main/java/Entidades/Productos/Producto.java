@@ -43,25 +43,32 @@ public class Producto implements Serializable {
     private Tipo_Producto tipo;
     
     
+    @Enumerated(EnumType.STRING)
+    @Column (name = "estado" , nullable = false , length = 70)
+    private Estado_Producto estado;
+    
+    
         @OneToMany  ( mappedBy = "producto", cascade = { CascadeType.PERSIST} )         //union con productoOcupaIngrediente
     private List<ProductoOcupaIngrediente> productos;
 
     public Producto() {
     }
 
-    public Producto(Long id, double precio, String nombre, Tipo_Producto tipo, List<ProductoOcupaIngrediente> productos) {
+    public Producto(Long id, double precio, String nombre, Tipo_Producto tipo, List<ProductoOcupaIngrediente> productos, Estado_Producto estado) {
         this.id = id;
         this.precio = precio;
         this.nombre = nombre;
         this.tipo = tipo;
         this.productos = productos;
+        this.estado = estado;
     }
 
-    public Producto(Long id, double precio, String nombre, Tipo_Producto tipo) {
+    public Producto(Long id, double precio, String nombre, Tipo_Producto tipo , Estado_Producto estado) {
         this.id = id;
         this.precio = precio;
         this.nombre = nombre;
         this.tipo = tipo;
+        this.estado = estado;
     }
     
     
@@ -72,6 +79,18 @@ public class Producto implements Serializable {
         this.tipo = tipo;
         this.productos = productos;
     }
+
+    public Estado_Producto getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado_Producto estado) {
+        this.estado = estado;
+    }
+    
+    
+    
+    
 
     public Long getId() {
         return id;
