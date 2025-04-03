@@ -58,8 +58,6 @@ public class Cliente implements Serializable {
         this.fechaRegistro = fechaRegistro;
     }
     
-    
-    
     public Long getId() {
         return id;
     }
@@ -137,11 +135,4 @@ public class Cliente implements Serializable {
         }
         return Objects.equals(this.fechaRegistro, other.fechaRegistro);
     }
-
-    @Override
-    public String toString() {
-        return "Entidades.Clientes.Clientes[ id=" + id + " ]";
-    }
-    
-    
 }

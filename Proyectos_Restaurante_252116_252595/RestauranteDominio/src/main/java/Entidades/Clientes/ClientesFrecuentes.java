@@ -6,11 +6,10 @@ package Entidades.Clientes;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -19,12 +18,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table (name = "Clientes Frecuentes")
-public class ClientesFrecuentes extends Cliente {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "Id")
-    private Long id;
+@PrimaryKeyJoinColumn(name = "id_Cliente")
+public class ClientesFrecuentes extends Cliente implements Serializable{
     
     @Column (name = "Total Gastado", nullable = false)
     private Long totalGastado;
@@ -38,6 +33,12 @@ public class ClientesFrecuentes extends Cliente {
     public ClientesFrecuentes() {
     }
 
+    public ClientesFrecuentes(Long totalGastado, Integer visitas, Integer puntos) {
+        this.totalGastado = totalGastado;
+        this.visitas = visitas;
+        this.puntos = puntos;
+    }
+    
     public ClientesFrecuentes(Long totalGastado, Integer visitas, Integer puntos, String nombre, String correo, int numTelefono, Calendar fechaRegistro) {
         super(nombre, correo, numTelefono, fechaRegistro);
         this.totalGastado = totalGastado;
@@ -50,18 +51,6 @@ public class ClientesFrecuentes extends Cliente {
         this.totalGastado = totalGastado;
         this.visitas = visitas;
         this.puntos = puntos;
-    }
-    
-    
-    
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getTotalGastado() {
@@ -87,30 +76,34 @@ public class ClientesFrecuentes extends Cliente {
     public void setPuntos(Integer puntos) {
         this.puntos = puntos;
     }
-    
-    
+
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.totalGastado);
+        hash = 97 * hash + Objects.hashCode(this.visitas);
+        hash = 97 * hash + Objects.hashCode(this.puntos);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof ClientesFrecuentes)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        ClientesFrecuentes other = (ClientesFrecuentes) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final ClientesFrecuentes other = (ClientesFrecuentes) obj;
+        if (!Objects.equals(this.totalGastado, other.totalGastado)) {
+            return false;
+        }
+        if (!Objects.equals(this.visitas, other.visitas)) {
+            return false;
+        }
+        return Objects.equals(this.puntos, other.puntos);
     }
-
-    @Override
-    public String toString() {
-        return "Entidades.Clientes.ClientesFrecuentes[ id=" + id + " ]";
-    }
-    
 }
