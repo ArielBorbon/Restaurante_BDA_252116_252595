@@ -18,69 +18,65 @@ import javax.persistence.TypedQuery;
  * @author PC Gamer
  */
 public class ProductosDAO {
-    
-    public List<Producto> filtrarPorNombreProducto(String nombreFiltro){
+
+    public List<Producto> filtrarPorNombreProducto(String nombreFiltro) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
-        String jpqlQuery = 
-    """
+        String jpqlQuery
+                = """
     SELECT p FROM Producto p WHERE p.nombre LIKE :nombreFiltrador
     """;
-        TypedQuery<Producto> query = entityManager.createQuery(jpqlQuery , Producto.class);
+        TypedQuery<Producto> query = entityManager.createQuery(jpqlQuery, Producto.class);
         query.setParameter("nombreFiltrador", "%" + nombreFiltro + "%");
         return query.getResultList();
     }
-    
+
     public List<Producto> filtrarPorTipoProducto(Tipo_Producto tipoFiltro) {
-    EntityManager entityManager = ManejadorConexiones.getEntityManager();
-        String jpqlQuery = 
-        """                  
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        String jpqlQuery
+                = """                  
         SELECT p FROM Producto p WHERE p.tipo = :tipoFiltrador;
         """;
         TypedQuery<Producto> query = entityManager.createQuery(jpqlQuery, Producto.class);
-        
+
         query.setParameter("tipoFiltrador", tipoFiltro);
         return query.getResultList();
 
-}
+    }
 
     public List<Producto> filtrarPorNombreYTipoProducto(String nombreFiltro, Tipo_Producto tipoFiltro) {
-    EntityManager entityManager = ManejadorConexiones.getEntityManager();
-        String jpqlQuery = 
-        """
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        String jpqlQuery
+                = """
         SELECT p FROM Producto p WHERE p.nombre LIKE :nombreFiltrador AND p.tipo = :tipoFiltrador
         """;
-                                                                                                                    
-        
 
         TypedQuery<Producto> query = entityManager.createQuery(jpqlQuery, Producto.class);
-        
-        query.setParameter("nombreFiltrador", "%" + nombreFiltro + "%"); 
-        query.setParameter("tipoFiltrador", tipoFiltro);  
-        
+
+        query.setParameter("nombreFiltrador", "%" + nombreFiltro + "%");
+        query.setParameter("tipoFiltrador", tipoFiltro);
+
         return query.getResultList();
 
-}
+    }
 
-        public Producto registrarProducto(NuevoProductoDTO nuevoProducto) {
-         
-        
-    EntityManager entityManager = ManejadorConexiones.getEntityManager();
+    public Producto registrarProducto(NuevoProductoDTO nuevoProducto) {
+
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
         entityManager.getTransaction().begin();
         Producto producto = new Producto();
         producto.setNombre(nuevoProducto.getNombre());
         producto.setPrecio(nuevoProducto.getPrecio());
         producto.setTipo(nuevoProducto.getTipo());
-        
+
         entityManager.persist(producto);
-        entityManager.getTransaction().commit();    
+        entityManager.getTransaction().commit();
         return producto;
     }
-    
-    
+
     public void eliminarProducto(NuevoProductoDTO nuevoProducto) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         entityManager.getTransaction().begin();
-    
+
         try {
             String jpql = """
                           SELECT p FROM Producto p WHERE p.nombre = :nombre AND p.precio = :precio AND p.tipo = :tipo
@@ -90,10 +86,10 @@ public class ProductosDAO {
                     .setParameter("precio", nuevoProducto.getPrecio())
                     .setParameter("tipo", nuevoProducto.getTipo())
                     .getSingleResult();
-        
+
             entityManager.remove(producto);
             entityManager.getTransaction().commit();
-        
+
         } catch (NoResultException e) {
             System.out.println("No se encontró el producto para eliminar.");
             entityManager.getTransaction().rollback();
@@ -105,22 +101,10 @@ public class ProductosDAO {
         }
     }
 
-        public List<Producto> mostrarListaProductos() {
+    public List<Producto> mostrarListaProductos() {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         String jpql = "SELECT p FROM Producto p";
         TypedQuery<Producto> query = entityManager.createQuery(jpql, Producto.class);
         return query.getResultList();
     }
 }
-    
-    
-    
-    
-    
-
-
-    
-    
-    
-    
-
