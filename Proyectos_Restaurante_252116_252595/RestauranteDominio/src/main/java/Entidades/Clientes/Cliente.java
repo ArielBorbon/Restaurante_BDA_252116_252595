@@ -36,14 +36,14 @@ public class Cliente implements Serializable {
     @Column (name = "Nombre", length = 255, nullable = false)
     private String nombre;
     
-    @Column (name = "Correo Electronico", length = 50, nullable = true)
+    @Column (name = "Correo_Electronico", length = 50, nullable = true)
     private String correo;
     
-    @Column (name = "Numero Telefono", unique = true, nullable = false)
+    @Column (name = "Numero_Telefono", unique = true, nullable = false)
     private Integer numTelefono;
     
     @Temporal (TemporalType.DATE)
-    @Column (name = "Fecha Registro", nullable = false)
+    @Column (name = "Fecha_Registro", nullable = false)
     private Calendar fechaRegistro;
 
     public Cliente() {

@@ -18,7 +18,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue("1")
 public class ClientesFrecuentes extends Cliente implements Serializable{
     
-    @Column (name = "Total Gastado", nullable = false)
+    @Column (name = "Total_Gastado", nullable = false)
     private double totalGastado;
     
     @Column (name = "Visitas", nullable = false)
