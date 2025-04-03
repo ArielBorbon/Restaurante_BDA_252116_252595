@@ -8,11 +8,14 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,7 +24,8 @@ import javax.persistence.TemporalType;
  * @author PC Gamer
  */
 @Entity
-@Table (name = "Clientes")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name= "Clientes_Tipo", discriminatorType = DiscriminatorType.INTEGER)
 public class Cliente implements Serializable {
     
     @Id

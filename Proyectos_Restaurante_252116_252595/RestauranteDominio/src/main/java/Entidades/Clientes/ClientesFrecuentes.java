@@ -8,17 +8,14 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
-
 /**
  *
  * @author Alberto Jimenez
  */
 @Entity
-@Table (name = "Clientes Frecuentes")
-@PrimaryKeyJoinColumn(name = "id_Cliente")
+@DiscriminatorValue("1")
 public class ClientesFrecuentes extends Cliente implements Serializable{
     
     @Column (name = "Total Gastado", nullable = false)
