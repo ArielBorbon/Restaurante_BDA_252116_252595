@@ -45,14 +45,14 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(String nombre, String correo, int numTelefono, Calendar fechaRegistro) {
+    public Cliente(String nombre, String correo, Integer numTelefono, Calendar fechaRegistro) {
         this.nombre = nombre;
         this.correo = correo;
         this.numTelefono = numTelefono;
         this.fechaRegistro = fechaRegistro;
     }
 
-    public Cliente(String nombre, int numTelefono, Calendar fechaRegistro) {
+    public Cliente(String nombre, Integer numTelefono, Calendar fechaRegistro) {
         this.nombre = nombre;
         this.numTelefono = numTelefono;
         this.fechaRegistro = fechaRegistro;
@@ -86,7 +86,7 @@ public class Cliente implements Serializable {
         return numTelefono;
     }
 
-    public void setNumTelefono(int numTelefono) {
+    public void setNumTelefono(Integer numTelefono) {
         this.numTelefono = numTelefono;
     }
 

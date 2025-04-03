@@ -22,7 +22,7 @@ import javax.persistence.Table;
 public class ClientesFrecuentes extends Cliente implements Serializable{
     
     @Column (name = "Total Gastado", nullable = false)
-    private Long totalGastado;
+    private double totalGastado;
     
     @Column (name = "Visitas", nullable = false)
     private Integer visitas;
@@ -33,31 +33,31 @@ public class ClientesFrecuentes extends Cliente implements Serializable{
     public ClientesFrecuentes() {
     }
 
-    public ClientesFrecuentes(Long totalGastado, Integer visitas, Integer puntos) {
+    public ClientesFrecuentes(double totalGastado, Integer visitas, Integer puntos) {
         this.totalGastado = totalGastado;
         this.visitas = visitas;
         this.puntos = puntos;
     }
     
-    public ClientesFrecuentes(Long totalGastado, Integer visitas, Integer puntos, String nombre, String correo, int numTelefono, Calendar fechaRegistro) {
+    public ClientesFrecuentes(double totalGastado, Integer visitas, Integer puntos, String nombre, String correo, int numTelefono, Calendar fechaRegistro) {
         super(nombre, correo, numTelefono, fechaRegistro);
         this.totalGastado = totalGastado;
         this.visitas = visitas;
         this.puntos = puntos;
     }
 
-    public ClientesFrecuentes(Long totalGastado, Integer visitas, Integer puntos, String nombre, int numTelefono, Calendar fechaRegistro) {
+    public ClientesFrecuentes(double totalGastado, Integer visitas, Integer puntos, String nombre, int numTelefono, Calendar fechaRegistro) {
         super(nombre, numTelefono, fechaRegistro);
         this.totalGastado = totalGastado;
         this.visitas = visitas;
         this.puntos = puntos;
     }
 
-    public Long getTotalGastado() {
+    public double getTotalGastado() {
         return totalGastado;
     }
 
-    public void setTotalGastado(Long totalGastado) {
+    public void setTotalGastado(double totalGastado) {
         this.totalGastado = totalGastado;
     }
 
