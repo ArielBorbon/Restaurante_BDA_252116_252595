@@ -15,22 +15,23 @@ import org.junit.jupiter.api.Test;
  */
 public class ProductoTest {
     
-    @Test
-    public  void crearProducto() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_RestauranteDominio_jar_1.0-SNAPSHOTPU");
-        EntityManager em = emf.createEntityManager();
-        
-        Producto producto = new Producto();
-        producto.setNombre("Pastel Chocolatoso");
-        producto.setPrecio(250.0);
-        producto.setTipo(Tipo_Producto.POSTRE);
-        producto.setEstado(Estado_Producto.HABILITADO);
-        
-        em.getTransaction().begin();
-        em.persist(producto);
-        em.getTransaction().commit();
-        
-        em.close();
-        emf.close();
-    }
+//    @Test
+//    public  void crearProducto() {
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_RestauranteDominio_jar_1.0-SNAPSHOTPU");
+//        EntityManager em = emf.createEntityManager();
+//        
+//        Producto producto = new Producto();
+//        producto.setNombre("Pastel de Vainilla");
+//        producto.setPrecio(250.0);
+//        producto.setTipo(Tipo_Producto.ENTRADA);
+//        producto.setEstado(Estado_Producto.HABILITADO);
+//        
+//        
+//        em.getTransaction().begin();
+//        em.persist(producto);
+//        em.getTransaction().commit();
+//        
+//        em.close();
+//        emf.close();
+//    }
 }

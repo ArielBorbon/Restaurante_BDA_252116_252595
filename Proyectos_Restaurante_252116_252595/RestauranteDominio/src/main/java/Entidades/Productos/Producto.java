@@ -5,6 +5,7 @@
 package Entidades.Productos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -59,7 +60,7 @@ public class Producto implements Serializable {
         this.precio = precio;
         this.nombre = nombre;
         this.tipo = tipo;
-        this.productos = productos;
+        this.productos = (productos != null) ? productos : new ArrayList<>();
         this.estado = estado;
     }
 
@@ -77,7 +78,7 @@ public class Producto implements Serializable {
         this.precio = precio;
         this.nombre = nombre;
         this.tipo = tipo;
-        this.productos = productos;
+        this.productos = (productos != null) ? productos : new ArrayList<>();
     }
 
     public Estado_Producto getEstado() {

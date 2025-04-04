@@ -12,6 +12,7 @@ import Entidades.Productos.Producto;
 import Entidades.Productos.ProductoOcupaIngrediente;
 import Entidades.Productos.Tipo_Producto;
 import ManejadorConexiones.ManejadorConexiones;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -79,13 +80,14 @@ public class ProductosDAO {
         producto.setNombre(nuevoProducto.getNombre());
         producto.setPrecio(nuevoProducto.getPrecio());
         producto.setTipo(nuevoProducto.getTipo());
+        producto.setEstado(nuevoProducto.getEstado());
 
         entityManager.persist(producto);
         entityManager.getTransaction().commit();
         return producto;
     }
 
-public void deshabilitarProducto(NuevoProductoDTO nuevoProducto) {
+public void deshabilitarProducto(NuevoProductoDTO productoAEliminar) {
     EntityManager entityManager = ManejadorConexiones.getEntityManager();
     entityManager.getTransaction().begin();
 
@@ -95,9 +97,9 @@ public void deshabilitarProducto(NuevoProductoDTO nuevoProducto) {
                       AND p.precio = :precio AND p.tipo = :tipo
                       """;
         Producto producto = entityManager.createQuery(jpql, Producto.class)
-                .setParameter("nombre", nuevoProducto.getNombre())
-                .setParameter("precio", nuevoProducto.getPrecio())
-                .setParameter("tipo", nuevoProducto.getTipo())
+                .setParameter("nombre", productoAEliminar.getNombre())
+                .setParameter("precio", productoAEliminar.getPrecio())
+                .setParameter("tipo", productoAEliminar.getTipo())
                 .getSingleResult();
 
         if (producto != null) {
@@ -131,13 +133,17 @@ public void deshabilitarProducto(NuevoProductoDTO nuevoProducto) {
     try {
         entityManager.getTransaction().begin();
         
-        
         Producto producto = new Producto();
         producto.setNombre(nuevoProducto.getNombre());
         producto.setPrecio(nuevoProducto.getPrecio());
         producto.setTipo(nuevoProducto.getTipo());
         producto.setEstado(nuevoProducto.getEstado());
-        
+
+
+        if (producto.getProductos() == null) {
+            producto.setProductos(new ArrayList<>());
+        }
+
         entityManager.persist(producto);
         
         for (NuevoProductoOcupaIngredienteDTO dto : listaProductoIngrediente) {
@@ -158,7 +164,10 @@ public void deshabilitarProducto(NuevoProductoDTO nuevoProducto) {
                 relacion.setProducto(producto);
                 relacion.setIngrediente(ingrediente);
                 relacion.setCantidad_necesaria(dto.getCantidadNecesariaProducto());
-                
+
+             
+                producto.getProductos().add(relacion);
+
                 entityManager.persist(relacion);
             }
         }
@@ -171,10 +180,11 @@ public void deshabilitarProducto(NuevoProductoDTO nuevoProducto) {
             entityManager.getTransaction().rollback();
         }
         throw e;
-            } finally {
-                entityManager.close();
-            }
-        }
+    } finally {
+        entityManager.close();
+    }
+}
+
 
 
     
