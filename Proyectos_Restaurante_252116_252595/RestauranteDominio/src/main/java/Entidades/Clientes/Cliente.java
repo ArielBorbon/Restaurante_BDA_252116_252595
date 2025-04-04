@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -26,6 +27,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name= "Clientes_Tipo", discriminatorType = DiscriminatorType.INTEGER)
+@Table(name = "Cliente")
 public class Cliente implements Serializable {
     
     @Id
@@ -45,7 +47,10 @@ public class Cliente implements Serializable {
     @Temporal (TemporalType.DATE)
     @Column (name = "Fecha_Registro", nullable = false)
     private Calendar fechaRegistro;
-
+    
+    @Column(name = "Clientes_Tipo", insertable = false, updatable = false)
+    private Integer tipoCliente;
+    
     public Cliente() {
     }
 
@@ -102,41 +107,24 @@ public class Cliente implements Serializable {
         this.fechaRegistro = fechaRegistro;
     }
 
+    public Integer getTipoCliente() {
+        return tipoCliente;
+    }
+
+    public void setTipoCliente(Integer tipoCliente) {
+        this.tipoCliente = tipoCliente;
+    }
+    
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.nombre);
-        hash = 53 * hash + Objects.hashCode(this.correo);
-        hash = 53 * hash + this.numTelefono;
-        hash = 53 * hash + Objects.hashCode(this.fechaRegistro);
-        return hash;
+        return Objects.hash(this.id);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Cliente other = (Cliente) obj;
-        if (this.numTelefono != other.numTelefono) {
-            return false;
-        }
-        if (!Objects.equals(this.nombre, other.nombre)) {
-            return false;
-        }
-        if (!Objects.equals(this.correo, other.correo)) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return Objects.equals(this.fechaRegistro, other.fechaRegistro);
+        if (this == obj) return true;
+        if (!(obj instanceof Cliente)) return false;
+        Cliente other = (Cliente) obj;
+        return Objects.equals(this.id, other.id);
     }
 }

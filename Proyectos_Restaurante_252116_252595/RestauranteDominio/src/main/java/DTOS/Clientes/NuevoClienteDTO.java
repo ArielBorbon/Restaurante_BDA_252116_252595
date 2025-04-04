@@ -15,7 +15,7 @@ public class NuevoClienteDTO {
     private String correo;
     private Integer numTelefono;
     private Calendar fechaRegistro;
-
+    private int tipo = 1;
     public NuevoClienteDTO() {
     }
 
@@ -63,6 +63,15 @@ public class NuevoClienteDTO {
     public void setFechaRegistro(Calendar fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+    
     
     
 }

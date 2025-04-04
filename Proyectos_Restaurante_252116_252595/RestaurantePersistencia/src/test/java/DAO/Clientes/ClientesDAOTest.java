@@ -78,44 +78,44 @@ public class ClientesDAOTest {
         assertEquals(nuevoClienteDTO.getFechaRegistro(), cliente.getFechaRegistro());
     }
 
-//    /**
-//     * Test of filtrarPorNombre method, of class ClientesDAO.
-//     */
-//    @Test
-//    public void testFiltrarPorNombre() {
-//        ClientesDAO clientesDAO = new ClientesDAO();
-//        String filtroNombre = "Juanito";
-//        int NUMERO_DE_CLIENTES_ESPERADOS = 1;
-//        List<Cliente> clientesConsultados = clientesDAO.filtrarPorNombre(filtroNombre);
-//        assertNotNull(clientesConsultados);
-//        assertEquals(NUMERO_DE_CLIENTES_ESPERADOS, clientesConsultados.size());
-//    }
-//
-//    /**
-//     * Test of filtrarPorTelefono method, of class ClientesDAO.
-//     */
-//    @Test
-//    public void testFiltrarPorTelefono() {
-//        ClientesDAO clientesDAO = new ClientesDAO();
-//        Integer filtroNumero = 644498212;
-//        int NUMERO_DE_CLIENTES_ESPERADOS = 1;
-//        List<Cliente> clientesConsultados = clientesDAO.filtrarPorTelefono(filtroNumero);
-//        assertNotNull(clientesConsultados);
-//        assertEquals(NUMERO_DE_CLIENTES_ESPERADOS, clientesConsultados.size());
-//    }
-//
-//    /**
-//     * Test of filtrarPorCorreo method, of class ClientesDAO.
-//     */
-//    @Test
-//    public void testFiltrarPorCorreo() {
-//        ClientesDAO clientesDAO = new ClientesDAO();
-//        String filtroCorreo = "pepelocochon123@hotmail.com";
-//        int NUMERO_DE_CLIENTES_ESPERADOS = 1;
-//        List<Cliente> clientesConsultados = clientesDAO.filtrarPorCorreo(filtroCorreo);
-//        assertNotNull(clientesConsultados);
-//        assertEquals(NUMERO_DE_CLIENTES_ESPERADOS, clientesConsultados.size());
-//    }
+    /**
+     * Test of filtrarPorNombre method, of class ClientesDAO.
+     */
+    @Test
+    public void testFiltrarPorNombre() {
+        ClientesDAO clientesDAO = new ClientesDAO();
+        String filtroNombre = "Juanito";
+        int NUMERO_DE_CLIENTES_ESPERADOS = 1;
+        List<Cliente> clientesConsultados = clientesDAO.filtrarPorNombre(filtroNombre);
+        assertNotNull(clientesConsultados);
+        assertEquals(NUMERO_DE_CLIENTES_ESPERADOS, clientesConsultados.size());
+    }
+
+    /**
+     * Test of filtrarPorTelefono method, of class ClientesDAO.
+     */
+    @Test
+    public void testFiltrarPorTelefono() {
+        ClientesDAO clientesDAO = new ClientesDAO();
+        Integer filtroNumero = 644498212;
+        int NUMERO_DE_CLIENTES_ESPERADOS = 1;
+        List<Cliente> clientesConsultados = clientesDAO.filtrarPorTelefono(filtroNumero);
+        assertNotNull(clientesConsultados);
+        assertEquals(NUMERO_DE_CLIENTES_ESPERADOS, clientesConsultados.size());
+    }
+
+    /**
+     * Test of filtrarPorCorreo method, of class ClientesDAO.
+     */
+    @Test
+    public void testFiltrarPorCorreo() {
+        ClientesDAO clientesDAO = new ClientesDAO();
+        String filtroCorreo = "pepelocochon123@hotmail.com";
+        int NUMERO_DE_CLIENTES_ESPERADOS = 1;
+        List<Cliente> clientesConsultados = clientesDAO.filtrarPorCorreo(filtroCorreo);
+        assertNotNull(clientesConsultados);
+        assertEquals(NUMERO_DE_CLIENTES_ESPERADOS, clientesConsultados.size());
+    }
 
     /**
      * Test of mostrarListaClientes method, of class ClientesDAO.

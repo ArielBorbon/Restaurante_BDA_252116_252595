@@ -6,6 +6,7 @@ package DAO.Clientes;
 
 import DTOS.Clientes.NuevoClienteDTO;
 import Entidades.Clientes.Cliente;
+import Entidades.Clientes.ClientesFrecuentes;
 import InterfazDAO.Clientes.IClientesDAO;
 import ManejadorConexiones.ManejadorConexiones;
 import java.util.List;
@@ -22,14 +23,30 @@ public class ClientesDAO implements IClientesDAO {
     public Cliente registrarCliente(NuevoClienteDTO nuevoClienteDTO) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         entityManager.getTransaction().begin();
-        Cliente cliente = new Cliente();
+
+        Cliente cliente;
+
+        switch (nuevoClienteDTO.getTipo()) {
+            case 1: // ClienteFrecuente
+                ClientesFrecuentes cf = new ClientesFrecuentes();
+                cf.setTotalGastado(0.0);
+                cf.setVisitas(0);
+                cf.setPuntos(0);
+                cliente = cf;
+                break;
+
+            case 2: // ClienteCorporativo
+                
+
+            default: // Cliente normal
+                cliente = new Cliente();
+        }
+
         cliente.setNombre(nuevoClienteDTO.getNombre());
         cliente.setNumTelefono(nuevoClienteDTO.getNumTelefono());
         cliente.setFechaRegistro(nuevoClienteDTO.getFechaRegistro());
-        if(nuevoClienteDTO.getCorreo() != null && !nuevoClienteDTO.getCorreo().isEmpty()){
-            cliente.setCorreo(nuevoClienteDTO.getCorreo());
-        }
-        
+        cliente.setCorreo(nuevoClienteDTO.getCorreo());
+
         entityManager.persist(cliente);
         entityManager.getTransaction().commit();
         return cliente;
