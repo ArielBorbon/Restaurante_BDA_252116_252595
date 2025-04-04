@@ -18,5 +18,5 @@ public interface IClientesDAO {
     public abstract List<Cliente> filtrarPorTelefono(Integer filtroNumero);
     public abstract List<Cliente> filtrarPorCorreo(String filtroCorreo);
     public abstract List<Cliente> mostrarListaClientes();
-    
+    public abstract Cliente buscarPorTelefono(Integer filtroNumero);
 }

@@ -11,7 +11,12 @@ import InterfazDAO.Clientes.IClientesDAO;
 import ManejadorConexiones.ManejadorConexiones;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -67,7 +72,7 @@ public class ClientesDAO implements IClientesDAO {
     public List<Cliente> filtrarPorTelefono(Integer filtroNumero) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         String jpqlQuery = """
-            SELECT c FROM Cliente c WHERE c.numTelefono LIKE = :filtroNumero
+            SELECT c FROM Cliente c WHERE c.numTelefono LIKE :filtroNumero
                            """;
         TypedQuery<Cliente> query = entityManager.createQuery(jpqlQuery, Cliente.class);
         query.setParameter("filtroNumero", "%" + filtroNumero + "%");
@@ -92,5 +97,23 @@ public class ClientesDAO implements IClientesDAO {
         TypedQuery<Cliente> query = entityManager.createQuery(jpqlQuery, Cliente.class);
         return query.getResultList();
     }
+    
+    @Override
+    public Cliente buscarPorTelefono(Integer filtroNumero){
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Cliente> query = cb.createQuery(Cliente.class);
+            Root<Cliente> root = query.from(Cliente.class);
 
+            Predicate nombrePredicate = cb.equal(root.get("Telefono"), filtroNumero);
+            query.select(root).where(cb.and(nombrePredicate));
+
+            return entityManager.createQuery(query).getSingleResult();
+        } catch (NoResultException e) {
+            return null; 
+        } finally {
+            entityManager.close();
+        }
+    }
 }
