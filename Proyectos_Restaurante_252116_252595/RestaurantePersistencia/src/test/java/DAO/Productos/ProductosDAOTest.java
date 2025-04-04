@@ -237,5 +237,109 @@ public class ProductosDAOTest {
         assertTrue(contieneHarina, "El producto debe estar asociado con Harina");
         assertTrue(contieneAzucar, "El producto debe estar asociado con Azúcar");
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    @org.junit.jupiter.api.Test
+public void testModificarProducto() {
+
+    ProductosDAO productosDAO = new ProductosDAO();
+    IngredientesDAO ingredientesDAO = new IngredientesDAO();
+
+
+    NuevoIngredienteDTO dtoHarina = new NuevoIngredienteDTO();
+    dtoHarina.setNombre("Harina");
+    dtoHarina.setUnidad_medida("kg");
+    dtoHarina.setStock(100);
+    ingredientesDAO.registrarIngrediente(dtoHarina);
+
+    NuevoIngredienteDTO dtoAzucar = new NuevoIngredienteDTO();
+    dtoAzucar.setNombre("Azúcar");
+    dtoAzucar.setUnidad_medida("kg");
+    dtoAzucar.setStock(50);
+    ingredientesDAO.registrarIngrediente(dtoAzucar);
+
+
+    NuevoProductoDTO nuevoProducto = new NuevoProductoDTO();
+    nuevoProducto.setNombre("Pastel de Chocolate");
+    nuevoProducto.setPrecio(300.0);
+    nuevoProducto.setTipo(Tipo_Producto.POSTRE);
+    nuevoProducto.setEstado(Estado_Producto.HABILITADO);
+
+    List<NuevoProductoOcupaIngredienteDTO> listaIngredientes = new ArrayList<>();
+
+    NuevoProductoOcupaIngredienteDTO prodIngrHarina = new NuevoProductoOcupaIngredienteDTO();
+    prodIngrHarina.setNombreIngrediente("Harina");
+    prodIngrHarina.setUnidadMedida("kg");
+    prodIngrHarina.setCantidadNecesariaProducto(2.0);
+    listaIngredientes.add(prodIngrHarina);
+
+    NuevoProductoOcupaIngredienteDTO prodIngrAzucar = new NuevoProductoOcupaIngredienteDTO();
+    prodIngrAzucar.setNombreIngrediente("Azúcar");
+    prodIngrAzucar.setUnidadMedida("kg");
+    prodIngrAzucar.setCantidadNecesariaProducto(1.0);
+    listaIngredientes.add(prodIngrAzucar);
+
+    productosDAO.registrarProductoConIngredientes(nuevoProducto, listaIngredientes);
+
+
+    NuevoProductoDTO productoModificado = new NuevoProductoDTO();
+    productoModificado.setNombre("Pastel de Chocolate");
+    productoModificado.setPrecio(999.0); 
+    productoModificado.setTipo(Tipo_Producto.SNACK); 
+
+    List<NuevoProductoOcupaIngredienteDTO> nuevaListaIngredientes = new ArrayList<>();
+
+
+    NuevoProductoOcupaIngredienteDTO prodIngrHarinaMod = new NuevoProductoOcupaIngredienteDTO();
+    prodIngrHarinaMod.setNombreIngrediente("Harina");
+    prodIngrHarinaMod.setUnidadMedida("kg");
+    prodIngrHarinaMod.setCantidadNecesariaProducto(2.5);
+    nuevaListaIngredientes.add(prodIngrHarinaMod);
+
+    NuevoIngredienteDTO dtoLeche = new NuevoIngredienteDTO();
+    dtoLeche.setNombre("Leche");
+    dtoLeche.setUnidad_medida("litro");
+    dtoLeche.setStock(30);
+    ingredientesDAO.registrarIngrediente(dtoLeche);
+
+    NuevoProductoOcupaIngredienteDTO prodIngrLeche = new NuevoProductoOcupaIngredienteDTO();
+    prodIngrLeche.setNombreIngrediente("Leche");
+    prodIngrLeche.setUnidadMedida("litro");
+    prodIngrLeche.setCantidadNecesariaProducto(1.0);
+    nuevaListaIngredientes.add(prodIngrLeche);
+
+    productosDAO.modificarProducto(productoModificado, nuevaListaIngredientes);
+
+
+    Producto productoActualizado = productosDAO.buscarProductoPorNombre("Pastel de Chocolate");
+    assertNotNull(productoActualizado, "El producto debe existir después de la modificación");
+    assertEquals(999.0, productoActualizado.getPrecio(), "El precio debe haber sido actualizado");
+    assertEquals(Tipo_Producto.SNACK, productoActualizado.getTipo(), "El tipo de producto debe haber cambiado");
+
+    List<ProductoOcupaIngrediente> relaciones = productoActualizado.getProductos();
+    assertNotNull(relaciones, "Las relaciones deben existir");
+    assertEquals(2, relaciones.size(), "Debe haber exactamente dos ingredientes después de la modificación");
+
+    boolean contieneHarina = relaciones.stream().anyMatch(rel ->
+            rel.getIngrediente().getNombre().equals("Harina") &&
+                    rel.getIngrediente().getUnidad_medida().equals("kg"));
+    boolean contieneLeche = relaciones.stream().anyMatch(rel ->
+            rel.getIngrediente().getNombre().equals("Leche") &&
+                    rel.getIngrediente().getUnidad_medida().equals("litro"));
+    boolean contieneAzucar = relaciones.stream().anyMatch(rel ->
+            rel.getIngrediente().getNombre().equals("Azúcar"));
+
+    assertTrue(contieneHarina, "El producto debe seguir teniendo Harina");
+    assertTrue(contieneLeche, "El producto debe haber agregado Leche");
+    assertFalse(contieneAzucar, "El producto ya no debe contener Azúcar");
+}
+
 }
 
