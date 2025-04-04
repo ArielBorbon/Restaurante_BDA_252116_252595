@@ -76,31 +76,17 @@ public class ClientesFrecuentes extends Cliente implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + Objects.hashCode(this.totalGastado);
-        hash = 97 * hash + Objects.hashCode(this.visitas);
-        hash = 97 * hash + Objects.hashCode(this.puntos);
-        return hash;
+        return Objects.hash(super.hashCode(), totalGastado, visitas, puntos);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
+        if (!super.equals(obj)) return false;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
         final ClientesFrecuentes other = (ClientesFrecuentes) obj;
-        if (!Objects.equals(this.totalGastado, other.totalGastado)) {
-            return false;
-        }
-        if (!Objects.equals(this.visitas, other.visitas)) {
-            return false;
-        }
-        return Objects.equals(this.puntos, other.puntos);
+        return Objects.equals(totalGastado, other.totalGastado) &&
+               Objects.equals(visitas, other.visitas) &&
+               Objects.equals(puntos, other.puntos);
     }
 }

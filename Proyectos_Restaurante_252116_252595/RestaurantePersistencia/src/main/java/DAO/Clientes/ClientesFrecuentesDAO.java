@@ -4,11 +4,12 @@
  */
 package DAO.Clientes;
 
-import InterfazDAO.Clientes.IClientesFrecuentesDAO;
+import Entidades.Clientes.Cliente;
+
 /**
  *
  * @author Alberto Jimenez
  */
-public class ClientesFrecuentesDAO implements IClientesFrecuentesDAO{
+public class ClientesFrecuentesDAO extends Cliente{
     
 }
