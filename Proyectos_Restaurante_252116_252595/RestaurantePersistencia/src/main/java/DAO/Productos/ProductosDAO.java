@@ -87,7 +87,8 @@ public class ProductosDAO {
         entityManager.getTransaction().commit();
         return producto;
     }
-
+    
+      
 public void deshabilitarProducto(NuevoProductoDTO productoAEliminar) {
     EntityManager entityManager = ManejadorConexiones.getEntityManager();
     entityManager.getTransaction().begin();

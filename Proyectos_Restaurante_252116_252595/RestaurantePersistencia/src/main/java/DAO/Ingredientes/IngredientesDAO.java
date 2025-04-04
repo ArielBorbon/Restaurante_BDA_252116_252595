@@ -15,6 +15,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
@@ -123,6 +124,36 @@ public class IngredientesDAO {
         entityManager.close();
     }
 }
+    
+    
+    
+    
+    
+        public Ingrediente buscarIngredientePorNombreYUnidad(String nombre, String unidadMedida) {
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Ingrediente> query = cb.createQuery(Ingrediente.class);
+            Root<Ingrediente> root = query.from(Ingrediente.class);
+
+            Predicate nombrePredicate = cb.equal(root.get("nombre"), nombre);
+            Predicate unidadMedidaPredicate = cb.equal(root.get("unidad_medida"), unidadMedida);
+            query.select(root).where(cb.and(nombrePredicate, unidadMedidaPredicate));
+
+            return entityManager.createQuery(query).getSingleResult();
+        } catch (NoResultException e) {
+            return null; 
+        } finally {
+            entityManager.close();
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
 }
     
 
