@@ -4,13 +4,10 @@
  */
 package DAO.Ingredientes;
 
-import DTOS.Ingredientes.NuevoIngredienteDTO;
 import Entidades.Ingredientes.Ingrediente;
-import ManejadorConexiones.ManejadorConexiones;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -187,7 +184,24 @@ public class IngredientesDAOTest {
 
 
     
-    
+//        @Test
+//    public void testObtenerIngredientesPorNombreProducto() {
+//        
+//        String nombreProducto = "Ensalada César";
+//        IngredientesDAO ingredienteDAO = new IngredientesDAO();
+//        List<Ingrediente> ingredientes = ingredienteDAO.obtenerIngredientesPorNombreProducto(nombreProducto);
+//
+//      
+//        assertNotNull(ingredientes, "La lista de ingredientes no debería ser nula");
+//
+//       
+//        assertFalse(ingredientes.isEmpty(), "El producto debería tener al menos un ingrediente relacionado");
+//
+//      
+//        for (Ingrediente ing : ingredientes) {
+//            System.out.println("Ingrediente: " + ing.getNombre() + " - Unidad: " + ing.getUnidad_medida());
+//        }
+//    }
     
     
 

@@ -4,12 +4,18 @@
  */
 package ModuloProductos;
 
+import ModuloProductos.AñadirProducto.AñadirProducto;
 import BO.ProductoBO.ProductoBO;
+import DTOS.Productos.NuevoProductoDTO;
 import Entidades.Productos.Producto;
 import Entidades.Productos.Tipo_Producto;
 import Fabricas.FabricaProductos;
+import ModuloProductos.ModificarProducto.ModificarProducto;
 import NegocioException.NegocioException;
+import java.awt.Color;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,6 +33,7 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
         initComponents();
         formTabla.setVisible(true);
         this.jPanel1.add(formTabla);
+        getContentPane().setBackground(new Color(0x78f332));
         
         
     }
@@ -50,6 +57,7 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
         btnDeshabilitar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         cmbTipo = new javax.swing.JComboBox<>();
+        btnHabilitar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,20 +83,44 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
         btnAgregar.setBackground(new java.awt.Color(153, 255, 153));
         btnAgregar.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnAgregar.setText("Agregar Producto");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setBackground(new java.awt.Color(204, 204, 204));
         btnModificar.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnModificar.setText("Modificar Producto");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnDeshabilitar.setBackground(new java.awt.Color(255, 102, 102));
         btnDeshabilitar.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnDeshabilitar.setText("Deshabilitar Producto");
+        btnDeshabilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeshabilitarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
         jLabel1.setText("Modulo Productos");
 
         cmbTipo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ninguno", "PLATO_FUERTE", "ENTRADA", "POSTRE", "BEBIDA", "SNACK" }));
+
+        btnHabilitar.setBackground(new java.awt.Color(204, 255, 204));
+        btnHabilitar.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        btnHabilitar.setText("Habilitar Producto");
+        btnHabilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHabilitarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,14 +129,23 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnDeshabilitar)
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnFiltrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(btnHabilitar)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(66, 66, 66))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnDeshabilitar)
+                                .addGap(33, 33, 33))))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
@@ -138,15 +179,17 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
                             .addComponent(cmbTipo))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnFiltrar)
                         .addGap(83, 83, 83)
                         .addComponent(btnAgregar)
                         .addGap(54, 54, 54)
                         .addComponent(btnModificar)
-                        .addGap(67, 67, 67)
-                        .addComponent(btnDeshabilitar))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(89, 89, 89)
+                        .addComponent(btnHabilitar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDeshabilitar)))
                 .addContainerGap())
         );
 
@@ -188,11 +231,114 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_btnFiltrarActionPerformed
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+       AñadirProducto añadirProducto = new AñadirProducto(formTabla);
+       añadirProducto.setVisible(true);
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+    try {                                             
+        int filaSeleccionada = formTabla.tblProductos.getSelectedRow();
+        
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona un producto para modificar.");
+            return;
+        }
+        
+        String nombreProducto = formTabla.tblProductos.getValueAt(filaSeleccionada, 0).toString();
+        
+        ProductoBO productoBO = FabricaProductos.crearProductoBO();
+        Producto producto = productoBO.buscarProductoPorNombreBO(nombreProducto);
+        
+       
+            ModificarProducto modificarProducto = new ModificarProducto(formTabla, producto);
+            modificarProducto.setVisible(true);
+
+    } catch (NegocioException ex) {
+            Logger.getLogger(ModuloPrincipalProductos.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnHabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHabilitarActionPerformed
+           int filaSeleccionada = formTabla.getTblProductos().getSelectedRow();
+
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Selecciona un producto para habilitar.");
+        return;
+    }
+
+    int confirmacion = JOptionPane.showConfirmDialog(this, 
+        "¿Estás seguro de que deseas habilitar este producto?", 
+        "Confirmar habilitación", 
+        JOptionPane.YES_NO_OPTION);
+
+    if (confirmacion == JOptionPane.YES_OPTION) {
+        try {
+            String nombre = formTabla.tblProductos.getValueAt(filaSeleccionada, 0).toString();
+            double precio = Double.parseDouble(formTabla.tblProductos.getValueAt(filaSeleccionada, 1).toString());
+            Tipo_Producto tipo = Tipo_Producto.valueOf(formTabla.tblProductos.getValueAt(filaSeleccionada, 2).toString());
+
+            NuevoProductoDTO productoDTO = new NuevoProductoDTO();
+            productoDTO.setNombre(nombre);
+            productoDTO.setPrecio(precio);
+            productoDTO.setTipo(tipo);
+
+            ProductoBO productoBO = FabricaProductos.crearProductoBO();
+            productoBO.habilitarProductoBO(productoDTO);
+
+            JOptionPane.showMessageDialog(this, "Producto habilitado correctamente.");
+            formTabla.cargarProductosEnTablaTodosExterno();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al habilitar el producto: " + e.getMessage());
+        }
+    }
+    }//GEN-LAST:event_btnHabilitarActionPerformed
+
+    private void btnDeshabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshabilitarActionPerformed
+            int filaSeleccionada = formTabla.tblProductos.getSelectedRow();
+
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Selecciona un producto para deshabilitar.");
+        return;
+    }
+
+    int confirmacion = JOptionPane.showConfirmDialog(this, 
+        "¿Estás seguro de que deseas deshabilitar este producto?", 
+        "Confirmar deshabilitación", 
+        JOptionPane.YES_NO_OPTION);
+
+    if (confirmacion == JOptionPane.YES_OPTION) {
+        try {
+            String nombre = formTabla.tblProductos.getValueAt(filaSeleccionada, 0).toString();
+            double precio = Double.parseDouble(formTabla.tblProductos.getValueAt(filaSeleccionada, 1).toString());
+            Tipo_Producto tipo = Tipo_Producto.valueOf(formTabla.tblProductos.getValueAt(filaSeleccionada, 2).toString());
+
+            NuevoProductoDTO productoDTO = new NuevoProductoDTO();
+            productoDTO.setNombre(nombre);
+            productoDTO.setPrecio(precio);
+            productoDTO.setTipo(tipo);
+
+            ProductoBO productoBO = FabricaProductos.crearProductoBO();
+            productoBO.deshabilitarProductoBO(productoDTO);
+
+            JOptionPane.showMessageDialog(this, "Producto deshabilitado correctamente.");
+            formTabla.cargarProductosEnTablaTodosExterno(); 
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al deshabilitar el producto: " + e.getMessage());
+        }
+    }
+    }//GEN-LAST:event_btnDeshabilitarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnDeshabilitar;
     private javax.swing.JButton btnFiltrar;
+    private javax.swing.JButton btnHabilitar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<String> cmbTipo;
     private javax.swing.JLabel jLabel1;

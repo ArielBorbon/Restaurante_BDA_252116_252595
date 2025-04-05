@@ -7,6 +7,7 @@ package BO.ProductoBO;
 import DAO.Productos.ProductosDAO;
 import DTOS.Productos.NuevoProductoDTO;
 import DTOS.Productos.NuevoProductoOcupaIngredienteDTO;
+import Entidades.Ingredientes.Ingrediente;
 import Entidades.Productos.Estado_Producto;
 import Entidades.Productos.Producto;
 import Entidades.Productos.Tipo_Producto;
@@ -225,7 +226,14 @@ public class ProductoBO implements IProductoBO {
     public List<Producto> filtrarPorNombreYTipoProductoTodosBO(String nombreFiltro, Tipo_Producto tipoFiltro) {
         return productoDAO.filtrarPorNombreYTipoProductoTodos(nombreFiltro, tipoFiltro);
     }
+
+    @Override
+    public void habilitarProductoBO(NuevoProductoDTO productoAHabilitar) {
+         productoDAO.habilitarProducto(productoAHabilitar);
+    }
     
+    
+
     
     
 }

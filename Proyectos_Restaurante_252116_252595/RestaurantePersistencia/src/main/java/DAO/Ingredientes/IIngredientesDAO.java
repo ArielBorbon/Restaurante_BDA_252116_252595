@@ -25,4 +25,6 @@ public interface IIngredientesDAO {
     Ingrediente buscarIngredientePorNombreYUnidad(String nombre, String unidadMedida);
     
     boolean tieneRelacionesActivas(String nombreIngrediente, String unidadMedida);
+    
+    public List<Ingrediente> obtenerIngredientesPorNombreProducto(String nombreProducto);
 }

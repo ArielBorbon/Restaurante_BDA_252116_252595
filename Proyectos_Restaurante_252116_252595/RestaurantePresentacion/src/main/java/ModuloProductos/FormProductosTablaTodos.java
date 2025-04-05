@@ -9,6 +9,7 @@ import Entidades.Productos.Producto;
 import Fabricas.FabricaProductos;
 import NegocioException.NegocioException;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,10 +20,12 @@ public class FormProductosTablaTodos extends javax.swing.JPanel {
 
     /**
      * Creates new form FormProductosTablaTodos
+     * @throws NegocioException.NegocioException
      */
     public FormProductosTablaTodos() throws NegocioException {
         initComponents();
         cargarProductosEnTablaTodos();
+        
     }
 
         private void cargarProductosEnTablaTodos() throws NegocioException {
@@ -52,6 +55,11 @@ public class FormProductosTablaTodos extends javax.swing.JPanel {
     tblProductos.setModel(modeloTabla);
 }
         
+        public void cargarProductosEnTablaTodosExterno() throws NegocioException{
+            cargarProductosEnTablaTodos();
+        }
+        
+        
         
     public void llenarTablaFiltrada(List<Producto> productos) {
         String[] columnas = {"Nombre", "Precio", "Tipo", "Disponible"};
@@ -73,6 +81,10 @@ public class FormProductosTablaTodos extends javax.swing.JPanel {
         }
         
         tblProductos.setModel(modeloTabla);
+    }
+
+    public JTable getTblProductos() {
+        return tblProductos;
     }
 
         
@@ -118,6 +130,6 @@ public class FormProductosTablaTodos extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane JScrollPane;
-    private javax.swing.JTable tblProductos;
+    public javax.swing.JTable tblProductos;
     // End of variables declaration//GEN-END:variables
 }

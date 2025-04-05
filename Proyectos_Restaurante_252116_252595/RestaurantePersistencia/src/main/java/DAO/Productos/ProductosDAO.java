@@ -196,7 +196,42 @@ public class ProductosDAO implements IProductosDAO {
         }
     }
     
-            
+          
+    
+        @Override
+    public void habilitarProducto(NuevoProductoDTO productoAHabilitar) {
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        entityManager.getTransaction().begin();
+    
+        try {
+            String jpql = """
+                          SELECT p FROM Producto p WHERE p.nombre = :nombre 
+                          AND p.precio = :precio AND p.tipo = :tipo
+                          """;
+            Producto producto = entityManager.createQuery(jpql, Producto.class)
+                    .setParameter("nombre", productoAHabilitar.getNombre())
+                    .setParameter("precio", productoAHabilitar.getPrecio())
+                    .setParameter("tipo", productoAHabilitar.getTipo())
+                    .getSingleResult();
+        
+            if (producto != null) {
+                producto.setEstado(Estado_Producto.HABILITADO); 
+                entityManager.merge(producto);
+            }
+        
+            entityManager.getTransaction().commit();
+        
+        } catch (NoResultException e) {
+            System.out.println("No se encontró el producto para habilitar.");
+            entityManager.getTransaction().rollback();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw e;
+        } finally {
+            entityManager.close();
+        }
+    }
+
 
     
     
@@ -266,11 +301,10 @@ public class ProductosDAO implements IProductosDAO {
     public Producto buscarProductoPorNombre(String nombre) {
     EntityManager entityManager = ManejadorConexiones.getEntityManager();
     
-    String jpqlQuery = "SELECT p FROM Producto p WHERE p.nombre = :nombre AND p.estado = :estado";
+    String jpqlQuery = "SELECT p FROM Producto p WHERE p.nombre = :nombre";
     
     TypedQuery<Producto> query = entityManager.createQuery(jpqlQuery, Producto.class);
     query.setParameter("nombre", nombre);
-    query.setParameter("estado", Estado_Producto.HABILITADO);
     
     try {
         return query.getSingleResult();

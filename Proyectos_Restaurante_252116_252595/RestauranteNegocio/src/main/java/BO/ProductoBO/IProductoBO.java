@@ -6,6 +6,7 @@ package BO.ProductoBO;
 
 import DTOS.Productos.NuevoProductoDTO;
 import DTOS.Productos.NuevoProductoOcupaIngredienteDTO;
+import Entidades.Ingredientes.Ingrediente;
 import Entidades.Productos.Producto;
 import Entidades.Productos.Tipo_Producto;
 import NegocioException.NegocioException;
@@ -42,4 +43,6 @@ public interface IProductoBO {
     List<Producto> filtrarPorTipoProductoTodosBO(Tipo_Producto tipoFiltro);
     
     List<Producto> filtrarPorNombreYTipoProductoTodosBO(String nombreFiltro, Tipo_Producto tipoFiltro);
+    
+     void habilitarProductoBO(NuevoProductoDTO productoAHabilitar);
 }
