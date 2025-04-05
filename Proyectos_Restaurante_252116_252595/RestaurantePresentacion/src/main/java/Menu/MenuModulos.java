@@ -4,6 +4,7 @@
  */
 package Menu;
 
+import ModuloClientes.ModuloPrincipalClientes;
 import ModuloIngredientes.ModuloPrincipalIngredientes;
 import ModuloProductos.ModuloPrincipalProductos;
 import NegocioException.NegocioException;
@@ -81,6 +82,11 @@ public class MenuModulos extends javax.swing.JFrame {
 
         btnClientes.setFont(new java.awt.Font("Arial Black", 1, 28)); // NOI18N
         btnClientes.setText("Clientes");
+        btnClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientesActionPerformed(evt);
+            }
+        });
 
         btnComandas.setFont(new java.awt.Font("Arial Black", 1, 28)); // NOI18N
         btnComandas.setText("Comandas");
@@ -158,6 +164,14 @@ public class MenuModulos extends javax.swing.JFrame {
         }
             
     }//GEN-LAST:event_btnProductosActionPerformed
+
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        try {
+            ModuloPrincipalClientes moduloClientes = new ModuloPrincipalClientes();
+            moduloClientes.setVisible(true);
+        } catch (NegocioException ex) {
+        }
+    }//GEN-LAST:event_btnClientesActionPerformed
 
     /**
      * @param args the command line arguments
