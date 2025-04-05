@@ -5,6 +5,7 @@
 package Menu;
 
 import ModuloIngredientes.ModuloPrincipalIngredientes;
+import ModuloProductos.ModuloPrincipalProductos;
 import NegocioException.NegocioException;
 import java.awt.Color;
 import java.util.logging.Level;
@@ -69,6 +70,7 @@ public class MenuModulos extends javax.swing.JFrame {
             }
         });
 
+        btnProductos.setBackground(new Color(0x78f332));
         btnProductos.setFont(new java.awt.Font("Arial Black", 0, 28)); // NOI18N
         btnProductos.setText("Productos");
         btnProductos.addActionListener(new java.awt.event.ActionListener() {
@@ -148,7 +150,13 @@ public class MenuModulos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIngredientesActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
-        // TODO add your handling code here:
+        try {
+            ModuloPrincipalProductos moduloProductos = new ModuloPrincipalProductos();
+            moduloProductos.setVisible(rootPaneCheckingEnabled);
+        } catch (NegocioException ex) {
+            Logger.getLogger(MenuModulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
     }//GEN-LAST:event_btnProductosActionPerformed
 
     /**

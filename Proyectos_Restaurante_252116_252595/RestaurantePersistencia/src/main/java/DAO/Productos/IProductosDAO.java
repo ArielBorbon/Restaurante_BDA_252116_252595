@@ -28,9 +28,18 @@ public interface IProductosDAO {
     void deshabilitarProducto(NuevoProductoDTO productoAEliminar);
     
     Producto registrarProductoConIngredientes(NuevoProductoDTO nuevoProducto, 
-        List<NuevoProductoOcupaIngredienteDTO> listaProductoIngrediente);
+            
+    List<NuevoProductoOcupaIngredienteDTO> listaProductoIngrediente);
     
     Producto buscarProductoPorNombre(String nombre);
     
     Producto modificarProducto(NuevoProductoDTO nuevoProductoDTO, List<NuevoProductoOcupaIngredienteDTO> nuevosIngredientesDTO);
+    
+    List<Producto> filtrarPorTipoProductoTodos(Tipo_Producto tipoFiltro);
+    
+    List<Producto> filtrarPorNombreYTipoProductoTodos(String nombreFiltro, Tipo_Producto tipoFiltro);
+    
+    List<Producto> filtrarPorNombreProductoTodos(String nombreFiltro);
+    
+    
 }
