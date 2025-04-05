@@ -30,26 +30,46 @@ import javax.swing.table.JTableHeader;
 public class ClienteMenu extends JFrame {
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Menú Clientes");
+        new ClienteMenu().frame();
+    }
+
+    private JFrame frame;
+    private JTable table;
+
+    private void frame() {
+        frame = new JFrame("Menú Clientes");
         frame.setSize(850, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
 
+        JPanel panelTitulo = panel1();
+        JScrollPane tablaScroll = tablaClientes();
+        JPanel panelLateral = panel2();
+
+        frame.add(panelTitulo, BorderLayout.NORTH);
+        frame.add(tablaScroll, BorderLayout.CENTER);
+        frame.add(panelLateral, BorderLayout.EAST);
+
+        frame.setVisible(true);
+    }
+
+    private JPanel panel1() {
         JPanel panel1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel titulo = new JLabel("Modulo Clientes");
         titulo.setFont(new Font("Arial", Font.BOLD, 32));
-
         panel1.add(titulo);
         panel1.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        return panel1;
+    }
 
+    private JScrollPane tablaClientes() {
         String[] columnas = {"Nombre", "Correo", "Teléfono", "Fecha de Registro", "Puntos", "Visitas", "Total Acumulado"};
         Object[][] datos = { 
             // Aquí va la lista de los clientes
         };
 
-        JTable table = new JTable(new DefaultTableModel(datos, columnas));
-
+        table = new JTable(new DefaultTableModel(datos, columnas));
         JTableHeader header = table.getTableHeader();
         header.setFont(new Font("Arial", Font.BOLD, 14));
         header.setBackground(Color.LIGHT_GRAY);
@@ -58,7 +78,10 @@ public class ClienteMenu extends JFrame {
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        return scrollPane;
+    }
 
+    private JPanel panel2() {
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
         panel2.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -86,34 +109,33 @@ public class ClienteMenu extends JFrame {
         filtrarCorreo.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JButton btnFiltrar = new JButton("Filtrar");
-        JButton btnAgregar = new JButton("Agregar Cliente");
-        JButton btnSalir = new JButton("Salir");
-        JButton btnReporte = new JButton("REPORTE CLIENTES FRECUENTES");
-
         btnFiltrar.setBackground(new Color(181, 136, 99));
         btnFiltrar.setForeground(Color.WHITE);
-        btnFiltrar.addActionListener(e ->{
-            
+        btnFiltrar.addActionListener(e -> {
+            // Acción del botón filtrar
         });
-        
+
+        JButton btnAgregar = new JButton("Agregar Cliente");
         btnAgregar.setBackground(new Color(50, 205, 50));
         btnAgregar.setForeground(Color.WHITE);
         btnAgregar.addActionListener(e -> {
             new ClienteAgregar();
         });
 
+        JButton btnSalir = new JButton("Salir");
         btnSalir.setBackground(new Color(255, 69, 69));
         btnSalir.setForeground(Color.WHITE);
         btnSalir.addActionListener(e -> {
             frame.dispose();
         });
-        
+
+        JButton btnReporte = new JButton("REPORTE CLIENTES FRECUENTES");
         btnReporte.setBackground(new Color(30, 144, 255));
         btnReporte.setForeground(Color.WHITE);
         btnReporte.addActionListener(e -> {
-        
+            // Acción del botón reporte
         });
-        
+
         panel2.add(nombreLabel);
         panel2.add(filtrarNombre);
         panel2.add(telefonoLabel);
@@ -129,11 +151,6 @@ public class ClienteMenu extends JFrame {
         panel2.add(Box.createVerticalStrut(10));
         panel2.add(btnReporte);
 
-        frame.add(panel1, BorderLayout.NORTH);
-        frame.add(scrollPane, BorderLayout.CENTER);
-        frame.add(panel2, BorderLayout.EAST);
-
-        frame.setVisible(true);
+        return panel2;
     }
-
 }
