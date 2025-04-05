@@ -12,6 +12,7 @@ import java.util.Calendar;
  * @author Alberto Jimenez
  */
 public class NuevoClienteFrecuenteDTO extends Cliente{
+    private Long id;
     private double totalGastado;
     private Integer visitas;
     private Integer puntos;
@@ -19,26 +20,26 @@ public class NuevoClienteFrecuenteDTO extends Cliente{
     public NuevoClienteFrecuenteDTO() {
     }
 
-    public NuevoClienteFrecuenteDTO(double totalGastado, Integer visitas, Integer puntos) {
+    public NuevoClienteFrecuenteDTO(Long id, double totalGastado, Integer visitas, Integer puntos) {
         this.totalGastado = totalGastado;
         this.visitas = visitas;
         this.puntos = puntos;
     }
 
-    public NuevoClienteFrecuenteDTO(double totalGastado, Integer visitas, Integer puntos, String nombre, String correo, Integer numTelefono, Calendar fechaRegistro) {
+    public NuevoClienteFrecuenteDTO(Long id, double totalGastado, Integer visitas, Integer puntos, String nombre, String correo, Integer numTelefono, Calendar fechaRegistro) {
         super(nombre, correo, numTelefono, fechaRegistro);
         this.totalGastado = totalGastado;
         this.visitas = visitas;
         this.puntos = puntos;
     }
 
-    public NuevoClienteFrecuenteDTO(double totalGastado, Integer visitas, Integer puntos, String nombre, Integer numTelefono, Calendar fechaRegistro) {
+    public NuevoClienteFrecuenteDTO(Long id, double totalGastado, Integer visitas, Integer puntos, String nombre, Integer numTelefono, Calendar fechaRegistro) {
         super(nombre, numTelefono, fechaRegistro);
         this.totalGastado = totalGastado;
         this.visitas = visitas;
         this.puntos = puntos;
     }
-
+    
     public double getTotalGastado() {
         return totalGastado;
     }
@@ -62,4 +63,16 @@ public class NuevoClienteFrecuenteDTO extends Cliente{
     public void setPuntos(Integer puntos) {
         this.puntos = puntos;
     }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    
 }

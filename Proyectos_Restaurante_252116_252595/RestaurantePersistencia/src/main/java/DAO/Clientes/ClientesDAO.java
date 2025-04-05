@@ -5,10 +5,11 @@
 package DAO.Clientes;
 
 import DTOS.Clientes.NuevoClienteDTO;
+import DTOS.Clientes.NuevoClienteFrecuenteDTO;
 import Entidades.Clientes.Cliente;
 import Entidades.Clientes.ClientesFrecuentes;
 import ManejadorConexiones.ManejadorConexiones;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -146,5 +147,45 @@ public class ClientesDAO implements IClientesDAO {
         }
 
         return query.getResultList();
+    }
+    
+    public void actualizarClienteFrecuente(int idCliente, int puntos, int visitas, double totalGastado) {
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        entityManager.getTransaction().begin();
+        
+        ClientesFrecuentes clienteFrecuente = entityManager.find(ClientesFrecuentes.class, idCliente);
+        
+        if (clienteFrecuente != null) {
+            clienteFrecuente.setPuntos(clienteFrecuente.getPuntos() + puntos);
+            clienteFrecuente.setVisitas(clienteFrecuente.getVisitas() + visitas);
+            clienteFrecuente.setTotalGastado(clienteFrecuente.getTotalGastado() + totalGastado);
+            entityManager.merge(clienteFrecuente);
+        }
+        
+        entityManager.getTransaction().commit();
+    }
+    
+    public List<NuevoClienteFrecuenteDTO> obtenerClientesFrecuentes() {
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        String jpqlQuery = "SELECT c FROM ClienteFrecuente c";
+        
+        TypedQuery<ClientesFrecuentes> query = entityManager.createQuery(jpqlQuery, ClientesFrecuentes.class);
+        List<ClientesFrecuentes> clientesFrecuentes = query.getResultList();
+        
+        List<NuevoClienteFrecuenteDTO> clientesDTO = new ArrayList<>();
+        for (ClientesFrecuentes c : clientesFrecuentes) {
+            NuevoClienteFrecuenteDTO clienteDTO = new NuevoClienteFrecuenteDTO(
+                c.getId(),
+                c.getTotalGastado(),
+                c.getVisitas(),
+                c.getPuntos(),
+                c.getNombre(),
+                c.getNumTelefono(),
+                c.getFechaRegistro()
+            );
+            clientesDTO.add(clienteDTO);
+        }
+
+        return clientesDTO;
     }
 }

@@ -6,6 +6,7 @@ package ModuloClientes;
 
 import BO.ClienteBO.ClienteBO;
 import Entidades.Clientes.Cliente;
+import Entidades.Clientes.ClientesFrecuentes;
 import Fabricas.FabricaClientes;
 import NegocioException.NegocioException;
 import java.util.List;
@@ -18,40 +19,41 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FormClientesTabla extends javax.swing.JPanel {
 
-
     public FormClientesTabla() throws NegocioException {
         initComponents();
         cargarClientesEnTabla();
     }
-    
-    public void cargarClientesEnTabla() throws NegocioException{
+
+    public void cargarClientesEnTabla() throws NegocioException {
         ClienteBO clienteBO = FabricaClientes.crearClienteBO();
         String[] columnas = {
             "Nombre", "Correo", "Teléfono", "Fecha Registro", "Puntos", "Visitas", "Total Acumulado"
         };
-        
-        DefaultTableModel modeloTabla = new DefaultTableModel(columnas,0){
+
+        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0) {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        
+
         List<Cliente> clientes = clienteBO.obtenerListaClientesBO();
-        
-        for (Cliente c : clientes){
+
+        for (Cliente c : clientes) {
             Object[] fila = {
                 c.getNombre(),
                 c.getCorreo(),
                 c.getNumTelefono(),
                 c.getFechaRegistro(),
-                // faltan puntos, visitas y total gastado
+                (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getPuntos() : "N/A",
+                (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getVisitas() : "N/A",
+                (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getTotalGastado() : "N/A"
             };
             modeloTabla.addRow(fila);
         }
         jTable1.setModel(modeloTabla);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -88,14 +90,46 @@ public class FormClientesTabla extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public JTable getTablabaClientes(){
+    public JTable getTablabaClientes() {
         return this.jTable1;
     }
     
-    public void recargarTabla() throws NegocioException{
-        cargarClientesEnTabla();
+    public void recargarTabla(List<Cliente> clientesFiltrados) {
+    // Aquí reemplazamos la lógica de recargar la tabla con los clientes filtrados
+    String[] columnas = {
+        "Nombre", "Correo", "Teléfono", "Fecha Registro", "Puntos", "Visitas", "Total Acumulado"
+    };
+    
+    DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+    
+    // Añadimos las filas basadas en los clientes filtrados
+    for (Cliente c : clientesFiltrados) {
+        Object[] fila = {
+            c.getNombre(),
+            c.getCorreo(),
+            c.getNumTelefono(),
+            c.getFechaRegistro(),
+            // Aquí puedes añadir los puntos, visitas y total acumulado
+            (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getPuntos() : "N/A",
+            (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getVisitas() : "N/A",
+            (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getTotalGastado() : "N/A"
+        };
+        modeloTabla.addRow(fila);
     }
     
+    // Establece el modelo de la tabla para mostrar los clientes
+    jTable1.setModel(modeloTabla);
+}
+    
+    public void recargarTabla() throws NegocioException {
+        cargarClientesEnTabla();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

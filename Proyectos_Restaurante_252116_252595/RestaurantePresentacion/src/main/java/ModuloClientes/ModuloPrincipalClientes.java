@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author Alberto Jimenez
@@ -183,29 +184,36 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
         try {
             ClienteBO clienteBO = FabricaClientes.crearClienteBO();
 
+            // Obtiene los filtros
             String nombreFiltro = filtroNombre.getText();
             String telefonoFiltro = filtroTelefono.getText();
             String correoFiltro = filtroCorreo.getText();
 
+            // Convierte teléfono a Integer, si es posible
             Integer telefonoFiltroInteger = null;
             if (!telefonoFiltro.isEmpty()) {
                 try {
-                    telefonoFiltroInteger = Integer.parseInt(telefonoFiltro); 
+                    telefonoFiltroInteger = Integer.parseInt(telefonoFiltro);
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, "El número de teléfono no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
 
+            // Validación: Si todos los campos están vacíos, muestra mensaje
             if (nombreFiltro.isEmpty() && telefonoFiltro.isEmpty() && correoFiltro.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor, ingrese al menos un criterio de búsqueda.");
-                return;
+                formClientesTabla.recargarTabla();
             }
 
-            List<Cliente> clientesFiltrados = clienteBO.filtrarClientes(nombreFiltro, telefonoFiltroInteger, correoFiltro);
+            // Llama a filtrarClientes pasando solo los valores que no son vacíos
+            List<Cliente> clientesFiltrados = clienteBO.filtrarClientes(
+                    nombreFiltro.isEmpty() ? null : nombreFiltro,
+                    telefonoFiltro.isEmpty() ? null : telefonoFiltroInteger,
+                    correoFiltro.isEmpty() ? null : correoFiltro);
 
-            formClientesTabla.recargarTabla();
-            
+            // Llama a recargarTabla y pasa los clientes filtrados
+            formClientesTabla.recargarTabla(clientesFiltrados);
+
         } catch (NegocioException ex) {
             Logger.getLogger(ModuloPrincipalClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
