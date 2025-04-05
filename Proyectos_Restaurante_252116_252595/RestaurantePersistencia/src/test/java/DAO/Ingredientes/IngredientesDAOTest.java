@@ -6,14 +6,12 @@ package DAO.Ingredientes;
 
 import DTOS.Ingredientes.NuevoIngredienteDTO;
 import Entidades.Ingredientes.Ingrediente;
-import java.util.List;
-import javax.persistence.NoResultException;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
+import ManejadorConexiones.ManejadorConexiones;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -64,27 +62,26 @@ public class IngredientesDAOTest {
 //     */
 //    @Test
 //    public void testEliminarIngrediente() {
+//        // Crear ingrediente de prueba
+//        EntityManager entityManager = ManejadorConexiones.getEntityManager();
 //        IngredientesDAO ingredientesDAO = new IngredientesDAO();
+//        
 //        NuevoIngredienteDTO nuevoIngrediente = new NuevoIngredienteDTO();
-//        nuevoIngrediente.setNombre("Sal");
-//        nuevoIngrediente.setUnidad_medida("kg");
+//        nuevoIngrediente.setNombre("Harina");
+//        nuevoIngrediente.setUnidad_medida("KG");
 //        nuevoIngrediente.setStock(50);
 //
-//        Ingrediente ingredienteRegistrado = ingredientesDAO.registrarIngrediente(nuevoIngrediente);
-//        assertNotNull(ingredienteRegistrado, "El ingrediente debe haberse registrado antes de eliminarlo");
+//        ingredientesDAO.registrarIngrediente(nuevoIngrediente);
 //
 //
-//        ingredientesDAO.eliminarIngrediente(nuevoIngrediente);
+//        Ingrediente encontrado = ingredientesDAO.buscarIngredientePorNombreYUnidad("Harina", "KG");
+//        assertNotNull(encontrado);
 //
 //
-//        Ingrediente ingredienteEliminado = null;
-//        try {
-//            ingredienteEliminado = ingredientesDAO.buscarIngredientePorNombreYUnidad("Sal", "kg");
-//        } catch (NoResultException e) {
-//            ingredienteEliminado = null;
-//        }
+//        ingredientesDAO.eliminarIngrediente(encontrado);
 //
-//        assertNull(ingredienteEliminado, "El ingrediente debe haber sido eliminado correctamente");
+//        Ingrediente eliminado = ingredientesDAO.buscarIngredientePorNombreYUnidad("Harina", "KG");
+//        assertNull(eliminado);
 //    }
 //
 //    /**
@@ -126,34 +123,34 @@ public class IngredientesDAOTest {
 //    /**
 //     * Test of actualizarIngrediente method, of class IngredientesDAO.
 //     */
-//@Test
-//public void testActualizarIngrediente() {
+//    @Test
+//    public void testActualizarIngrediente() {
+//        IngredientesDAO ingredientesDAO = new IngredientesDAO();
+//        
 //
-//    IngredientesDAO ingredientesDAO = new IngredientesDAO();
+//        NuevoIngredienteDTO dtoHarina = new NuevoIngredienteDTO();
+//        dtoHarina.setNombre("PRUEBASTOCK");
+//        dtoHarina.setUnidad_medida("kg");
+//        dtoHarina.setStock(50);
+//        ingredientesDAO.registrarIngrediente(dtoHarina);
+//        
+//        ingredientesDAO.actualizarIngrediente(dtoHarina, 70.0);
+//    Ingrediente harinaActualizada = ingredientesDAO.buscarIngredientePorNombreYUnidad("PRUEBASTOCK", "kg");
+//    
+//        assertNotNull(harinaActualizada, "El ingrediente Harina debe existir en la BD");
+//        assertEquals(70.0, harinaActualizada.getStock(), "El stock de Harina debe ser exactamente 70 kg");
+//        
+//    ingredientesDAO.actualizarIngrediente(dtoHarina, 40.0);
+//            harinaActualizada = ingredientesDAO.buscarIngredientePorNombreYUnidad("PRUEBASTOCK", "kg");
 //
-//    NuevoIngredienteDTO dtoHarina = new NuevoIngredienteDTO();
-//    dtoHarina.setNombre("Harina");
-//    dtoHarina.setUnidad_medida("kg");
-//    dtoHarina.setStock(50);
-//    ingredientesDAO.registrarIngrediente(dtoHarina);
-//
-//
-//    ingredientesDAO.actualizarIngrediente(dtoHarina, 20.0);
-//
-//    Ingrediente harinaActualizada = ingredientesDAO.buscarIngredientePorNombreYUnidad("Harina", "kg");
-//
-//    assertNotNull(harinaActualizada, "El ingrediente Harina debe existir en la BD");
-//    assertEquals(70.0, harinaActualizada.getStock(), "El stock de Harina debe ser 70 kg después del reabastecimiento");
-//
-//    ingredientesDAO.actualizarIngrediente(dtoHarina, -30.0);
-//    harinaActualizada = ingredientesDAO.buscarIngredientePorNombreYUnidad("Harina", "kg");
-//
-//    assertEquals(40.0, harinaActualizada.getStock(), "El stock de Harina debe ser 40 kg después de la reducción");
-//
-//    ingredientesDAO.actualizarIngrediente(dtoHarina, -50.0);
-//    harinaActualizada = ingredientesDAO.buscarIngredientePorNombreYUnidad("Harina", "kg");
-//    assertEquals(40.0, harinaActualizada.getStock(), "El stock de Harina no debe ser negativo, debe quedarse en los 40 kg");
-//}
+//        assertEquals(40.0, harinaActualizada.getStock(), "El stock de Harina debe ser exactamente 40 kg");
+//        
+//        ingredientesDAO.actualizarIngrediente(dtoHarina, -50.0); 
+//        harinaActualizada = ingredientesDAO.buscarIngredientePorNombreYUnidad("PRUEBASTOCK", "kg");
+//        
+//        assertEquals(40.0, harinaActualizada.getStock(), "El stock de Harina no debe cambiar, sigue siendo 40 kg");
+//    }
+//    
 //
 //
 //
@@ -190,4 +187,25 @@ public class IngredientesDAOTest {
 
 
     
+    
+    
+    
+
+//@Test
+//    public void testTieneRelacionesActivas_ConRelaciones() {
+//        IngredientesDAO ingredientesDAO = new IngredientesDAO();
+//        String nombre = "Cebolla";
+//        String unidad = "kg";
+//        
+//        // Act (simular relaciones)
+//    boolean resultado = ingredientesDAO.tieneRelacionesActivas(nombre, unidad);
+//    
+//        // Assert
+//        assertTrue(resultado);
+//    }
+
+    
 }
+    
+    
+

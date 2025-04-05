@@ -8,6 +8,7 @@ import DTOS.Ingredientes.NuevoIngredienteDTO;
 import DTOS.Productos.NuevoProductoDTO;
 import Entidades.Ingredientes.Ingrediente;
 import Entidades.Productos.Producto;
+import Entidades.Productos.ProductoOcupaIngrediente;
 import ManejadorConexiones.ManejadorConexiones;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -15,6 +16,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -22,8 +24,9 @@ import javax.persistence.criteria.Root;
  *
  * @author PC Gamer
  */
-public class IngredientesDAO {
+public class IngredientesDAO implements IIngredientesDAO {
     
+        @Override
         public Ingrediente registrarIngrediente(NuevoIngredienteDTO nuevoIngrediente) {         
     EntityManager entityManager = ManejadorConexiones.getEntityManager();
         entityManager.getTransaction().begin();
@@ -38,38 +41,28 @@ public class IngredientesDAO {
     }
     
     
-    public void eliminarIngrediente(NuevoIngredienteDTO nuevoIngrediente) {
-        EntityManager entityManager = ManejadorConexiones.getEntityManager();
-        entityManager.getTransaction().begin();
+        @Override
+        public void eliminarIngrediente(Ingrediente ingrediente) {
+    EntityManager entityManager = ManejadorConexiones.getEntityManager();
+    entityManager.getTransaction().begin();
     
-        try {
-            String jpql = """
-                          SELECT i FROM Ingrediente i WHERE i.nombre = :nombre AND i.stock = :stock AND i.unidad_medida = :unidad_medida
-            """;
-            Ingrediente ingrediente = entityManager.createQuery(jpql, Ingrediente.class)
-                    .setParameter("nombre", nuevoIngrediente.getNombre())
-                    .setParameter("stock", nuevoIngrediente.getStock())
-                    .setParameter("unidad_medida", nuevoIngrediente.getUnidad_medida())
-                    .getSingleResult();
-            
+    try {
+        Ingrediente managedIngrediente = entityManager.merge(ingrediente);
+        entityManager.remove(managedIngrediente);
+        entityManager.getTransaction().commit();
         
-            entityManager.remove(ingrediente);
-            entityManager.getTransaction().commit();
-        
-        } catch (NoResultException e) {
-            System.out.println("No se encontró el Ingrediente para eliminar.");
-            entityManager.getTransaction().rollback();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
-            throw e;
-        } finally {
-            entityManager.close();
-        }
+    } catch (Exception e) {
+        entityManager.getTransaction().rollback();
+        throw e;
+    } finally {
+        entityManager.close();
     }
+}
     
     
     
 
+        @Override
     public List<Ingrediente> mostrarListaIngredientes() {
         
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
@@ -81,54 +74,56 @@ public class IngredientesDAO {
     
     
     
-    public void actualizarIngrediente(NuevoIngredienteDTO nuevoIngredienteDTO, double cantidad) {
-    EntityManager entityManager = ManejadorConexiones.getEntityManager();
-    try {
-        entityManager.getTransaction().begin();
-
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Ingrediente> criteriaQuery = criteriaBuilder.createQuery(Ingrediente.class);
-        Root<Ingrediente> ingredienteRoot = criteriaQuery.from(Ingrediente.class);
-
-        criteriaQuery.select(ingredienteRoot)
-                     .where(criteriaBuilder.and(
-                         criteriaBuilder.equal(ingredienteRoot.get("nombre"), nuevoIngredienteDTO.getNombre()),
-                         criteriaBuilder.equal(ingredienteRoot.get("unidad_medida"), nuevoIngredienteDTO.getUnidad_medida())
-                     ));
-
-        Ingrediente ingrediente = entityManager.createQuery(criteriaQuery)
-                                                 .getResultList()
-                                                 .stream()
-                                                 .findFirst()
-                                                 .orElse(null);
-
-        if (ingrediente != null) {
-            double nuevoStock = ingrediente.getStock() + cantidad;
-            if (nuevoStock >= 0) {
-                
+        @Override
+    public void actualizarIngrediente(NuevoIngredienteDTO nuevoIngredienteDTO, double nuevoStock) {
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        try {
+            entityManager.getTransaction().begin();
             
-            ingrediente.setStock(nuevoStock);
-            entityManager.merge(ingrediente);
-        } else {
-            System.out.println("No se puede restar más de lo disponible.");
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Ingrediente> criteriaQuery = criteriaBuilder.createQuery(Ingrediente.class);
+            Root<Ingrediente> ingredienteRoot = criteriaQuery.from(Ingrediente.class);
+            
+            criteriaQuery.select(ingredienteRoot)
+                         .where(criteriaBuilder.and(
+                             criteriaBuilder.equal(ingredienteRoot.get("nombre"), nuevoIngredienteDTO.getNombre()),
+                             criteriaBuilder.equal(ingredienteRoot.get("unidad_medida"), nuevoIngredienteDTO.getUnidad_medida())
+                         ));
+            
+            Ingrediente ingrediente = entityManager.createQuery(criteriaQuery)
+                                                   .getResultList()
+                                                   .stream()
+                                                   .findFirst()
+                                                   .orElse(null);
+            
+            if (ingrediente != null) {
+                if (nuevoStock >= 0) {
+                    ingrediente.setStock(nuevoStock);
+                    entityManager.merge(ingrediente);
+                } else {
+                    System.out.println("El stock no puede ser negativo.");
+                }
+            } else {
+                System.out.println("Ingrediente no encontrado para actualizar.");
             }
+            
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
         }
-        
-        entityManager.getTransaction().commit();
-    } catch (Exception e) {
-        if (entityManager.getTransaction().isActive()) {
-            entityManager.getTransaction().rollback();
-        }
-        e.printStackTrace();
-    } finally {
-        entityManager.close();
     }
-}
     
     
     
     
     
+    
+        @Override
         public Ingrediente buscarIngredientePorNombreYUnidad(String nombre, String unidadMedida) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         try {
@@ -149,6 +144,36 @@ public class IngredientesDAO {
     }
     
     
+        
+        
+        @Override
+    public boolean tieneRelacionesActivas(String nombreIngrediente, String unidadMedida) {
+            EntityManager entityManager = ManejadorConexiones.getEntityManager();
+            try {
+                String jpql = """
+                    SELECT COUNT(poi) 
+                    FROM ProductoOcupaIngrediente poi 
+                    JOIN poi.ingrediente i 
+                    WHERE i.nombre = :nombre 
+                    AND i.unidad_medida = :unidad
+                """;
+            
+                Long count = entityManager.createQuery(jpql, Long.class)
+                                         .setParameter("nombre", nombreIngrediente)
+                                         .setParameter("unidad", unidadMedida)
+                                         .getSingleResult();
+                                     
+                return count > 0;
+            
+            } finally {
+                entityManager.close();
+            }
+        }
+
+
+
+        
+        
     
     
     

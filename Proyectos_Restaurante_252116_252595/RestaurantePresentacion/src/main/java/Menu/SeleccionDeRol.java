@@ -10,12 +10,12 @@ import java.awt.Color;
  *
  * @author PC Gamer
  */
-public class InicioSesion extends javax.swing.JFrame {
+public class SeleccionDeRol extends javax.swing.JFrame {
 
     /**
      * Creates new form InicioSesion
      */
-    public InicioSesion() {
+    public SeleccionDeRol() {
         initComponents();
         getContentPane().setBackground(new Color(0xF4FC89));
     }
@@ -45,6 +45,7 @@ public class InicioSesion extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         jLabel3.setText("Selecciona Tu ROL:");
 
+        btnAdministrador.setBackground(new java.awt.Color(72, 170, 246));
         btnAdministrador.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnAdministrador.setText("Administrador");
         btnAdministrador.addActionListener(new java.awt.event.ActionListener() {
@@ -53,6 +54,7 @@ public class InicioSesion extends javax.swing.JFrame {
             }
         });
 
+        btnMesero.setBackground(new java.awt.Color(255, 93, 97));
         btnMesero.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnMesero.setText("Mesero");
         btnMesero.addActionListener(new java.awt.event.ActionListener() {
@@ -133,20 +135,21 @@ public class InicioSesion extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionDeRol.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionDeRol.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionDeRol.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionDeRol.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InicioSesion().setVisible(true);
+                new SeleccionDeRol().setVisible(true);
             }
         });
     }
