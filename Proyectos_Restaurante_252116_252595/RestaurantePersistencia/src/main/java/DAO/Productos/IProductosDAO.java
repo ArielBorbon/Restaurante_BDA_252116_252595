@@ -41,5 +41,5 @@ public interface IProductosDAO {
     
     List<Producto> filtrarPorNombreProductoTodos(String nombreFiltro);
     
-    
+    public void habilitarProducto(NuevoProductoDTO productoAHabilitar);
 }

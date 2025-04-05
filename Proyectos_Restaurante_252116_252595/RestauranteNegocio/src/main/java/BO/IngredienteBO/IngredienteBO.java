@@ -181,6 +181,15 @@ public class IngredienteBO implements IIngredienteBO {
             throw new NegocioException("No se pudo verificar si el ingrediente está en uso.");
         }
     }
+        
+        
+        
+        
+     @Override
+        public List<Ingrediente> obtenerIngredientesPorNombreProductoBO(String nombreProducto){
+            return ingredienteDAO.obtenerIngredientesPorNombreProducto(nombreProducto);
+        }
+        
 }
         
         

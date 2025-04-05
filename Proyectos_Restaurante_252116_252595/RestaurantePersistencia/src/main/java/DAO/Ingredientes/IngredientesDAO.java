@@ -173,7 +173,27 @@ public class IngredientesDAO implements IIngredientesDAO {
 
 
         
-        
+        @Override
+        public List<Ingrediente> obtenerIngredientesPorNombreProducto(String nombreProducto) {
+    EntityManager entityManager = ManejadorConexiones.getEntityManager();
+
+    try {
+        String jpql = """
+            SELECT poi.ingrediente
+            FROM ProductoOcupaIngrediente poi
+            WHERE poi.producto.nombre = :nombreProducto
+        """;
+
+        TypedQuery<Ingrediente> query = entityManager.createQuery(jpql, Ingrediente.class);
+        query.setParameter("nombreProducto", nombreProducto);
+
+        return query.getResultList();
+
+    } finally {
+        entityManager.close();
+    }
+}
+
     
     
     

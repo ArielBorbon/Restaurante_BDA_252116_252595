@@ -26,4 +26,6 @@ public interface IIngredienteBO {
     Ingrediente buscarIngredientePorNombreYUnidadBO(String nombre, String unidadMedida) throws Exception;
     
     boolean tieneRelacionesActivasBO(String nombre, String unidadMedida) throws NegocioException;
+    
+    public List<Ingrediente> obtenerIngredientesPorNombreProductoBO(String nombreProducto);
 }

@@ -1,31 +1,33 @@
-///*
-// * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-// * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
-// */
-//package DAO.Productos;
-//
-//import DAO.Ingredientes.IngredientesDAO;
-//import DTOS.Ingredientes.NuevoIngredienteDTO;
-//import DTOS.Productos.NuevoProductoDTO;
-//import DTOS.Productos.NuevoProductoOcupaIngredienteDTO;
-//import Entidades.Ingredientes.Ingrediente;
-//import Entidades.Productos.Estado_Producto;
-//import Entidades.Productos.Producto;
-//import Entidades.Productos.ProductoOcupaIngrediente;
-//import Entidades.Productos.Tipo_Producto;
-//import java.util.ArrayList;
-//import java.util.List;
-//import org.junit.jupiter.api.Test;
-//import static org.junit.jupiter.api.Assertions.*;
-//
-///**
-// *
-// * @author rayoa
-// */
-//public class ProductosDAOTest {
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
+ */
+package DAO.Productos;
+
+import DAO.Ingredientes.IngredientesDAO;
+import DTOS.Ingredientes.NuevoIngredienteDTO;
+import DTOS.Productos.NuevoProductoDTO;
+import DTOS.Productos.NuevoProductoOcupaIngredienteDTO;
+import Entidades.Ingredientes.Ingrediente;
+import Entidades.Productos.Estado_Producto;
+import Entidades.Productos.Producto;
+import Entidades.Productos.ProductoOcupaIngrediente;
+import Entidades.Productos.Tipo_Producto;
+import ManejadorConexiones.ManejadorConexiones;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ *
+ * @author rayoa
+ */
+public class ProductosDAOTest {
 //    
-//    public ProductosDAOTest() {
-//    }
+    public ProductosDAOTest() {
+    }
 //
 //    @org.junit.jupiter.api.BeforeAll
 //    public static void setUpClass() throws Exception {
@@ -167,6 +169,57 @@
 ////        
 ////        
 ////        
+
+
+
+//@Test
+//public void testHabilitarProducto() {
+//    EntityManager entityManager = ManejadorConexiones.getEntityManager();
+//    entityManager.getTransaction().begin();
+//
+//    Producto producto = new Producto();
+//    producto.setNombre("Producto Test Habilitar");
+//    producto.setPrecio(19.99);
+//    producto.setTipo(Tipo_Producto.ENTRADA); // Usa un tipo existente
+//    producto.setEstado(Estado_Producto.DESHABILITADO);
+//    entityManager.persist(producto);
+//    entityManager.getTransaction().commit();
+//    entityManager.close();
+//
+//
+//    NuevoProductoDTO productoDTO = new NuevoProductoDTO();
+//    productoDTO.setNombre("Producto Test Habilitar");
+//    productoDTO.setPrecio(19.99);
+//    productoDTO.setTipo(Tipo_Producto.ENTRADA);
+//
+//    // Ejecutar método que queremos probar
+//    ProductosDAO productoDAO = new ProductosDAO();
+//    productoDAO.habilitarProducto(productoDTO);
+//
+//
+//    EntityManager em = ManejadorConexiones.getEntityManager();
+//    Producto productoVerificado = em.createQuery("""
+//            SELECT p FROM Producto p 
+//            WHERE p.nombre = :nombre AND p.precio = :precio AND p.tipo = :tipo
+//            """, Producto.class)
+//        .setParameter("nombre", productoDTO.getNombre())
+//        .setParameter("precio", productoDTO.getPrecio())
+//        .setParameter("tipo", productoDTO.getTipo())
+//        .getSingleResult();
+//
+//    em.close();
+//    assertEquals(Estado_Producto.HABILITADO, productoVerificado.getEstado());
+//}
+
+
+
+
+
+
+
+
+
+
 ////    }
 //
 //    /**
@@ -341,5 +394,6 @@
 //    assertFalse(contieneAzucar, "El producto ya no debe contener Azúcar");
 //}
 //
-//}
+}
+
 
