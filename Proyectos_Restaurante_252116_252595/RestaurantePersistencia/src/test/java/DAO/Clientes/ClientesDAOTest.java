@@ -122,5 +122,9 @@ public class ClientesDAOTest {
 //     */
 //    @Test
 //    public void testMostrarListaClientes() {
-//    }  
+//        ClientesDAO clientesDAO = new ClientesDAO();
+//        int NUMERO_DE_CLIENTES_ESPERADOS = 2;
+//        List<Cliente> clientes = clientesDAO.mostrarListaClientes();
+//        assertEquals(NUMERO_DE_CLIENTES_ESPERADOS, clientes.size());
+//    }
 }

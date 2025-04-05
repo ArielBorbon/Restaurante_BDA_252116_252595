@@ -41,7 +41,7 @@ public class ClientesDAO implements IClientesDAO {
                 break;
 
             case 2: // ClienteCorporativo
-                
+               
 
             default: // Cliente normal
                 cliente = new Cliente();
@@ -106,7 +106,7 @@ public class ClientesDAO implements IClientesDAO {
             CriteriaQuery<Cliente> query = cb.createQuery(Cliente.class);
             Root<Cliente> root = query.from(Cliente.class);
 
-            Predicate nombrePredicate = cb.equal(root.get("Telefono"), filtroNumero);
+            Predicate nombrePredicate = cb.equal(root.get("numTelefono"), filtroNumero);
             query.select(root).where(cb.and(nombrePredicate));
 
             return entityManager.createQuery(query).getSingleResult();
