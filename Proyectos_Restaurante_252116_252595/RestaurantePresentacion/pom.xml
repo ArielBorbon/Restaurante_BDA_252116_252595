@@ -14,10 +14,26 @@
             <artifactId>AbsoluteLayout</artifactId>
             <version>RELEASE230</version>
         </dependency>
+        <dependency>
+            <groupId>itson</groupId>
+            <artifactId>SistemaVideojuegosNegocio</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <exec.mainClass>com.mycompany.restaurantepresentacion.RestaurantePresentacion</exec.mainClass>
     </properties>
+    
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+            </resource>
+        </resources>
+    </build>
+    
+    
+    
 </project>
