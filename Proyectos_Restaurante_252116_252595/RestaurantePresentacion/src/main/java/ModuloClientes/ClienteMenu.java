@@ -119,7 +119,7 @@ public class ClienteMenu extends JFrame {
         btnAgregar.setBackground(new Color(50, 205, 50));
         btnAgregar.setForeground(Color.WHITE);
         btnAgregar.addActionListener(e -> {
-            new ClienteAgregar();
+            // Abrir ClienteAgregar
         });
 
         JButton btnSalir = new JButton("Salir");

@@ -7,7 +7,6 @@ package DAO.Clientes;
 import DTOS.Clientes.NuevoClienteDTO;
 import Entidades.Clientes.Cliente;
 import Entidades.Clientes.ClientesFrecuentes;
-import InterfazDAO.Clientes.IClientesDAO;
 import ManejadorConexiones.ManejadorConexiones;
 import java.util.List;
 import javax.persistence.EntityManager;

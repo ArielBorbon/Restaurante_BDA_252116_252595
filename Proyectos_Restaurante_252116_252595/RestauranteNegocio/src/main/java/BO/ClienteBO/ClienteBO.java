@@ -13,7 +13,7 @@ import Entidades.Clientes.Cliente;
  *
  * @author Alberto Jimenez
  */
-public class ClienteBO {
+public class ClienteBO implements IClienteBO{
 
     private ClientesDAO clientesDAO;
 
