@@ -29,31 +29,41 @@ public class ProductoBO implements IProductoBO {
     }
     
     
+    @Override
     public List<Producto> mostrarListaProductosDisponiblesBO(){
         return productoDAO.mostrarListaProductosDisponibles();
     }
     
     
     
+    @Override
     public List<Producto> filtrarPorNombreProductoDisponiblesBO(String nombreFiltro) {
         return productoDAO.filtrarPorNombreProductoDisponibles(nombreFiltro);
     }
     
     
     
+    @Override
     public List<Producto> filtrarPorTipoProductoDisponiblesBO(Tipo_Producto tipoFiltro) {
         return productoDAO.filtrarPorTipoProductoDisponibles(tipoFiltro);
     }
     
     
     
+    @Override
     public List<Producto> filtrarPorNombreYTipoProductoDisponiblesBO(String nombreFiltro, Tipo_Producto tipoFiltro) {
         return productoDAO.filtrarPorNombreYTipoProductoDisponibles(nombreFiltro, tipoFiltro);
+    }
+    
+    @Override
+    public List<Producto> mostrarListaProductosTodosBO(){
+        return productoDAO.mostrarListaProductosTodos();
     }
     
     
     
     
+    @Override
     public Producto registrarProductoBO(NuevoProductoDTO nuevoProducto) throws NegocioException {
 
  
@@ -196,8 +206,24 @@ public class ProductoBO implements IProductoBO {
 
     
     
+    @Override
     public Producto buscarProductoPorNombreBO(String nombre) {
         return productoDAO.buscarProductoPorNombre(nombre);
+    }
+
+    @Override
+    public List<Producto> filtrarPorNombreProductoTodosBO(String nombreFiltro) {
+        return productoDAO.filtrarPorNombreProductoTodos(nombreFiltro);
+    }
+
+    @Override
+    public List<Producto> filtrarPorTipoProductoTodosBO(Tipo_Producto tipoFiltro) {
+        return productoDAO.filtrarPorTipoProductoTodos(tipoFiltro);
+    }
+
+    @Override
+    public List<Producto> filtrarPorNombreYTipoProductoTodosBO(String nombreFiltro, Tipo_Producto tipoFiltro) {
+        return productoDAO.filtrarPorNombreYTipoProductoTodos(nombreFiltro, tipoFiltro);
     }
     
     

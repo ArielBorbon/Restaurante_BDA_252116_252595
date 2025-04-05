@@ -38,6 +38,17 @@ public class ProductosDAO implements IProductosDAO {
 }
     
     
+    public List<Producto> mostrarListaProductosTodos() {
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        
+        String jpql = "SELECT p FROM Producto p";
+        
+        TypedQuery<Producto> query = entityManager.createQuery(jpql, Producto.class); 
+        return query.getResultList();
+    }
+    
+    
+    
     
     
     @Override
@@ -50,6 +61,19 @@ public class ProductosDAO implements IProductosDAO {
         TypedQuery<Producto> query = entityManager.createQuery(jpqlQuery, Producto.class);
         query.setParameter("nombreFiltrador", "%" + nombreFiltro + "%");
         query.setParameter("estado", Estado_Producto.HABILITADO);
+        return query.getResultList();
+    }
+    
+    
+    
+    @Override
+    public List<Producto> filtrarPorNombreProductoTodos(String nombreFiltro){
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        
+        String jpqlQuery = "SELECT p FROM Producto p WHERE p.nombre LIKE :nombreFiltrador";
+        
+        TypedQuery<Producto> query = entityManager.createQuery(jpqlQuery, Producto.class);
+        query.setParameter("nombreFiltrador", "%" + nombreFiltro + "%");
         return query.getResultList();
     }
     
@@ -70,12 +94,38 @@ public class ProductosDAO implements IProductosDAO {
         return query.getResultList();
     }
     
+
     
+        @Override
+    public List<Producto> filtrarPorTipoProductoTodos(Tipo_Producto tipoFiltro) {
+        
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        
+        String jpqlQuery = "SELECT p FROM Producto p WHERE p.tipo = :tipoFiltrador";
+        
+        TypedQuery<Producto> query = entityManager.createQuery(jpqlQuery, Producto.class);
+        query.setParameter("tipoFiltrador", tipoFiltro);
+        return query.getResultList();
+    }
     
     
     
     
     @Override
+    public List<Producto> filtrarPorNombreYTipoProductoTodos(String nombreFiltro, Tipo_Producto tipoFiltro) {
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        
+        String jpqlQuery = "SELECT p FROM Producto p WHERE p.nombre LIKE :nombreFiltrador AND p.tipo = :tipoFiltrador";
+        
+        TypedQuery<Producto> query = entityManager.createQuery(jpqlQuery, Producto.class);
+        query.setParameter("nombreFiltrador", "%" + nombreFiltro + "%");
+        query.setParameter("tipoFiltrador", tipoFiltro);
+        return query.getResultList();
+    }
+    
+    
+    
+            @Override
     public List<Producto> filtrarPorNombreYTipoProductoDisponibles(String nombreFiltro, Tipo_Producto tipoFiltro) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         

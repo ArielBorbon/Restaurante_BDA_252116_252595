@@ -34,4 +34,12 @@ public interface IProductoBO {
     Producto modificarProductoBO(NuevoProductoDTO nuevoProductoDTO, List<NuevoProductoOcupaIngredienteDTO> nuevosIngredientesDTO) throws NegocioException;
     
     Producto buscarProductoPorNombreBO(String nombre);
+    
+    List<Producto> mostrarListaProductosTodosBO();
+    
+    List<Producto> filtrarPorNombreProductoTodosBO(String nombreFiltro);
+    
+    List<Producto> filtrarPorTipoProductoTodosBO(Tipo_Producto tipoFiltro);
+    
+    List<Producto> filtrarPorNombreYTipoProductoTodosBO(String nombreFiltro, Tipo_Producto tipoFiltro);
 }
