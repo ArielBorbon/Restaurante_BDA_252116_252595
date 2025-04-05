@@ -12,6 +12,8 @@ import NegocioException.NegocioException;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -39,12 +41,20 @@ public class FormClientesTabla extends javax.swing.JPanel {
 
         List<Cliente> clientes = clienteBO.obtenerListaClientesBO();
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         for (Cliente c : clientes) {
+
+            String fechaRegistro = "";
+            if (c.getFechaRegistro() != null) {
+                fechaRegistro = sdf.format(c.getFechaRegistro().getTime()); // Formato: YYYY-MM-DD
+            }
+            
             Object[] fila = {
                 c.getNombre(),
                 c.getCorreo(),
                 c.getNumTelefono(),
-                c.getFechaRegistro(),
+                fechaRegistro,
                 (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getPuntos() : "N/A",
                 (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getVisitas() : "N/A",
                 (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getTotalGastado() : "N/A"
@@ -93,39 +103,39 @@ public class FormClientesTabla extends javax.swing.JPanel {
     public JTable getTablabaClientes() {
         return this.jTable1;
     }
-    
+
     public void recargarTabla(List<Cliente> clientesFiltrados) {
-    // Aquí reemplazamos la lógica de recargar la tabla con los clientes filtrados
-    String[] columnas = {
-        "Nombre", "Correo", "Teléfono", "Fecha Registro", "Puntos", "Visitas", "Total Acumulado"
-    };
-    
-    DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0) {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    };
-    
-    // Añadimos las filas basadas en los clientes filtrados
-    for (Cliente c : clientesFiltrados) {
-        Object[] fila = {
-            c.getNombre(),
-            c.getCorreo(),
-            c.getNumTelefono(),
-            c.getFechaRegistro(),
-            // Aquí puedes añadir los puntos, visitas y total acumulado
-            (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getPuntos() : "N/A",
-            (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getVisitas() : "N/A",
-            (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getTotalGastado() : "N/A"
+        // Aquí reemplazamos la lógica de recargar la tabla con los clientes filtrados
+        String[] columnas = {
+            "Nombre", "Correo", "Teléfono", "Fecha Registro", "Puntos", "Visitas", "Total Acumulado"
         };
-        modeloTabla.addRow(fila);
+
+        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        // Añadimos las filas basadas en los clientes filtrados
+        for (Cliente c : clientesFiltrados) {
+            Object[] fila = {
+                c.getNombre(),
+                c.getCorreo(),
+                c.getNumTelefono(),
+                c.getFechaRegistro(),
+                // Aquí puedes añadir los puntos, visitas y total acumulado
+                (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getPuntos() : "N/A",
+                (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getVisitas() : "N/A",
+                (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getTotalGastado() : "N/A"
+            };
+            modeloTabla.addRow(fila);
+        }
+
+        // Establece el modelo de la tabla para mostrar los clientes
+        jTable1.setModel(modeloTabla);
     }
-    
-    // Establece el modelo de la tabla para mostrar los clientes
-    jTable1.setModel(modeloTabla);
-}
-    
+
     public void recargarTabla() throws NegocioException {
         cargarClientesEnTabla();
     }
