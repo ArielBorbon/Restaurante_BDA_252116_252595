@@ -8,12 +8,13 @@ import DAO.Clientes.ClientesDAO;
 import DTOS.Clientes.NuevoClienteDTO;
 import NegocioException.NegocioException;
 import Entidades.Clientes.Cliente;
+import java.util.List;
 
 /**
  *
  * @author Alberto Jimenez
  */
-public class ClienteBO implements IClienteBO{
+public class ClienteBO implements IClienteBO {
 
     private ClientesDAO clientesDAO;
 
@@ -28,23 +29,23 @@ public class ClienteBO implements IClienteBO{
         if (nuevoClienteDTO == null) {
             throw new NegocioException("El DTO no puede ser nulo");
         }
-        
+
         if (nuevoClienteDTO.getNombre() == null) {
             throw new NegocioException("El nombre no puede ser nulo");
         }
-        
+
         if (nuevoClienteDTO.getNumTelefono() == null) {
             throw new NegocioException("El numero de telefono no puede ser nulo");
         }
-        
+
         if (nuevoClienteDTO.getFechaRegistro() == null) {
             throw new NegocioException("La fecha de registro no puede ser nulo");
         }
-        
+
         if (!String.valueOf(nuevoClienteDTO.getNumTelefono()).matches("\\d+")) {
             throw new NegocioException("El numero de telefono solo debe contener dígitos");
         }
-        
+
         Cliente telefonoExistente = clientesDAO.buscarPorTelefono(nuevoClienteDTO.getNumTelefono());
 
         if (telefonoExistente != null) {
@@ -70,5 +71,14 @@ public class ClienteBO implements IClienteBO{
         }
 
         return cliente;
+    }
+
+    @Override
+    public List<Cliente> obtenerListaClientesBO() {
+        return clientesDAO.mostrarListaClientes();
+    }
+
+    public List<Cliente> filtrarClientes(String nombre, Integer telefono, String correo) throws NegocioException {
+        return clientesDAO.filtrarClientes(nombre, telefono, correo);
     }
 }

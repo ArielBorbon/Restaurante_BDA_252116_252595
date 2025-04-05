@@ -7,6 +7,7 @@ package BO.ClienteBO;
 import DTOS.Clientes.NuevoClienteDTO;
 import Entidades.Clientes.Cliente;
 import NegocioException.NegocioException;
+import java.util.List;
 /**
  *
  * @author Alberto Jimenez
@@ -14,4 +15,5 @@ import NegocioException.NegocioException;
 public interface IClienteBO {
     public Cliente registrarClienteBO(NuevoClienteDTO nuevoClienteDTO) throws NegocioException;
     public Cliente buscarPorTelefono(Integer filtroNumero) throws NegocioException;
+    public List<Cliente> obtenerListaClientesBO();
 }

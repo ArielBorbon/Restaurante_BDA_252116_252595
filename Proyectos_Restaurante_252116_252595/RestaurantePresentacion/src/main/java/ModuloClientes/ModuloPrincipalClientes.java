@@ -3,35 +3,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ModuloClientes;
+
+import BO.ClienteBO.ClienteBO;
+import Entidades.Clientes.Cliente;
+import Fabricas.FabricaClientes;
 import NegocioException.NegocioException;
-import java.awt.Dimension;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
+
 /**
  *
  * @author Alberto Jimenez
  */
 public class ModuloPrincipalClientes extends javax.swing.JFrame {
+
     private final FormClientesTabla formClientesTabla = new FormClientesTabla();
+
     /**
      * Creates new form ModuloPrincipalClientes
      */
-    public ModuloPrincipalClientes() throws NegocioException{
+    public ModuloPrincipalClientes() throws NegocioException {
         initComponents();
 //        formClientesTabla.setVisible(true);
 //        this.pnlFormClientes.add(formClientesTabla);
@@ -60,7 +56,7 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
         btnReporte = new javax.swing.JButton();
         pnlFormClientes = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Modulo Cliente");
         jLabel1.setFont(new Font("Arial", Font.BOLD, 32));
@@ -78,6 +74,11 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
         btnFiltro.setBackground(new Color(162, 132, 94));
         btnFiltro.setForeground(Color.WHITE);
         btnFiltro.setFont(new Font("Arial", Font.BOLD, 16));
+        btnFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltroActionPerformed(evt);
+            }
+        });
 
         btnAgregarCliente.setText("Agregar Cliente");
         btnAgregarCliente.setBackground(new Color(52, 199, 89));
@@ -93,6 +94,11 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
         btnSalir.setBackground(new Color(236, 34, 31));
         btnSalir.setForeground(Color.WHITE);
         btnSalir.setFont(new Font("Arial", Font.BOLD, 16));
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         btnReporte.setText("REPORTE CLIENTES FRECUENTES");
         btnReporte.setBackground(new Color(50, 173, 230));
@@ -175,9 +181,45 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarClienteActionPerformed
-        ClienteAgregar clienteAgregar = new ClienteAgregar();
+        ClienteAgregar clienteAgregar = new ClienteAgregar(formClientesTabla);
         clienteAgregar.setVisible(true);
     }//GEN-LAST:event_btnAgregarClienteActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
+        try {
+            ClienteBO clienteBO = FabricaClientes.crearClienteBO();
+
+            String nombreFiltro = filtroNombre.getText();
+            String telefonoFiltro = filtroTelefono.getText();
+            String correoFiltro = filtroCorreo.getText();
+
+            Integer telefonoFiltroInteger = null;
+            if (!telefonoFiltro.isEmpty()) {
+                try {
+                    telefonoFiltroInteger = Integer.parseInt(telefonoFiltro); 
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "El número de teléfono no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            if (nombreFiltro.isEmpty() && telefonoFiltro.isEmpty() && correoFiltro.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese al menos un criterio de búsqueda.");
+                return;
+            }
+
+            List<Cliente> clientesFiltrados = clienteBO.filtrarClientes(nombreFiltro, telefonoFiltroInteger, correoFiltro);
+
+            formClientesTabla.recargarTabla();
+            
+        } catch (NegocioException ex) {
+            Logger.getLogger(ModuloPrincipalClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnFiltroActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarCliente;

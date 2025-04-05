@@ -3,35 +3,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ModuloClientes;
-import java.awt.Dimension;
-import java.awt.BorderLayout;
+
+import BO.ClienteBO.ClienteBO;
+import DTOS.Clientes.NuevoClienteDTO;
+import Fabricas.FabricaClientes;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Alberto Jimenez
  */
 public class ClienteAgregar extends javax.swing.JFrame {
 
+    private FormClientesTabla formClientesTabla;
+
     /**
      * Creates new form ClienteAgregar
+     *
+     * @param formClientesTabla
      */
-    public ClienteAgregar() {
+    public ClienteAgregar(FormClientesTabla formClientesTabla) {
         initComponents();
+        this.formClientesTabla = formClientesTabla;
+        getContentPane().setBackground(new Color(0x4dd3e0));
     }
 
     /**
@@ -57,7 +54,7 @@ public class ClienteAgregar extends javax.swing.JFrame {
         btnRegistrarCliente = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Modulo Cliente");
         jLabel1.setFont(new Font("Arial", Font.BOLD, 32));
@@ -81,6 +78,11 @@ public class ClienteAgregar extends javax.swing.JFrame {
         btnRegistrarCliente.setBackground(new Color(52, 199, 89));
         btnRegistrarCliente.setForeground(Color.WHITE);
         btnRegistrarCliente.setFont(new Font("Arial", Font.BOLD, 16));
+        btnRegistrarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarClienteActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("Salir");
         btnSalir.setBackground(new Color(236, 34, 31));
@@ -167,6 +169,59 @@ public class ClienteAgregar extends javax.swing.JFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnRegistrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarClienteActionPerformed
+        String nombre = agregarNombre.getText().trim();
+        String apellidoP = agregarApellidoPaterno.getText().trim();
+        String apellidoM = agregarApellidoMaterno.getText().trim();
+        String correo = agregarCorreo.getText().trim();
+        String numTelefonoTexto = agregarTelefono.getText().trim();
+
+        if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || numTelefonoTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Por favor, complete todos los campos.",
+                    "Campos incompletos",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        String nombreCompleto = nombre + " " + apellidoP + " " + apellidoM;
+        
+        Integer numTelefono = Integer.parseInt(numTelefonoTexto);
+
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "¿Deseas registrar al cliente " + nombre + " " + apellidoP + " " + apellidoM + "?",
+                "Confirmar Registro",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                NuevoClienteDTO nuevoClienteDTO = new NuevoClienteDTO();
+                nuevoClienteDTO.setNombre(nombreCompleto);
+                nuevoClienteDTO.setCorreo(correo);
+                nuevoClienteDTO.setNumTelefono(numTelefono);
+                nuevoClienteDTO.setFechaRegistro(Calendar.getInstance());
+
+                ClienteBO clienteBO = FabricaClientes.crearClienteBO();
+                clienteBO.registrarClienteBO(nuevoClienteDTO);
+
+                JOptionPane.showMessageDialog(this,
+                        "Cliente Registrado Exitosamente",
+                        "Exito",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+
+                formClientesTabla.recargarTabla();
+                this.dispose();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado al registrar el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Registro cancelado.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnRegistrarClienteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
