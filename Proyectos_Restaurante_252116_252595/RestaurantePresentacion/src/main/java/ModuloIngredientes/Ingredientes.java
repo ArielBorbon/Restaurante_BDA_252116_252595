@@ -4,6 +4,12 @@
  */
 package ModuloIngredientes;
 
+import BO.IngredienteBO.IngredienteBO;
+import Fabricas.FabricaIngredientes;
+import NegocioException.NegocioException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author PC Gamer
@@ -12,13 +18,18 @@ public class Ingredientes extends javax.swing.JFrame {
     private FomIngredientesTabla formTabla =  new FomIngredientesTabla();
     /**
      * Creates new form Ingredientes
+     * @throws NegocioException.NegocioException
      */
-    public Ingredientes() {
+    public Ingredientes() throws NegocioException {
         initComponents();  
         formTabla.setVisible(true);
         this.pnlFormIngredientes.add(formTabla);
     }
 
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -122,7 +133,11 @@ public class Ingredientes extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Ingredientes().setVisible(true);
+                try {
+                    new Ingredientes().setVisible(true);
+                } catch (NegocioException ex) {
+                    Logger.getLogger(Ingredientes.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

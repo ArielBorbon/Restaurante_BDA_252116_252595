@@ -4,6 +4,13 @@
  */
 package ModuloIngredientes;
 
+import BO.IngredienteBO.IngredienteBO;
+import Entidades.Ingredientes.Ingrediente;
+import Fabricas.FabricaIngredientes;
+import NegocioException.NegocioException;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author PC Gamer
@@ -13,10 +20,32 @@ public class FomIngredientesTabla extends javax.swing.JPanel {
     /**
      * Creates new form FomIngredientesTabla
      */
-    public FomIngredientesTabla() {
+    public FomIngredientesTabla() throws NegocioException {
         initComponents();
+        cargarIngredientesEnTabla();
     }
 
+private void cargarIngredientesEnTabla() throws NegocioException {
+    
+    IngredienteBO ingredienteBO = FabricaIngredientes.crearIngredienteBO();
+    String[] columnas = {"Nombre", "Unidad de Medida", "Stock"};
+    DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0); // 0 filas inicialmente
+
+    // Obtener los ingredientes desde el BO
+    List<Ingrediente> ingredientes = ingredienteBO.obtenerListaIngredientesBO();
+
+    for (Ingrediente ing : ingredientes) {
+        Object[] fila = {
+            ing.getNombre(),
+            ing.getUnidad_medida(),
+            ing.getStock()
+        };
+        modeloTabla.addRow(fila);
+    }
+
+    // Asignar el modelo a la tabla
+    tblIngredientes.setModel(modeloTabla);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
