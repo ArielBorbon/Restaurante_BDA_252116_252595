@@ -18,14 +18,14 @@ import javax.swing.JOptionPane;
  */
 public class ClienteAgregar extends javax.swing.JFrame {
 
-    private FormClientesTabla formClientesTabla;
+    private FormClientesTablas formClientesTabla;
 
     /**
      * Creates new form ClienteAgregar
      *
      * @param formClientesTabla
      */
-    public ClienteAgregar(FormClientesTabla formClientesTabla) {
+    public ClienteAgregar(FormClientesTablas formClientesTabla) {
         initComponents();
         this.formClientesTabla = formClientesTabla;
         getContentPane().setBackground(new Color(0x4dd3e0));

@@ -29,9 +29,9 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
      */
     public ModuloPrincipalClientes() throws NegocioException {
         initComponents();
-//        formClientesTabla.setVisible(true);
-//        this.pnlFormClientes.add(formClientesTabla);
-//        getContentPane().setBackground(new Color(0x4dd3e0));
+        formClientesTabla.setVisible(true);
+        this.pnlFormClientes.add(formClientesTabla);
+        getContentPane().setBackground(new Color(0x4dd3e0));
     }
 
     /**
