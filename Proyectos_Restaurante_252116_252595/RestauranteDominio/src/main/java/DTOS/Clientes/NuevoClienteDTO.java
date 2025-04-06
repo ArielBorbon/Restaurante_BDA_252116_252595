@@ -13,21 +13,21 @@ import java.util.Calendar;
 public class NuevoClienteDTO {
     private String nombre;
     private String correo;
-    private Integer numTelefono;
+    private String numTelefono;
     private Calendar fechaRegistro;
     private int tipo = 1;
     
     public NuevoClienteDTO() {
     }
 
-    public NuevoClienteDTO(String nombre, String correo, Integer numTelefono, Calendar fechaRegistro) {
+    public NuevoClienteDTO(String nombre, String correo, String numTelefono, Calendar fechaRegistro) {
         this.nombre = nombre;
         this.correo = correo;
         this.numTelefono = numTelefono;
         this.fechaRegistro = fechaRegistro;
     }
 
-    public NuevoClienteDTO(String nombre, Integer numTelefono, Calendar fechaRegistro) {
+    public NuevoClienteDTO(String nombre, String numTelefono, Calendar fechaRegistro) {
         this.nombre = nombre;
         this.numTelefono = numTelefono;
         this.fechaRegistro = fechaRegistro;
@@ -49,11 +49,11 @@ public class NuevoClienteDTO {
         this.correo = correo;
     }
 
-    public Integer getNumTelefono() {
+    public String getNumTelefono() {
         return numTelefono;
     }
 
-    public void setNumTelefono(Integer numTelefono) {
+    public void setNumTelefono(String numTelefono) {
         this.numTelefono = numTelefono;
     }
 

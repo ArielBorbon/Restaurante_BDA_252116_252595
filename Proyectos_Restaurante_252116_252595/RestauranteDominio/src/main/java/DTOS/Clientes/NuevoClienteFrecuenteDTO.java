@@ -26,14 +26,14 @@ public class NuevoClienteFrecuenteDTO extends Cliente{
         this.puntos = puntos;
     }
 
-    public NuevoClienteFrecuenteDTO(Long id, double totalGastado, Integer visitas, Integer puntos, String nombre, String correo, Integer numTelefono, Calendar fechaRegistro) {
+    public NuevoClienteFrecuenteDTO(Long id, double totalGastado, Integer visitas, Integer puntos, String nombre, String correo, String numTelefono, Calendar fechaRegistro) {
         super(nombre, correo, numTelefono, fechaRegistro);
         this.totalGastado = totalGastado;
         this.visitas = visitas;
         this.puntos = puntos;
     }
 
-    public NuevoClienteFrecuenteDTO(Long id, double totalGastado, Integer visitas, Integer puntos, String nombre, Integer numTelefono, Calendar fechaRegistro) {
+    public NuevoClienteFrecuenteDTO(Long id, double totalGastado, Integer visitas, Integer puntos, String nombre, String numTelefono, Calendar fechaRegistro) {
         super(nombre, numTelefono, fechaRegistro);
         this.totalGastado = totalGastado;
         this.visitas = visitas;

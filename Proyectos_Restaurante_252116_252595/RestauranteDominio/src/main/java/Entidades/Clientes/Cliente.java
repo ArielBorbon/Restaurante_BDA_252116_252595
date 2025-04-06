@@ -42,7 +42,7 @@ public class Cliente implements Serializable {
     private String correo;
     
     @Column (name = "Numero_Telefono", unique = true, nullable = false)
-    private Integer numTelefono;
+    private String numTelefono;
     
     @Temporal (TemporalType.DATE)
     @Column (name = "Fecha_Registro", nullable = false)
@@ -54,14 +54,14 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(String nombre, String correo, Integer numTelefono, Calendar fechaRegistro) {
+    public Cliente(String nombre, String correo, String numTelefono, Calendar fechaRegistro) {
         this.nombre = nombre;
         this.correo = correo;
         this.numTelefono = numTelefono;
         this.fechaRegistro = fechaRegistro;
     }
 
-    public Cliente(String nombre, Integer numTelefono, Calendar fechaRegistro) {
+    public Cliente(String nombre, String numTelefono, Calendar fechaRegistro) {
         this.nombre = nombre;
         this.numTelefono = numTelefono;
         this.fechaRegistro = fechaRegistro;
@@ -91,11 +91,11 @@ public class Cliente implements Serializable {
         this.correo = correo;
     }
 
-    public int getNumTelefono() {
+    public String getNumTelefono() {
         return numTelefono;
     }
 
-    public void setNumTelefono(Integer numTelefono) {
+    public void setNumTelefono(String numTelefono) {
         this.numTelefono = numTelefono;
     }
 

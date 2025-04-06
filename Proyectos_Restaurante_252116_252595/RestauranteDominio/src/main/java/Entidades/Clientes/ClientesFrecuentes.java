@@ -45,14 +45,14 @@ public class ClientesFrecuentes extends Cliente implements Serializable{
         this.puntos = puntos;
     }
     
-    public ClientesFrecuentes(double totalGastado, Integer visitas, Integer puntos, String nombre, String correo, int numTelefono, Calendar fechaRegistro) {
+    public ClientesFrecuentes(double totalGastado, Integer visitas, Integer puntos, String nombre, String correo, String numTelefono, Calendar fechaRegistro) {
         super(nombre, correo, numTelefono, fechaRegistro);
         this.totalGastado = totalGastado;
         this.visitas = visitas;
         this.puntos = puntos;
     }
 
-    public ClientesFrecuentes(double totalGastado, Integer visitas, Integer puntos, String nombre, int numTelefono, Calendar fechaRegistro) {
+    public ClientesFrecuentes(double totalGastado, Integer visitas, Integer puntos, String nombre, String numTelefono, Calendar fechaRegistro) {
         super(nombre, numTelefono, fechaRegistro);
         this.totalGastado = totalGastado;
         this.visitas = visitas;

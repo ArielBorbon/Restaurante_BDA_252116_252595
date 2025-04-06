@@ -70,7 +70,7 @@ public class ClientesDAO implements IClientesDAO {
     }
 
     @Override
-    public List<Cliente> filtrarPorTelefono(Integer filtroNumero) {
+    public List<Cliente> filtrarPorTelefono(String filtroNumero) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         String jpqlQuery = """
             SELECT c FROM Cliente c WHERE c.numTelefono LIKE :filtroNumero
@@ -100,7 +100,7 @@ public class ClientesDAO implements IClientesDAO {
     }
 
     @Override
-    public Cliente buscarPorTelefono(Integer filtroNumero) {
+    public Cliente buscarPorTelefono(String filtroNumero) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         try {
             CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -119,7 +119,7 @@ public class ClientesDAO implements IClientesDAO {
     }
 
     @Override
-    public List<Cliente> filtrarClientes(String nombre, Integer telefono, String correo) {
+    public List<Cliente> filtrarClientes(String nombre, String telefono, String correo) {
         EntityManager em = ManejadorConexiones.getEntityManager();
 
         StringBuilder jpql = new StringBuilder("SELECT c FROM Cliente c WHERE 1=1");

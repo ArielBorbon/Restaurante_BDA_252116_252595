@@ -15,9 +15,9 @@ import java.util.List;
 public interface IClientesDAO {
     public abstract Cliente registrarCliente(NuevoClienteDTO nuevoClienteDTO);
     public abstract List<Cliente> filtrarPorNombre(String filtroNombre);
-    public abstract List<Cliente> filtrarPorTelefono(Integer filtroNumero);
+    public abstract List<Cliente> filtrarPorTelefono(String filtroNumero);
     public abstract List<Cliente> filtrarPorCorreo(String filtroCorreo);
     public abstract List<Cliente> mostrarListaClientes();
-    public abstract Cliente buscarPorTelefono(Integer filtroNumero);
-    public abstract List<Cliente> filtrarClientes(String nombre, Integer telefono, String correo);
+    public abstract Cliente buscarPorTelefono(String filtroNumero);
+    public abstract List<Cliente> filtrarClientes(String nombre, String telefono, String correo);
 }

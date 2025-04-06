@@ -184,34 +184,19 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
         try {
             ClienteBO clienteBO = FabricaClientes.crearClienteBO();
 
-            // Obtiene los filtros
             String nombreFiltro = filtroNombre.getText();
             String telefonoFiltro = filtroTelefono.getText();
-            String correoFiltro = filtroCorreo.getText();
+            String correoFiltro = filtroCorreo.getText();            
 
-            // Convierte teléfono a Integer, si es posible
-            Integer telefonoFiltroInteger = null;
-            if (!telefonoFiltro.isEmpty()) {
-                try {
-                    telefonoFiltroInteger = Integer.parseInt(telefonoFiltro);
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this, "El número de teléfono no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            }
-
-            // Validación: Si todos los campos están vacíos, muestra mensaje
             if (nombreFiltro.isEmpty() && telefonoFiltro.isEmpty() && correoFiltro.isEmpty()) {
                 formClientesTabla.recargarTabla();
             }
 
-            // Llama a filtrarClientes pasando solo los valores que no son vacíos
             List<Cliente> clientesFiltrados = clienteBO.filtrarClientes(
                     nombreFiltro.isEmpty() ? null : nombreFiltro,
-                    telefonoFiltro.isEmpty() ? null : telefonoFiltroInteger,
+                    telefonoFiltro.isEmpty() ? null : telefonoFiltro,
                     correoFiltro.isEmpty() ? null : correoFiltro);
 
-            // Llama a recargarTabla y pasa los clientes filtrados
             formClientesTabla.recargarTabla(clientesFiltrados);
 
         } catch (NegocioException ex) {

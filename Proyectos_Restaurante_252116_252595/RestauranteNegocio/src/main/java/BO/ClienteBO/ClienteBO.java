@@ -25,6 +25,7 @@ public class ClienteBO implements IClienteBO {
         this.clientesDAO = clientesDAO;
     }
 
+    @Override
     public Cliente registrarClienteBO(NuevoClienteDTO nuevoClienteDTO) throws NegocioException {
         if (nuevoClienteDTO == null) {
             throw new NegocioException("El DTO no puede ser nulo");
@@ -55,7 +56,8 @@ public class ClienteBO implements IClienteBO {
         return clientesDAO.registrarCliente(nuevoClienteDTO);
     }
 
-    public Cliente buscarPorTelefono(Integer filtroNumero) throws NegocioException {
+    @Override
+    public Cliente buscarPorTelefono(String filtroNumero) throws NegocioException {
         if (filtroNumero == null) {
             throw new NegocioException("El número de teléfono no puede ser nulo.");
         }
@@ -78,7 +80,7 @@ public class ClienteBO implements IClienteBO {
         return clientesDAO.mostrarListaClientes();
     }
 
-    public List<Cliente> filtrarClientes(String nombre, Integer telefono, String correo) throws NegocioException {
+    public List<Cliente> filtrarClientes(String nombre, String telefono, String correo) throws NegocioException {
         return clientesDAO.filtrarClientes(nombre, telefono, correo);
     }
 }

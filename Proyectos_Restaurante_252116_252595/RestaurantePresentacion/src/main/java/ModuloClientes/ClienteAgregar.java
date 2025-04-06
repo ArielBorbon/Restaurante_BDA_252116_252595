@@ -175,19 +175,32 @@ public class ClienteAgregar extends javax.swing.JFrame {
         String apellidoP = agregarApellidoPaterno.getText().trim();
         String apellidoM = agregarApellidoMaterno.getText().trim();
         String correo = agregarCorreo.getText().trim();
-        String numTelefonoTexto = agregarTelefono.getText().trim();
+        String numTelefono = agregarTelefono.getText().trim();
 
-        if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || numTelefonoTexto.isEmpty()) {
+        if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || numTelefono.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Por favor, complete todos los campos.",
                     "Campos incompletos",
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
+        if (!numTelefono.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this,
+                    "El número de teléfono solo debe tener números.",
+                    "Número inválido",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (numTelefono.length() != 10) {
+            JOptionPane.showMessageDialog(this,
+                    "El número de teléfono debe tener 10 dígitos.",
+                    "Número inválido",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         String nombreCompleto = nombre + " " + apellidoP + " " + apellidoM;
-        
-        Integer numTelefono = Integer.parseInt(numTelefonoTexto);
 
         int confirmacion = JOptionPane.showConfirmDialog(this,
                 "¿Deseas registrar al cliente " + nombre + " " + apellidoP + " " + apellidoM + "?",
@@ -218,7 +231,7 @@ public class ClienteAgregar extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado al registrar el cliente.", "Error", JOptionPane.ERROR_MESSAGE);
                 ex.printStackTrace();
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Registro cancelado.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnRegistrarClienteActionPerformed
