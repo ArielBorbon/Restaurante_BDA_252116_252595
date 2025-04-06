@@ -4,12 +4,15 @@
  */
 package DTOS.Mesa;
 
+import Entidades.Mesa.EstadoMesa;
+
 /**
  *
  * @author PC Gamer
  */
 public class NuevaMesaDTO {
     private int num_mesa; //probablemente usemos esta con un DAO para identificar cual es la verdadera mesa, DAO. identificarMesaporNum
+    private EstadoMesa estado;
 
     public NuevaMesaDTO() {
     }
@@ -17,6 +20,31 @@ public class NuevaMesaDTO {
     public NuevaMesaDTO(int num_mesa) {
         this.num_mesa = num_mesa;
     }
+
+    public NuevaMesaDTO(int num_mesa, EstadoMesa estado) {
+        this.num_mesa = num_mesa;
+        this.estado = estado;
+    }
+    
+    
+
+    public NuevaMesaDTO(EstadoMesa estado) {
+        this.estado = estado;
+    }
+
+    
+    
+    
+    
+    public EstadoMesa getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoMesa estado) {
+        this.estado = estado;
+    }
+    
+    
     
 
     public int getNum_mesa() {

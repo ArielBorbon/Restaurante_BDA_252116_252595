@@ -8,7 +8,9 @@ import DTOS.Mesa.NuevaMesaDTO;
 import Entidades.Mesa.EstadoMesa;
 import Entidades.Mesa.Mesa;
 import ManejadorConexiones.ManejadorConexiones;
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -18,10 +20,11 @@ import javax.persistence.criteria.Root;
  *
  * @author PC Gamer
  */
-public class MesasDAO {
+public class MesasDAO implements IMesasDAO {
     
     
 
+    @Override
     public Mesa crearMesa(NuevaMesaDTO nuevaMesaDTO) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         entityManager.getTransaction().begin();
@@ -29,6 +32,7 @@ public class MesasDAO {
 
             Mesa mesa = new Mesa();
             mesa.setNum_mesa(nuevaMesaDTO.getNum_mesa());
+            mesa.setEstado(nuevaMesaDTO.getEstado());
 
 
             entityManager.persist(mesa);
@@ -44,6 +48,7 @@ public class MesasDAO {
     
     
 
+    @Override
     public void eliminarMesa(NuevaMesaDTO nuevaMesaDTO) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         entityManager.getTransaction().begin();
@@ -69,6 +74,7 @@ public class MesasDAO {
     
     
     
+    @Override
             public Mesa ocuparMesa(NuevaMesaDTO nuevaMesaDTO) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         entityManager.getTransaction().begin();
@@ -98,6 +104,7 @@ public class MesasDAO {
             
             
 
+    @Override
     public Mesa disponibilizarMesa(NuevaMesaDTO nuevaMesaDTO) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         entityManager.getTransaction().begin();
@@ -126,6 +133,7 @@ public class MesasDAO {
     
     
             
+    @Override
     public Mesa obtenerMesaPorNumMesa(int numMesa) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         try {
@@ -143,7 +151,101 @@ public class MesasDAO {
             entityManager.close();
         }
     }
+          
+    
+    @Override
+    public List<Mesa> obtenerListaMesasDisponibles() {
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Mesa> cq = cb.createQuery(Mesa.class);
+            Root<Mesa> root = cq.from(Mesa.class);
+            cq.select(root).where(cb.equal(root.get("estado"), EstadoMesa.DISPONIBLE));
+        
+            return entityManager.createQuery(cq).getResultList();
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    
+    @Override
+    public List<Mesa> obtenerListaMesasOcupadas() {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Mesa> cq = cb.createQuery(Mesa.class);
+            Root<Mesa> root = cq.from(Mesa.class);
+            cq.select(root).where(cb.equal(root.get("estado"), EstadoMesa.OCUPADA));
+        
+            return em.createQuery(cq).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    
+    
+    
+    
+    @Override
+    public List<Mesa> obtenerListaMesasTodas() {
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Mesa> cq = cb.createQuery(Mesa.class);
+            Root<Mesa> root = cq.from(Mesa.class);
+            cq.select(root);
+        
+            return entityManager.createQuery(cq).getResultList();
+        } finally {
+            entityManager.close();
+        }
+    }
+    
+    
+    @Override
+    public Mesa crearMesaEnOrden() {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+    
+        try {
+            tx.begin();
+        
+         
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Integer> cq = cb.createQuery(Integer.class);
+            Root<Mesa> root = cq.from(Mesa.class);
+            cq.select(cb.max(root.get("num_mesa")));
+        
+            Integer maxNumMesa = em.createQuery(cq).getSingleResult();
+            int nuevoNumMesa = (maxNumMesa != null ? maxNumMesa : 0) + 1;
+         
             
+            Mesa nuevaMesa = new Mesa();
+            nuevaMesa.setNum_mesa(nuevoNumMesa);
+            nuevaMesa.setEstado(EstadoMesa.DISPONIBLE);
+        
+            em.persist(nuevaMesa);
+            tx.commit();
+        
+            return nuevaMesa;
+        } catch (Exception e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
+        }
+}   
+
+    
+    
+    
+    
+    
+    
     
     
     

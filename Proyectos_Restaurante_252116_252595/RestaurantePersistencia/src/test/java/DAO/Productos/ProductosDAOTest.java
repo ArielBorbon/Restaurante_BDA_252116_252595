@@ -171,7 +171,7 @@ public class ProductosDAOTest {
 ////        
 
 
-
+//
 //@Test
 //public void testHabilitarProducto() {
 //    EntityManager entityManager = ManejadorConexiones.getEntityManager();

@@ -37,13 +37,14 @@ public class Mesa implements Serializable {
     private int num_mesa;
 
 
-    
-    @OneToMany(mappedBy = "mesa", cascade = CascadeType.PERSIST)
-    private List<Comanda> comandas = new ArrayList<>();
-
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
     private EstadoMesa estado;
+    
+    
+    @OneToMany(mappedBy = "mesa", cascade = CascadeType.PERSIST)
+    private List<Comanda> comandas = new ArrayList<>();
+    
 
     public Mesa() {
     }
@@ -58,6 +59,13 @@ public class Mesa implements Serializable {
         this.num_mesa = num_mesa;
         this.estado = estado;
     }
+
+    public Mesa(int num_mesa) {
+        this.num_mesa = num_mesa;
+    }
+    
+    
+    
 
     public Long getId() {
         return id;
