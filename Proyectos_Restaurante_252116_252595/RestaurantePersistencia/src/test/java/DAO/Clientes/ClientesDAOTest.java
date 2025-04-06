@@ -125,9 +125,10 @@ public class ClientesDAOTest {
 //    @Test
 //    public void testBuscarPorNombre(){
 //        ClientesDAO clientesDAO = new ClientesDAO();
-//        String Correo = "ariel@gmail.com";
+//        String Correo = "juan@example.com";
 //        Cliente cliente = clientesDAO.obtenerPorCorreo(Correo);
-//        assertEquals ("ariel@gmail.com" , cliente.getCorreo());
+//        assertEquals ("juan@example.com" , cliente.getCorreo());
+//        assertEquals ("123456789",cliente.getNumTelefono());
 //    }
     
     

@@ -162,7 +162,7 @@ public class ClientesDAO implements IClientesDAO {
             clienteFrecuente.setTotalGastado(clienteFrecuente.getTotalGastado() + totalGastado);
             entityManager.merge(clienteFrecuente);
         }
-
+ 
         entityManager.getTransaction().commit();
     }
 
@@ -191,12 +191,11 @@ public class ClientesDAO implements IClientesDAO {
     }
 
     @Override
-    public Cliente obtenerPorCorreo(String Correo) {
+    public ClientesFrecuentes obtenerPorCorreo(String Correo) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         try {
-            String jpql = "SELECT c FROM Cliente c WHERE c.correo = :correo";
-
-            return entityManager.createQuery(jpql, Cliente.class)
+            String jpql = "SELECT c FROM Cliente c WHERE c.correo = :correo";      
+            return entityManager.createQuery(jpql, ClientesFrecuentes.class)
                     .setParameter("correo", Correo)
                     .getSingleResult();
         } catch (NoResultException e) {

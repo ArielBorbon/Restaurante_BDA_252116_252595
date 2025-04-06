@@ -17,18 +17,18 @@ public class NuevaComandaDTO {
     private int num_mesa; 
     private EstadoComanda estado_comanda;
     private double total;
-    private String nombre_cliente;
+    private String correoCliente;
 
     public NuevaComandaDTO() {
     }
 
-    public NuevaComandaDTO(String folio, Calendar fecha_hora, int num_mesa, EstadoComanda estado_comanda, double total, String nombre_cliente) {
+    public NuevaComandaDTO(String folio, Calendar fecha_hora, int num_mesa, EstadoComanda estado_comanda, double total, String CorreoCliente) {
         this.folio = folio;
         this.fecha_hora = fecha_hora;
         this.num_mesa = num_mesa;
         this.estado_comanda = estado_comanda;
         this.total = total;
-        this.nombre_cliente = nombre_cliente;
+        this.correoCliente = CorreoCliente;
     }
 
     public NuevaComandaDTO(String folio, Calendar fecha_hora, int num_mesa, EstadoComanda estado_comanda, double total) {
@@ -38,6 +38,8 @@ public class NuevaComandaDTO {
         this.estado_comanda = estado_comanda;
         this.total = total;
     }
+    
+    
 
     public String getFolio() {
         return folio;
@@ -79,12 +81,12 @@ public class NuevaComandaDTO {
         this.total = total;
     }
 
-    public String getNombre_cliente() {
-        return nombre_cliente;
+    public String getCorreoCliente() {
+        return correoCliente;
     }
 
-    public void setNombre_cliente(String nombre_cliente) {
-        this.nombre_cliente = nombre_cliente;
+    public void setCorreoCliente(String CorreoCliente) {
+        this.correoCliente = CorreoCliente;
     }
     
     
