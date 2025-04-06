@@ -15,26 +15,26 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+
 /**
  *
  * @author Alberto Jimenez
  */
 @Entity
 @DiscriminatorValue("1")
-public class ClientesFrecuentes extends Cliente implements Serializable{
-    
-    @Column (name = "Total_Gastado", nullable = false)
+public class ClientesFrecuentes extends Cliente implements Serializable {
+
+    @Column(name = "Total_Gastado", nullable = false)
     private double totalGastado;
-    
-    @Column (name = "Visitas", nullable = false)
+
+    @Column(name = "Visitas", nullable = false)
     private Integer visitas;
-    
-    @Column (name = "Puntos", nullable = false)
+
+    @Column(name = "Puntos", nullable = false)
     private Integer puntos;
-    
+
     @OneToMany(mappedBy = "clienteFrecuente", cascade = CascadeType.PERSIST)
     private List<Comanda> comandas = new ArrayList<>();
-
 
     public ClientesFrecuentes() {
     }
@@ -44,7 +44,7 @@ public class ClientesFrecuentes extends Cliente implements Serializable{
         this.visitas = visitas;
         this.puntos = puntos;
     }
-    
+
     public ClientesFrecuentes(double totalGastado, Integer visitas, Integer puntos, String nombre, String correo, String numTelefono, Calendar fechaRegistro) {
         super(nombre, correo, numTelefono, fechaRegistro);
         this.totalGastado = totalGastado;
@@ -58,9 +58,7 @@ public class ClientesFrecuentes extends Cliente implements Serializable{
         this.visitas = visitas;
         this.puntos = puntos;
     }
-    
-    
-    
+
     public double getTotalGastado() {
         return totalGastado;
     }
@@ -92,12 +90,18 @@ public class ClientesFrecuentes extends Cliente implements Serializable{
 
     @Override
     public boolean equals(Object obj) {
-        if (!super.equals(obj)) return false;
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
         final ClientesFrecuentes other = (ClientesFrecuentes) obj;
-        return Objects.equals(totalGastado, other.totalGastado) &&
-               Objects.equals(visitas, other.visitas) &&
-               Objects.equals(puntos, other.puntos);
+        return Objects.equals(totalGastado, other.totalGastado)
+                && Objects.equals(visitas, other.visitas)
+                && Objects.equals(puntos, other.puntos);
     }
 }

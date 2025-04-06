@@ -196,7 +196,6 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
                     nombreFiltro.isEmpty() ? null : nombreFiltro,
                     telefonoFiltro.isEmpty() ? null : telefonoFiltro,
                     correoFiltro.isEmpty() ? null : correoFiltro);
-
             formClientesTabla.recargarTabla(clientesFiltrados);
 
         } catch (NegocioException ex) {
