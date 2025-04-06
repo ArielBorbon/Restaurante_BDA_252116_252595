@@ -20,4 +20,5 @@ public interface IClientesDAO {
     public abstract List<Cliente> mostrarListaClientes();
     public abstract Cliente buscarPorTelefono(String filtroNumero);
     public abstract List<Cliente> filtrarClientes(String nombre, String telefono, String correo);
+    public abstract Cliente obtenerPorCorreo(String Correo);
 }

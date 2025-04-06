@@ -191,6 +191,7 @@ public class ClientesDAO implements IClientesDAO {
     }
     
     
+    @Override
     public Cliente obtenerPorCorreo(String Correo) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         try {
