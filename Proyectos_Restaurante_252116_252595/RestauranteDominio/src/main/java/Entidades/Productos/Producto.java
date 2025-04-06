@@ -53,7 +53,7 @@ public class Producto implements Serializable {
     @OneToMany  ( mappedBy = "producto", cascade = { CascadeType.PERSIST} )         //union con productoOcupaIngrediente
     private List<ProductoOcupaIngrediente> productos;
         
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.PERSIST)
     private List<DetalleComanda> detallesComanda = new ArrayList<>();
 
     public Producto(Long id, double precio, String nombre, Tipo_Producto tipo, Estado_Producto estado, List<ProductoOcupaIngrediente> productos) {

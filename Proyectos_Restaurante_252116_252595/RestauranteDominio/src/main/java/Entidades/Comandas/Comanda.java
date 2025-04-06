@@ -63,7 +63,7 @@ public class Comanda implements Serializable {
     private Mesa mesa;
 
     //Relación DetalleComanda (1 N)
-    @OneToMany(mappedBy = "comanda", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "comanda", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<DetalleComanda> detalles = new ArrayList<>();
 
     public Comanda() {

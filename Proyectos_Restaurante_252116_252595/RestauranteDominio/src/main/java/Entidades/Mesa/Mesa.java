@@ -38,7 +38,7 @@ public class Mesa implements Serializable {
 
 
     
-    @OneToMany(mappedBy = "mesa", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "mesa", cascade = CascadeType.PERSIST)
     private List<Comanda> comandas = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)

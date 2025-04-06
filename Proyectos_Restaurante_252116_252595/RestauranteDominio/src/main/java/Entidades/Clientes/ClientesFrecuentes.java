@@ -32,7 +32,7 @@ public class ClientesFrecuentes extends Cliente implements Serializable{
     @Column (name = "Puntos", nullable = false)
     private Integer puntos;
     
-    @OneToMany(mappedBy = "clienteFrecuente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "clienteFrecuente", cascade = CascadeType.PERSIST)
     private List<Comanda> comandas = new ArrayList<>();
 
 
