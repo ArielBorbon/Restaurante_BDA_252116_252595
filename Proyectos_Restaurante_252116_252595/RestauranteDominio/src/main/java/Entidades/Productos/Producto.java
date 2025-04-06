@@ -56,6 +56,15 @@ public class Producto implements Serializable {
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<DetalleComanda> detallesComanda = new ArrayList<>();
 
+    public Producto(Long id, double precio, String nombre, Tipo_Producto tipo, Estado_Producto estado, List<ProductoOcupaIngrediente> productos) {
+        this.id = id;
+        this.precio = precio;
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.estado = estado;
+        this.productos = productos;
+    }
+
         
 
     public Producto() {

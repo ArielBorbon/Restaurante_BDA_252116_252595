@@ -50,6 +50,31 @@ public class DetalleComanda implements Serializable {
     @JoinColumn(name = "id_comanda", nullable = false)
     private Comanda comanda;
 
+    public DetalleComanda() {
+    }
+
+    public DetalleComanda(Long id, double precioUnitario, String notasEspeciales, int cantidad, double importeTotal, Producto producto, Comanda comanda) {
+        this.id = id;
+        this.precioUnitario = precioUnitario;
+        this.notasEspeciales = notasEspeciales;
+        this.cantidad = cantidad;
+        this.importeTotal = importeTotal;
+        this.producto = producto;
+        this.comanda = comanda;
+    }
+
+    public DetalleComanda(double precioUnitario, String notasEspeciales, int cantidad, double importeTotal, Producto producto, Comanda comanda) {
+        this.precioUnitario = precioUnitario;
+        this.notasEspeciales = notasEspeciales;
+        this.cantidad = cantidad;
+        this.importeTotal = importeTotal;
+        this.producto = producto;
+        this.comanda = comanda;
+    }
+
+    
+    
+    
 
     public Long getId() {
         return id;

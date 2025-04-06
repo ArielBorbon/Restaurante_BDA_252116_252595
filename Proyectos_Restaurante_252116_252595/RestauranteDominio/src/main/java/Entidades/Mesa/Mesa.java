@@ -45,6 +45,52 @@ public class Mesa implements Serializable {
     @Column(name = "estado", nullable = false)
     private EstadoMesa estado;
 
+    public Mesa() {
+    }
+
+    public Mesa(Long id, int num_mesa, EstadoMesa estado) {
+        this.id = id;
+        this.num_mesa = num_mesa;
+        this.estado = estado;
+    }
+
+    public Mesa(int num_mesa, EstadoMesa estado) {
+        this.num_mesa = num_mesa;
+        this.estado = estado;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getNum_mesa() {
+        return num_mesa;
+    }
+
+    public void setNum_mesa(int num_mesa) {
+        this.num_mesa = num_mesa;
+    }
+
+    public List<Comanda> getComandas() {
+        return comandas;
+    }
+
+    public void setComandas(List<Comanda> comandas) {
+        this.comandas = comandas;
+    }
+
+    public EstadoMesa getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoMesa estado) {
+        this.estado = estado;
+    }
+
     
     
 

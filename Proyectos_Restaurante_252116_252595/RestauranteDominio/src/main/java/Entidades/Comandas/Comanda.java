@@ -57,16 +57,42 @@ public class Comanda implements Serializable {
     @JoinColumn(name = "id_cliente_frecuente")
     private ClientesFrecuentes clienteFrecuente;
 
-    //Relación  Mesa (N 1)
+    //Relación Mesa (N 1)
     @ManyToOne
     @JoinColumn(name = "id_mesa", nullable = false)
     private Mesa mesa;
 
-    // 🔗 Relación con DetalleComanda (Uno a Muchos)
+    //Relación DetalleComanda (1 N)
     @OneToMany(mappedBy = "comanda", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetalleComanda> detalles = new ArrayList<>();
 
     public Comanda() {
+    }
+
+    public Comanda(Long id, String folio, Calendar fechaHora, EstadoComanda estado, double total, ClientesFrecuentes clienteFrecuente, Mesa mesa) {
+        this.id = id;
+        this.folio = folio;
+        this.fechaHora = fechaHora;
+        this.estado = estado;
+        this.total = total;
+        this.clienteFrecuente = clienteFrecuente;
+        this.mesa = mesa;
+    }
+
+    public Comanda(String folio, Calendar fechaHora, EstadoComanda estado, double total, ClientesFrecuentes clienteFrecuente, Mesa mesa) {
+        this.folio = folio;
+        this.fechaHora = fechaHora;
+        this.estado = estado;
+        this.total = total;
+        this.clienteFrecuente = clienteFrecuente;
+        this.mesa = mesa;
+    }
+
+    public Comanda(String folio, Calendar fechaHora, EstadoComanda estado, double total) {
+        this.folio = folio;
+        this.fechaHora = fechaHora;
+        this.estado = estado;
+        this.total = total;
     }
     
     
