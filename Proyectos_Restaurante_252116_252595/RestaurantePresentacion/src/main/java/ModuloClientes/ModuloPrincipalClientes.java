@@ -6,10 +6,17 @@ package ModuloClientes;
 
 import BO.ClienteBO.ClienteBO;
 import Entidades.Clientes.Cliente;
+import Entidades.Clientes.ClientesFrecuentes;
 import Fabricas.FabricaClientes;
 import NegocioException.NegocioException;
+import com.lowagie.text.Document;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -95,6 +102,11 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
         btnReporte.setBackground(new Color(50, 173, 230));
         btnReporte.setForeground(Color.WHITE);
         btnReporte.setFont(new Font("Arial", Font.BOLD, 16));
+        btnReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteActionPerformed(evt);
+            }
+        });
 
         pnlFormClientes.setPreferredSize(new java.awt.Dimension(638, 521));
         pnlFormClientes.setLayout(new java.awt.BorderLayout());
@@ -114,7 +126,7 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
                             .addComponent(filtroNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                         .addGap(60, 60, 60))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlFormClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 724, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pnlFormClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -155,15 +167,15 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
                         .addComponent(filtroCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnFiltro)
-                        .addGap(55, 55, 55)
+                        .addGap(61, 61, 61)
                         .addComponent(btnAgregarCliente)
                         .addGap(28, 28, 28)
                         .addComponent(btnSalir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlFormClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)))
+                        .addComponent(pnlFormClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68)))
                 .addComponent(btnReporte)
                 .addContainerGap())
         );
@@ -186,7 +198,7 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
 
             String nombreFiltro = filtroNombre.getText();
             String telefonoFiltro = filtroTelefono.getText();
-            String correoFiltro = filtroCorreo.getText();            
+            String correoFiltro = filtroCorreo.getText();
 
             if (nombreFiltro.isEmpty() && telefonoFiltro.isEmpty() && correoFiltro.isEmpty()) {
                 formClientesTabla.recargarTabla();
@@ -202,6 +214,17 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
             Logger.getLogger(ModuloPrincipalClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnFiltroActionPerformed
+
+    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
+        ReporteClientes reporteClientes;
+        try {
+            reporteClientes = new ReporteClientes();
+            reporteClientes.setVisible(true);
+        } catch (NegocioException ex) {
+            Logger.getLogger(ModuloPrincipalClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnReporteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarCliente;

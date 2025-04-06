@@ -36,7 +36,7 @@
                       <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Component id="pnlFormClientes" min="-2" pref="724" max="-2" attributes="0"/>
+                      <Component id="pnlFormClientes" min="-2" pref="725" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -88,7 +88,7 @@
                       <Component id="filtroCorreo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnFiltro" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                       <Component id="btnAgregarCliente" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="btnSalir" min="-2" max="-2" attributes="0"/>
@@ -96,8 +96,8 @@
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="pnlFormClientes" min="-2" pref="497" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="pnlFormClientes" min="-2" pref="459" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <Component id="btnReporte" min="-2" max="-2" attributes="0"/>
@@ -182,6 +182,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="REPORTE CLIENTES FRECUENTES"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnReporte.setBackground(new Color(50, 173, 230));&#xa;btnReporte.setForeground(Color.WHITE);&#xa;btnReporte.setFont(new Font(&quot;Arial&quot;, Font.BOLD, 16));"/>
       </AuxValues>
