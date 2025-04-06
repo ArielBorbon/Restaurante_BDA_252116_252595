@@ -48,7 +48,7 @@ public class FormClientesTabla extends javax.swing.JPanel {
             if (c.getFechaRegistro() != null) {
                 fechaRegistro = sdf.format(c.getFechaRegistro().getTime()); // Formato: YYYY-MM-DD
             }
-            
+
             Object[] fila = {
                 c.getNombre(),
                 c.getCorreo(),
@@ -104,7 +104,6 @@ public class FormClientesTabla extends javax.swing.JPanel {
     }
 
     public void recargarTabla(List<Cliente> clientesFiltrados) {
-        // Aquí reemplazamos la lógica de recargar la tabla con los clientes filtrados
         String[] columnas = {
             "Nombre", "Correo", "Teléfono", "Fecha Registro", "Puntos", "Visitas", "Total Acumulado"
         };
@@ -116,14 +115,20 @@ public class FormClientesTabla extends javax.swing.JPanel {
             }
         };
 
-        // Añadimos las filas basadas en los clientes filtrados
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         for (Cliente c : clientesFiltrados) {
+            
+            String fechaRegistro = "";
+            if (c.getFechaRegistro() != null) {
+                fechaRegistro = sdf.format(c.getFechaRegistro().getTime()); // Formato: YYYY-MM-DD
+            }
+            
             Object[] fila = {
                 c.getNombre(),
                 c.getCorreo(),
                 c.getNumTelefono(),
-                c.getFechaRegistro(),
-                // Aquí puedes añadir los puntos, visitas y total acumulado
+                fechaRegistro,
                 (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getPuntos() : "N/A",
                 (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getVisitas() : "N/A",
                 (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getTotalGastado() : "N/A"
@@ -131,7 +136,6 @@ public class FormClientesTabla extends javax.swing.JPanel {
             modeloTabla.addRow(fila);
         }
 
-        // Establece el modelo de la tabla para mostrar los clientes
         jTable1.setModel(modeloTabla);
     }
 
