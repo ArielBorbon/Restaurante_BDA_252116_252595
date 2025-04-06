@@ -16,6 +16,7 @@ public class NuevoClienteDTO {
     private Integer numTelefono;
     private Calendar fechaRegistro;
     private int tipo = 1;
+    
     public NuevoClienteDTO() {
     }
 
