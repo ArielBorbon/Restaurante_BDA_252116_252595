@@ -4,8 +4,7 @@
  */
 package DAO.Mesas;
 
-import Entidades.Mesa.Mesa;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 
@@ -137,6 +136,15 @@ public class MesasDAOTest {
     
     
     
+//    @Test
+//    public void verRelacionesMesaTest(){
+//        
+//        
+//        boolean resultado1 = mesasDAO.verRelacionesMesa(1);
+//        assertEquals (false , resultado1);
+//        boolean resultado2 = mesasDAO.verRelacionesMesa(2);
+//        assertEquals(true,resultado2);
+//   }     
     
     
     

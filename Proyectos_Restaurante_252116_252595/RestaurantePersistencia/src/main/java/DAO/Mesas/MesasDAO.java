@@ -5,6 +5,7 @@
 package DAO.Mesas;
 
 import DTOS.Mesa.NuevaMesaDTO;
+import Entidades.Comandas.Comanda;
 import Entidades.Mesa.EstadoMesa;
 import Entidades.Mesa.Mesa;
 import ManejadorConexiones.ManejadorConexiones;
@@ -127,7 +128,28 @@ public class MesasDAO implements IMesasDAO {
         } finally {
             entityManager.close();
         }
-    }      
+    }
+    
+    
+    public boolean verRelacionesMesa(int num_mesa) {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+            Root<Comanda> root = cq.from(Comanda.class);
+        
+            cq.select(cb.count(root)).where(cb.equal(root.get("mesa").get("num_mesa"), num_mesa));
+            Long count = em.createQuery(cq).getSingleResult();
+        
+            return count > 0;
+        } catch (Exception e) {
+            throw new RuntimeException("Error al verificar relaciones de la mesa con comandas", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    
     
     
     
