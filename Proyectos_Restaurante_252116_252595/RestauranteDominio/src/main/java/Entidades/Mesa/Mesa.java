@@ -1,0 +1,52 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Entidades.Mesa;
+
+import Entidades.Comandas.Comanda;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+/**
+ *
+ * @author PC Gamer
+ */
+@Entity
+@Table (name = "Mesas")
+public class Mesa implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (name = "id_mesa")
+    private Long id;
+
+    
+    @Column (name = "num_mesa" , nullable = false )
+    private int num_mesa;
+
+
+    
+    @OneToMany(mappedBy = "mesa", cascade = CascadeType.ALL)
+    private List<Comanda> comandas = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", nullable = false)
+    private EstadoMesa estado;
+
+    
+    
+
+    
+}

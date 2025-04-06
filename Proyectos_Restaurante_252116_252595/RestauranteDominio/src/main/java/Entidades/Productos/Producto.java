@@ -4,6 +4,7 @@
  */
 package Entidades.Productos;
 
+import Entidades.Comandas.DetalleComanda;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +50,13 @@ public class Producto implements Serializable {
     private Estado_Producto estado;
     
     
-        @OneToMany  ( mappedBy = "producto", cascade = { CascadeType.PERSIST} )         //union con productoOcupaIngrediente
+    @OneToMany  ( mappedBy = "producto", cascade = { CascadeType.PERSIST} )         //union con productoOcupaIngrediente
     private List<ProductoOcupaIngrediente> productos;
+        
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+    private List<DetalleComanda> detallesComanda = new ArrayList<>();
+
+        
 
     public Producto() {
     }

@@ -80,6 +80,7 @@ public class MenuModulos extends javax.swing.JFrame {
             }
         });
 
+        btnClientes.setBackground(new Color(0x4dd3e0));
         btnClientes.setFont(new java.awt.Font("Arial Black", 1, 28)); // NOI18N
         btnClientes.setText("Clientes");
         btnClientes.addActionListener(new java.awt.event.ActionListener() {

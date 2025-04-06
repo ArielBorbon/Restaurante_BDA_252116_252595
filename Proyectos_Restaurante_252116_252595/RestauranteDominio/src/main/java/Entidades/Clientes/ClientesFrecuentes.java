@@ -4,12 +4,17 @@
  */
 package Entidades.Clientes;
 
+import Entidades.Comandas.Comanda;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 /**
  *
  * @author Alberto Jimenez
@@ -26,6 +31,10 @@ public class ClientesFrecuentes extends Cliente implements Serializable{
     
     @Column (name = "Puntos", nullable = false)
     private Integer puntos;
+    
+    @OneToMany(mappedBy = "clienteFrecuente", cascade = CascadeType.ALL)
+    private List<Comanda> comandas = new ArrayList<>();
+
 
     public ClientesFrecuentes() {
     }

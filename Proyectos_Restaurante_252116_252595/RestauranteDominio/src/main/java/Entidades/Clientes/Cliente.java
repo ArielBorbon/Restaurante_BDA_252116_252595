@@ -27,7 +27,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name= "Clientes_Tipo", discriminatorType = DiscriminatorType.INTEGER)
-@Table(name = "Cliente")
+@Table(name = "Clientes")
 public class Cliente implements Serializable {
     
     @Id
