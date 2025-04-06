@@ -129,7 +129,7 @@ public class ClientesDAO implements IClientesDAO {
             jpql.append(" AND LOWER(c.nombre) LIKE LOWER(:nombre)");
         }
         if (telefono != null) {
-            jpql.append(" AND c.numTelefono = :telefono");
+            jpql.append(" AND c.numTelefono LIKE :telefono");
         }
         if (correo != null && !correo.trim().isEmpty()) {
             jpql.append(" AND LOWER(c.correo) LIKE LOWER(:correo)");
@@ -141,7 +141,7 @@ public class ClientesDAO implements IClientesDAO {
             query.setParameter("nombre", "%" + nombre.trim() + "%");
         }
         if (telefono != null) {
-            query.setParameter("telefono", telefono);
+            query.setParameter("telefono", "%" + telefono.trim() + "%");
         }
         if (correo != null && !correo.trim().isEmpty()) {
             query.setParameter("correo", "%" + correo.trim() + "%");
@@ -149,68 +149,84 @@ public class ClientesDAO implements IClientesDAO {
 
         return query.getResultList();
     }
-    
+
     public void actualizarClienteFrecuente(int idCliente, int puntos, int visitas, double totalGastado) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         entityManager.getTransaction().begin();
-        
+
         ClientesFrecuentes clienteFrecuente = entityManager.find(ClientesFrecuentes.class, idCliente);
-        
+
         if (clienteFrecuente != null) {
             clienteFrecuente.setPuntos(clienteFrecuente.getPuntos() + puntos);
             clienteFrecuente.setVisitas(clienteFrecuente.getVisitas() + visitas);
             clienteFrecuente.setTotalGastado(clienteFrecuente.getTotalGastado() + totalGastado);
             entityManager.merge(clienteFrecuente);
         }
-        
+
         entityManager.getTransaction().commit();
     }
-    
+
     public List<NuevoClienteFrecuenteDTO> obtenerClientesFrecuentes() {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         String jpqlQuery = "SELECT c FROM ClienteFrecuente c";
-        
+
         TypedQuery<ClientesFrecuentes> query = entityManager.createQuery(jpqlQuery, ClientesFrecuentes.class);
         List<ClientesFrecuentes> clientesFrecuentes = query.getResultList();
-        
+
         List<NuevoClienteFrecuenteDTO> clientesDTO = new ArrayList<>();
         for (ClientesFrecuentes c : clientesFrecuentes) {
             NuevoClienteFrecuenteDTO clienteDTO = new NuevoClienteFrecuenteDTO(
-                c.getId(),
-                c.getTotalGastado(),
-                c.getVisitas(),
-                c.getPuntos(),
-                c.getNombre(),
-                c.getNumTelefono(),
-                c.getFechaRegistro()
+                    c.getId(),
+                    c.getTotalGastado(),
+                    c.getVisitas(),
+                    c.getPuntos(),
+                    c.getNombre(),
+                    c.getNumTelefono(),
+                    c.getFechaRegistro()
             );
             clientesDTO.add(clienteDTO);
         }
 
         return clientesDTO;
     }
-    
-    
+
     @Override
     public Cliente obtenerPorCorreo(String Correo) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         try {
             String jpql = "SELECT c FROM Cliente c WHERE c.correo = :correo";
-        
+
             return entityManager.createQuery(jpql, Cliente.class)
                     .setParameter("correo", Correo)
                     .getSingleResult();
         } catch (NoResultException e) {
-            return null; 
+            return null;
         } catch (NonUniqueResultException e) {
             throw new IllegalStateException("Error de integridad: Correo duplicado detectado", e);
         }
     }
-    
-    
-    
-    
-    
-    
-    
+
+    public List<Cliente> filtrarClientesReporte(String telefono, String correo) {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+
+        StringBuilder jpql = new StringBuilder("SELECT c FROM Cliente c WHERE 1=1");
+
+        if (telefono != null) {
+            jpql.append(" AND c.numTelefono LIKE :telefono");
+        }
+        if (correo != null && !correo.trim().isEmpty()) {
+            jpql.append(" AND LOWER(c.correo) LIKE LOWER(:correo)");
+        }
+
+        TypedQuery<Cliente> query = em.createQuery(jpql.toString(), Cliente.class);
+
+        if (telefono != null) {
+            query.setParameter("telefono", "%" + telefono.trim() + "%");
+        }
+        if (correo != null && !correo.trim().isEmpty()) {
+            query.setParameter("correo", "%" + correo.trim() + "%");
+        }
+
+        return query.getResultList();
+    }
 }
