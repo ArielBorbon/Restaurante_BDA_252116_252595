@@ -4,15 +4,7 @@
  */
 package DAO.Clientes;
 
-import DTOS.Clientes.NuevoClienteDTO;
 import Entidades.Clientes.Cliente;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -127,4 +119,22 @@ public class ClientesDAOTest {
 //        List<Cliente> clientes = clientesDAO.mostrarListaClientes();
 //        assertEquals(NUMERO_DE_CLIENTES_ESPERADOS, clientes.size());
 //    }
+    
+    
+    
+//    @Test
+//    public void testBuscarPorNombre(){
+//        ClientesDAO clientesDAO = new ClientesDAO();
+//        String Correo = "ariel@gmail.com";
+//        Cliente cliente = clientesDAO.obtenerPorCorreo(Correo);
+//        assertEquals ("ariel@gmail.com" , cliente.getCorreo());
+//    }
+    
+    
+    
+    
+    
+    
+    
+    
 }

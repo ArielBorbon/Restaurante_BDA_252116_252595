@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -188,4 +189,27 @@ public class ClientesDAO implements IClientesDAO {
 
         return clientesDTO;
     }
+    
+    
+    public Cliente obtenerPorCorreo(String Correo) {
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        try {
+            String jpql = "SELECT c FROM Cliente c WHERE c.correo = :correo";
+        
+            return entityManager.createQuery(jpql, Cliente.class)
+                    .setParameter("correo", Correo)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null; 
+        } catch (NonUniqueResultException e) {
+            throw new IllegalStateException("Error de integridad: Correo duplicado detectado", e);
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
 }
