@@ -74,7 +74,7 @@ public void testRegistrarComanda() {
         
 
 
-        // Detalle DTO
+
         NuevoDetalleComandaDTO detalleDTO1 = new NuevoDetalleComandaDTO();
         detalleDTO1.setNombreProducto("Pizza Margherita");
         detalleDTO1.setPrecioUnitario(150);
@@ -94,7 +94,7 @@ public void testRegistrarComanda() {
         detallesDTO.add(detalleDTO2);
 
         
-        // Comanda DTO
+
         NuevaComandaDTO comandaDTO = new NuevaComandaDTO();
         comandaDTO.setFolio(comandasDAO.generarFolioComanda());
         comandaDTO.setFecha_hora(Calendar.getInstance());
@@ -112,7 +112,7 @@ public void testRegistrarComanda() {
         
         Comanda comandaRegistrada = comandasDAO.registrarComanda(comandaDTO, detallesDTO);
 
-        // Aserciones
+
         assertNotNull(comandaRegistrada);
         assertEquals("OB-20250406-001", comandaRegistrada.getFolio());
         assertEquals(1050, comandaRegistrada.getTotal());
@@ -197,9 +197,20 @@ public void testRegistrarComanda() {
     }
     
     
+    @Test
+    public void  pruebaEntregarComanda(){
+        ComandasDAO comandaDAO = new ComandasDAO();
+        Comanda comanda = new Comanda();
+        comandaDAO.cambiarEstadoComandaAEntregada("OB-20250406-001");
+    }
     
     
-    
+    @Test
+    public void  pruebaCancelarComanda(){
+        ComandasDAO comandaDAO = new ComandasDAO();
+        Comanda comanda = new Comanda();
+        comandaDAO.cambiarEstadoComandaACancelada("OB-20250406-001");
+    }    
     
     
     

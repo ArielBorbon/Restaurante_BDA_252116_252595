@@ -12,6 +12,7 @@ import DTOS.Comandas.NuevoDetalleComandaDTO;
 import Entidades.Clientes.ClientesFrecuentes;
 import Entidades.Comandas.Comanda;
 import Entidades.Comandas.DetalleComanda;
+import Entidades.Comandas.EstadoComanda;
 import Entidades.Mesa.Mesa;
 import Entidades.Productos.Producto;
 import ManejadorConexiones.ManejadorConexiones;
@@ -237,11 +238,51 @@ public class ComandasDAO {
     
     
     
+        
+    public void cambiarEstadoComandaACancelada(String folio) {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        em.getTransaction().begin();
+    
+        try {
+            TypedQuery<Comanda> query = em.createQuery(
+                "SELECT c FROM Comanda c WHERE c.folio = :folio", Comanda.class);
+            query.setParameter("folio", folio);
+            Comanda comanda = query.getSingleResult();
+        
+            comanda.setEstado(EstadoComanda.CANCELADA);
+        
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new RuntimeException("Error al cambiar el estado de la comanda a CANCELADA", e);
+        } finally {
+            em.close();
+        }
+    }
+
     
     
+        public void cambiarEstadoComandaAEntregada(String folio) {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        em.getTransaction().begin();
     
-    
-    
+        try {
+            TypedQuery<Comanda> query = em.createQuery(
+                "SELECT c FROM Comanda c WHERE c.folio = :folio", Comanda.class);
+            query.setParameter("folio", folio);
+            Comanda comanda = query.getSingleResult();
+        
+            comanda.setEstado(EstadoComanda.ENTREGADA);
+        
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new RuntimeException("Error al cambiar el estado de la comanda a ENTREGADA", e);
+        } finally {
+            em.close();
+        }
+    }
+
     
     
     
