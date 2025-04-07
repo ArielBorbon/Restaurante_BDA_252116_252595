@@ -49,7 +49,7 @@ public class SeleccionarProductoNuevo extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         pnlTabla.setLayout(new java.awt.BorderLayout());
 

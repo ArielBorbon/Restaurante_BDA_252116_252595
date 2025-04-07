@@ -5,6 +5,7 @@
 package Menu;
 
 import ModuloClientes.ModuloPrincipalClientes;
+import ModuloComandas.ModuloPrincipalComandas;
 import ModuloIngredientes.ModuloPrincipalIngredientes;
 import ModuloProductos.ModuloPrincipalProductos;
 import NegocioException.NegocioException;
@@ -91,6 +92,11 @@ public class MenuModulos extends javax.swing.JFrame {
 
         btnComandas.setFont(new java.awt.Font("Arial Black", 1, 28)); // NOI18N
         btnComandas.setText("Comandas");
+        btnComandas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComandasActionPerformed(evt);
+            }
+        });
 
         lblPersona.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         lblPersona.setText("Admin: Ariel Eduardo Jimenez Garcia");
@@ -173,6 +179,14 @@ public class MenuModulos extends javax.swing.JFrame {
         } catch (NegocioException ex) {
         }
     }//GEN-LAST:event_btnClientesActionPerformed
+
+    private void btnComandasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComandasActionPerformed
+    
+        ModuloPrincipalComandas moduloComanda = new ModuloPrincipalComandas();
+        moduloComanda.setVisible(true);
+        
+        
+    }//GEN-LAST:event_btnComandasActionPerformed
 
     /**
      * @param args the command line arguments

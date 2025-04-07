@@ -88,7 +88,7 @@ public class AñadirComanda extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnEditarNota = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
         jLabel1.setText("Añadir Comandas");
