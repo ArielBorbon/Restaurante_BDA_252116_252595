@@ -4,19 +4,20 @@
  */
 package DAO.Ingredientes;
 
+import DAO.Productos.ProductosDAO;
+import DTOS.Ingredientes.IngredienteConCantidadNecesariaDTO;
 import DTOS.Ingredientes.NuevoIngredienteDTO;
-import DTOS.Productos.NuevoProductoDTO;
 import Entidades.Ingredientes.Ingrediente;
 import Entidades.Productos.Producto;
 import Entidades.Productos.ProductoOcupaIngrediente;
 import ManejadorConexiones.ManejadorConexiones;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -196,10 +197,49 @@ public class IngredientesDAO implements IIngredientesDAO {
 
     
     
+        
+public List<IngredienteConCantidadNecesariaDTO> obtenerIngredientesConCantidadPorProducto(String nombreProducto) {
+    EntityManager em = ManejadorConexiones.getEntityManager();
     
-    
-    
+    try {
+
+        ProductosDAO productosDAO = new ProductosDAO();
+        Producto producto = productosDAO.buscarProductoPorNombre(nombreProducto);
+
+        if (producto == null) {
+            throw new RuntimeException("Producto no encontrado: " + nombreProducto);
+        }
+
+
+        TypedQuery<ProductoOcupaIngrediente> query = em.createQuery(
+            "SELECT poi FROM ProductoOcupaIngrediente poi WHERE poi.producto.id = :idProducto",
+            ProductoOcupaIngrediente.class
+        );
+        query.setParameter("idProducto", producto.getId());
+        List<ProductoOcupaIngrediente> relaciones = query.getResultList();
+
+        List<IngredienteConCantidadNecesariaDTO> resultado = new ArrayList<>();
+
+        for (ProductoOcupaIngrediente relacion : relaciones) {
+            Ingrediente ingrediente = relacion.getIngrediente();
+
+            IngredienteConCantidadNecesariaDTO dto = new IngredienteConCantidadNecesariaDTO();
+            dto.setNombreIngrediente(ingrediente.getNombre());
+            dto.setUnidadMedida(ingrediente.getUnidad_medida());
+            dto.setCantidadIngredienteNecesaria(relacion.getCantidad_necesaria());
+
+            resultado.add(dto);
+        }
+
+        return resultado;
+    } catch (Exception e) {
+        throw new RuntimeException("Error al obtener ingredientes del producto: " + nombreProducto, e);
+    } finally {
+        em.close();
+    }
 }
+}
+
     
 
     

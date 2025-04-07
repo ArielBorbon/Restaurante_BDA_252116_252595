@@ -4,10 +4,9 @@
  */
 package DAO.Ingredientes;
 
+import DTOS.Ingredientes.IngredienteConCantidadNecesariaDTO;
 import Entidades.Ingredientes.Ingrediente;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -59,7 +58,6 @@ public class IngredientesDAOTest {
 //     */
 //    @Test
 //    public void testEliminarIngrediente() {
-//        // Crear ingrediente de prueba
 //        EntityManager entityManager = ManejadorConexiones.getEntityManager();
 //        IngredientesDAO ingredientesDAO = new IngredientesDAO();
 //        
@@ -157,7 +155,6 @@ public class IngredientesDAOTest {
 //
 //@Test
 //public void testBuscarIngredientePorNombreYUnidad() {
-//    // Arrange: Registrar un ingrediente antes de buscarlo
 //    IngredientesDAO ingredientesDAO = new IngredientesDAO();
 //
 //    NuevoIngredienteDTO dtoHarina = new NuevoIngredienteDTO();
@@ -166,19 +163,15 @@ public class IngredientesDAOTest {
 //    dtoHarina.setStock(50);
 //    ingredientesDAO.registrarIngrediente(dtoHarina);
 //
-//    // Act: Buscar el ingrediente registrado
 //    Ingrediente harinaEncontrada = ingredientesDAO.buscarIngredientePorNombreYUnidad("Harina", "kg");
 //
-//    // Assert: Verificar que se encontró correctamente
 //    assertNotNull(harinaEncontrada, "El ingrediente Harina debe existir en la BD");
 //    assertEquals("Harina", harinaEncontrada.getNombre(), "El nombre del ingrediente debe ser Harina");
 //    assertEquals("kg", harinaEncontrada.getUnidad_medida(), "La unidad de medida del ingrediente debe ser kg");
 //    assertEquals(50, harinaEncontrada.getStock(), "El stock de Harina debe ser 50 kg");
 //
-//    // Act: Buscar un ingrediente inexistente
 //    Ingrediente inexistente = ingredientesDAO.buscarIngredientePorNombreYUnidad("Mantequilla", "kg");
 //
-//    // Assert: Verificar que retorna null cuando el ingrediente no existe
 //    assertNull(inexistente, "Si el ingrediente no existe, el metodo deberia retornar null");
 //}
 
@@ -211,13 +204,39 @@ public class IngredientesDAOTest {
 //        String nombre = "Cebolla";
 //        String unidad = "kg";
 //        
-//        // Act (simular relaciones)
 //    boolean resultado = ingredientesDAO.tieneRelacionesActivas(nombre, unidad);
 //    
-//        // Assert
 //        assertTrue(resultado);
 //    }
 
+    
+    
+    @Test
+    public void ProbarVerRelacionesDeUnProducto(){
+        IngredientesDAO ingredientesDAO = new IngredientesDAO();
+        String nombreProducto = "Flan";
+     List<IngredienteConCantidadNecesariaDTO> Lista = ingredientesDAO.obtenerIngredientesConCantidadPorProducto(nombreProducto);
+     
+        for (IngredienteConCantidadNecesariaDTO i : Lista) {
+            System.out.println(i.getNombreIngrediente() + " " + i.getUnidadMedida() + " " + i.getCantidadIngredienteNecesaria());
+        }
+    }
+    
+    
+    
+    
+//    @Test
+//    public static void generarTabla(){
+//        IngredientesDAO ingredientesDAO = new IngredientesDAO();
+//        List<Ingrediente> ingredientes = ingredientesDAO.mostrarListaIngredientes();
+//    }
+    
+    
+    
+    
+    
+    
+    
     
 }
     
