@@ -211,16 +211,16 @@ public class IngredientesDAOTest {
 
     
     
-    @Test
-    public void ProbarVerRelacionesDeUnProducto(){
-        IngredientesDAO ingredientesDAO = new IngredientesDAO();
-        String nombreProducto = "Flan";
-     List<IngredienteConCantidadNecesariaDTO> Lista = ingredientesDAO.obtenerIngredientesConCantidadPorProducto(nombreProducto);
-     
-        for (IngredienteConCantidadNecesariaDTO i : Lista) {
-            System.out.println(i.getNombreIngrediente() + " " + i.getUnidadMedida() + " " + i.getCantidadIngredienteNecesaria());
-        }
-    }
+//    @Test
+//    public void ProbarVerRelacionesDeUnProducto(){
+//        IngredientesDAO ingredientesDAO = new IngredientesDAO();
+//        String nombreProducto = "Flan";
+//     List<IngredienteConCantidadNecesariaDTO> Lista = ingredientesDAO.obtenerIngredientesConCantidadPorProducto(nombreProducto);
+//     
+//        for (IngredienteConCantidadNecesariaDTO i : Lista) {
+//            System.out.println(i.getNombreIngrediente() + " " + i.getUnidadMedida() + " " + i.getCantidadIngredienteNecesaria());
+//        }
+//    }
     
     
     

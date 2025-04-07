@@ -5,21 +5,27 @@
 package DAO.Comandas;
 
 import DAO.Clientes.ClientesDAO;
+import DAO.Ingredientes.IngredientesDAO;
 import DAO.Mesas.MesasDAO;
 import DAO.Productos.ProductosDAO;
 import DTOS.Comandas.NuevaComandaDTO;
 import DTOS.Comandas.NuevoDetalleComandaDTO;
+import DTOS.Ingredientes.IngredienteConCantidadNecesariaDTO;
 import Entidades.Clientes.ClientesFrecuentes;
 import Entidades.Comandas.Comanda;
 import Entidades.Comandas.DetalleComanda;
 import Entidades.Comandas.EstadoComanda;
+import Entidades.Ingredientes.Ingrediente;
+import Entidades.Ingredientes.Unidad_Medida;
 import Entidades.Mesa.Mesa;
 import Entidades.Productos.Producto;
 import ManejadorConexiones.ManejadorConexiones;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -285,8 +291,117 @@ public class ComandasDAO {
 
     
     
+public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> detallesDTO) {
+    EntityManager em = ManejadorConexiones.getEntityManager();
     
-    
+    try {
+        IngredientesDAO ingredientesDAO = new IngredientesDAO();
+        ProductosDAO productosDAO = new ProductosDAO();
+
+        Map<String, Double> ingredientesNecesarios = new HashMap<>();
+
+        for (NuevoDetalleComandaDTO detalleDTO : detallesDTO) {
+            String nombreProducto = detalleDTO.getNombreProducto();
+            int cantidadPlatillos = detalleDTO.getCantidad();
+
+            List<IngredienteConCantidadNecesariaDTO> ingredientesProducto =
+                ingredientesDAO.obtenerIngredientesConCantidadPorProducto(nombreProducto);
+
+            for (IngredienteConCantidadNecesariaDTO ingredienteDTO : ingredientesProducto) {
+                String nombreIngrediente = ingredienteDTO.getNombreIngrediente();
+                String unidadMedida = ingredienteDTO.getUnidadMedida();
+
+                double cantidadRequerida = ingredienteDTO.getCantidadIngredienteNecesaria() * cantidadPlatillos;
+
+                String clave = nombreIngrediente + "|" + unidadMedida.toString();
+
+                ingredientesNecesarios.merge(clave, cantidadRequerida, Double::sum);
+            }
+        }
+
+        for (Map.Entry<String, Double> entrada : ingredientesNecesarios.entrySet()) {
+            String clave = entrada.getKey();
+            double cantidadNecesaria = entrada.getValue();
+
+            String[] partes = clave.split("\\|");
+            String nombreIngrediente = partes[0];
+            Unidad_Medida unidad = Unidad_Medida.valueOf(partes[1]);
+            String unidadString = unidad.toString();
+            Ingrediente ingrediente = ingredientesDAO.buscarIngredientePorNombreYUnidad(nombreIngrediente, unidadString);
+
+            if (ingrediente == null || ingrediente.getStock() < cantidadNecesaria) {
+                return false; 
+            }
+        }
+
+        return true; 
+    } catch (Exception e) {
+        throw new RuntimeException("Error al verificar stock de ingredientes necesarios", e);
+    } finally {
+        em.close();
+    }
+}
+
+
+    public void restarStockIngredientesPorProductosComanda(List<NuevoDetalleComandaDTO> detallesDTO) {
+    EntityManager em = ManejadorConexiones.getEntityManager();
+    em.getTransaction().begin();
+
+    try {
+        IngredientesDAO ingredientesDAO = new IngredientesDAO();
+        ProductosDAO productosDAO = new ProductosDAO();
+
+        Map<String, Double> ingredientesPorRestar = new HashMap<>();
+
+        for (NuevoDetalleComandaDTO detalle : detallesDTO) {
+            Producto producto = productosDAO.buscarProductoPorNombre(detalle.getNombreProducto());
+            int cantidadPlatillos = detalle.getCantidad();
+
+            List<IngredienteConCantidadNecesariaDTO> ingredientes =
+                ingredientesDAO.obtenerIngredientesConCantidadPorProducto(producto.getNombre());
+
+            for (IngredienteConCantidadNecesariaDTO ingredienteDTO : ingredientes) {
+                String nombre = ingredienteDTO.getNombreIngrediente();
+                String unidad = ingredienteDTO.getUnidadMedida();
+                double cantidadTotal = ingredienteDTO.getCantidadIngredienteNecesaria() * cantidadPlatillos;
+
+                String clave = nombre + "|" + unidad.toString();
+
+                ingredientesPorRestar.merge(clave, cantidadTotal, Double::sum);
+            }
+        }
+
+
+        for (Map.Entry<String, Double> entry : ingredientesPorRestar.entrySet()) {
+            String[] partes = entry.getKey().split("\\|");
+            String nombre = partes[0];
+            Unidad_Medida unidad = Unidad_Medida.valueOf(partes[1]);
+            double cantidadARestar = entry.getValue();
+
+            Ingrediente ingrediente = ingredientesDAO.buscarIngredientePorNombreYUnidad(nombre, unidad.toString());
+
+            if (ingrediente == null) {
+                throw new RuntimeException("Ingrediente no encontrado: " + nombre + " (" + unidad + ")");
+            }
+
+            double nuevoStock = ingrediente.getStock() - cantidadARestar;
+            if (nuevoStock < 0) {
+                throw new RuntimeException("Stock insuficiente al restar: " + nombre + " (" + unidad + ")");
+            }
+
+            ingrediente.setStock(nuevoStock);
+            em.merge(ingrediente);
+        }
+
+        em.getTransaction().commit();
+    } catch (Exception e) {
+        em.getTransaction().rollback();
+        throw new RuntimeException("Error al restar stock de ingredientes", e);
+    } finally {
+        em.close();
+    }
+}
+
     
     
     
