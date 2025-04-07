@@ -4,6 +4,8 @@
  */
 package ModuloComandas;
 
+import ModuloComandas.AñadirComanda.AñadirComanda;
+
 /**
  *
  * @author PC Gamer
@@ -46,6 +48,11 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
 
         btnAñadirComanda.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnAñadirComanda.setText("Añadir Comanda");
+        btnAñadirComanda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirComandaActionPerformed(evt);
+            }
+        });
 
         btnDetallesComanda.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnDetallesComanda.setText("Detalles Comanda");
@@ -128,6 +135,11 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
     private void btnReporteComandasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteComandasActionPerformed
         
     }//GEN-LAST:event_btnReporteComandasActionPerformed
+
+    private void btnAñadirComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirComandaActionPerformed
+        AñadirComanda añadirComanda = new AñadirComanda();
+        añadirComanda.setVisible(true);
+    }//GEN-LAST:event_btnAñadirComandaActionPerformed
 
     /**
      * @param args the command line arguments

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package ModuloProductos;
+package ModuloProductos.AñadirProducto;
 
 import BO.IngredienteBO.IngredienteBO;
 import BO.ProductoBO.ProductoBO;
@@ -12,6 +12,7 @@ import Fabricas.FabricaIngredientes;
 import Fabricas.FabricaProductos;
 import NegocioException.NegocioException;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -53,6 +54,17 @@ public class FormProductosTablaDisponibles extends javax.swing.JPanel {
 
     tblProductos.setModel(modeloTabla);
 }
+    
+    
+    public void cargarProductosEnTablaDisponiblesExterno() throws NegocioException{
+        cargarProductosEnTablaDisponibles();
+    }
+
+    public JTable getTblProductos() {
+        return tblProductos;
+    }
+    
+    
 
     
     

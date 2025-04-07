@@ -102,6 +102,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="A&#xf1;adir Comanda"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnA&#xf1;adirComandaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnDetallesComanda">
       <Properties>
