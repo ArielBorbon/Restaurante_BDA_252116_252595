@@ -39,4 +39,5 @@ public interface IComandasDAO {
     
     void modificarNota(NuevoDetalleComandaDTO detalleDTO, String nuevaNota);
     
+    List<Comanda> mostrarComandasAbiertas();
 }

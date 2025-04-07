@@ -473,7 +473,20 @@ public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> det
 }
 
     
-    
+    @Override
+    public List<Comanda> mostrarComandasAbiertas() {
+    EntityManager em = ManejadorConexiones.getEntityManager();
+
+    try {
+        String jpql = "SELECT c FROM Comanda c WHERE c.estado = :estado";
+        TypedQuery<Comanda> query = em.createQuery(jpql, Comanda.class);
+        query.setParameter("estado", EstadoComanda.ABIERTA);
+        return query.getResultList();
+    } finally {
+        em.close();
+    }
+}
+
     
     
     
