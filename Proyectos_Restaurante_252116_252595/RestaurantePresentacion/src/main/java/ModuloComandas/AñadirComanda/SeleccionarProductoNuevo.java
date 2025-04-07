@@ -96,9 +96,7 @@ public class SeleccionarProductoNuevo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-                                          
     try {                                           
-        
         int filaSeleccionada = formtablaProductos.getTblProductos().getSelectedRow();
         
         if (filaSeleccionada == -1) {
@@ -108,18 +106,18 @@ public class SeleccionarProductoNuevo extends javax.swing.JFrame {
         
         String nombreProducto = formtablaProductos.getTblProductos().getValueAt(filaSeleccionada, 0).toString();
         
-        // Mostrar input dialog para la cantidad
+ 
         String inputCantidad = JOptionPane.showInputDialog(this,
                 "Selecciona la cantidad de \"" + nombreProducto + "\" que deseas agregar a la comanda:");
         
         if (inputCantidad == null || inputCantidad.trim().isEmpty()) {
-            return; // Usuario canceló o no ingresó nada
+            return; 
         }
         
-        int cantidadNueva;
+        int cantidad;
         try {
-            cantidadNueva = Integer.parseInt(inputCantidad.trim());
-            if (cantidadNueva <= 0) {
+            cantidad = Integer.parseInt(inputCantidad.trim());
+            if (cantidad <= 0) {
                 JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a 0.");
                 return;
             }
@@ -128,41 +126,27 @@ public class SeleccionarProductoNuevo extends javax.swing.JFrame {
             return;
         }
         
-        // Obtener información del producto
+
         ProductoBO productoBO = FabricaProductos.crearProductoBO();
         Producto producto = productoBO.buscarProductoPorNombreBO(nombreProducto);
         
         double precioUnitario = producto.getPrecio();
-        double totalNuevo = cantidadNueva * precioUnitario;
+        double total = cantidad * precioUnitario;
         
-        DefaultTableModel modeloExistente = (DefaultTableModel) tablaProductosClienteHastaElMomento.getModel();
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaProductosClienteHastaElMomento.getModel();
         
-        // Buscar si ya existe el producto en la tabla y sumar la cantidad
-        for (int i = 0; i < modeloExistente.getRowCount(); i++) {
-            String productoEnTabla = modeloExistente.getValueAt(i, 0).toString();
-            if (productoEnTabla.equalsIgnoreCase(nombreProducto)) {
-                int cantidadActual = (int) modeloExistente.getValueAt(i, 1);
-                int nuevaCantidad = cantidadActual + cantidadNueva;
-                
-                modeloExistente.setValueAt(nuevaCantidad, i, 1); // Actualiza cantidad
-                modeloExistente.setValueAt(nuevaCantidad * precioUnitario, i, 4); // Actualiza total
-                
-                this.dispose(); // Cierra la ventana al terminar
-                return;
-            }
-        }
-        
-        // Si no estaba en la tabla, lo agregamos
         Object[] nuevaFila = {
             nombreProducto,
-            cantidadNueva,
+            cantidad,
             precioUnitario,
-            "",           // Nota inicial vacía
-            totalNuevo
+            "",          
+            total
         };
         
-        modeloExistente.addRow(nuevaFila);
-        this.dispose();
+        modelo.addRow(nuevaFila);
+        
+        this.dispose(); 
     } catch (NegocioException ex) {
             Logger.getLogger(SeleccionarProductoNuevo.class.getName()).log(Level.SEVERE, null,ex);
     }

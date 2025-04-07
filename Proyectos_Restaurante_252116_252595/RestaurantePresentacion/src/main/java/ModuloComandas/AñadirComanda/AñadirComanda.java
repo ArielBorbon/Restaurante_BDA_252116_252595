@@ -159,6 +159,11 @@ public class AñadirComanda extends javax.swing.JFrame {
 
         btnEditarNota.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnEditarNota.setText("Editar Nota");
+        btnEditarNota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarNotaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -262,7 +267,7 @@ public class AñadirComanda extends javax.swing.JFrame {
 
         DefaultTableModel modelo = (DefaultTableModel) tblProductosHastaElMomento.getModel();
             int opcion = JOptionPane.showConfirmDialog(this, 
-            "¿Estás seguro de eliminar este ingrediente?", 
+            "¿Estás seguro de eliminar este Producto?", 
             "Confirmar eliminación", 
             JOptionPane.YES_NO_OPTION);
 
@@ -270,6 +275,22 @@ public class AñadirComanda extends javax.swing.JFrame {
             modelo.removeRow(filaSeleccionada);
         }
     }//GEN-LAST:event_btnEliminarProductoActionPerformed
+
+    private void btnEditarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarNotaActionPerformed
+    int filaSeleccionada = tblProductosHastaElMomento.getSelectedRow();
+
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Por favor selecciona una fila para editar la nota.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    String notaActual = (String) tblProductosHastaElMomento.getValueAt(filaSeleccionada, 3);
+    String nuevaNota = JOptionPane.showInputDialog(this, "Nota:", notaActual);
+
+    if (nuevaNota != null) {
+        tblProductosHastaElMomento.setValueAt(nuevaNota, filaSeleccionada, 3); 
+    }
+    }//GEN-LAST:event_btnEditarNotaActionPerformed
 
     /**
      * @param args the command line arguments

@@ -287,6 +287,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Editar Nota"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarNotaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
