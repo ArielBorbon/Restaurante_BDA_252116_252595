@@ -420,7 +420,48 @@ public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> det
 
     
     
-    
+    public void modificarNota(NuevoDetalleComandaDTO detalleDTO, String nuevaNota) {
+    EntityManager em = ManejadorConexiones.getEntityManager();
+
+    try {
+        em.getTransaction().begin();
+
+
+        ProductosDAO productosDAO = new ProductosDAO();
+        Producto producto = productosDAO.buscarProductoPorNombre(detalleDTO.getNombreProducto());
+
+        String jpqlDetalle = """
+            SELECT d FROM DetalleComanda d
+            WHERE d.comanda.folio = :folio
+            AND d.producto = :producto
+            AND d.cantidad = :cantidad
+            AND d.precioUnitario = :precioUnitario
+        """;
+
+        TypedQuery<DetalleComanda> query = em.createQuery(jpqlDetalle, DetalleComanda.class);
+        query.setParameter("folio", detalleDTO.getFolioComanda());
+        query.setParameter("producto", producto);
+        query.setParameter("cantidad", detalleDTO.getCantidad());
+        query.setParameter("precioUnitario", detalleDTO.getPrecioUnitario());
+
+        DetalleComanda detalle = query.getResultStream().findFirst()
+            .orElseThrow(() -> new RuntimeException("No se encontró el detalle de comanda para el folio y producto dados."));
+
+
+        detalle.setNotasEspeciales(nuevaNota);
+        em.merge(detalle);
+
+        em.getTransaction().commit();
+    } catch (Exception e) {
+        if (em.getTransaction().isActive()) {
+            em.getTransaction().rollback();
+        }
+        throw new RuntimeException("Error al modificar la nota del detalle de comanda", e);
+    } finally {
+        em.close();
+    }
+}
+
     
     
     

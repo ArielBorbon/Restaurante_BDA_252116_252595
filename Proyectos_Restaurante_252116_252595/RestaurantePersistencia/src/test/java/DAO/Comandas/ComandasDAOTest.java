@@ -307,4 +307,13 @@ public class ComandasDAOTest {
 //    }
     
     
+//    @Test
+//    public void pruebaModificarNota(){
+//        NuevoDet
+//    }
+    
+    
+    
+    
+    
 }
