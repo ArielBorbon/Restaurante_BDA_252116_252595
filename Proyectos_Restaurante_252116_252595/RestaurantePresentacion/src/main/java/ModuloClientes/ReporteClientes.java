@@ -189,7 +189,7 @@ public class ReporteClientes extends javax.swing.JFrame {
                 try {
                     telefonoDesencriptado = Encriptador.desencriptar(cliente.getNumTelefono());
                 } catch (Exception e) {
-                    e.printStackTrace(); 
+                    e.printStackTrace();
                 }
 
                 if (telefonoFiltro.isEmpty() || telefonoDesencriptado.contains(telefonoFiltro)) {
@@ -220,7 +220,27 @@ public class ReporteClientes extends javax.swing.JFrame {
 
     private void generarReporteClientesFrecuentes() throws NegocioException {
         ClienteBO clienteBO = FabricaClientes.crearClienteBO();
-        List<Cliente> clientes = clienteBO.obtenerListaClientesBO();
+
+        String telefonoFiltro = filtroTelefono.getText();
+        String correoFiltro = filtroCorreo.getText();
+
+        List<Cliente> clientesFiltrados = clienteBO.filtrarClientesReporte(
+                correoFiltro.isEmpty() ? null : correoFiltro);
+
+        List<Cliente> clientesFiltradosPorTelefono = new ArrayList<>();
+
+        for (Cliente cliente : clientesFiltrados) {
+            String telefonoDesencriptado = "";
+            try {
+                telefonoDesencriptado = Encriptador.desencriptar(cliente.getNumTelefono());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (telefonoFiltro.isEmpty() || telefonoDesencriptado.contains(telefonoFiltro)) {
+                clientesFiltradosPorTelefono.add(cliente);
+            }
+        }
 
         Document document = new Document();
         try {
@@ -234,7 +254,6 @@ public class ReporteClientes extends javax.swing.JFrame {
             PdfPTable tabla = new PdfPTable(6);
             tabla.setWidthPercentage(100);
 
-            // Encabezados
             tabla.addCell("Nombre");
             tabla.addCell("Correo");
             tabla.addCell("Teléfono");
@@ -244,7 +263,7 @@ public class ReporteClientes extends javax.swing.JFrame {
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-            for (Cliente c : clientes) {
+            for (Cliente c : clientesFiltradosPorTelefono) {
                 if (c instanceof ClientesFrecuentes) {
                     ClientesFrecuentes cf = (ClientesFrecuentes) c;
 
@@ -264,7 +283,6 @@ public class ReporteClientes extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Reporte generado con éxito: " + ruta);
         } catch (Exception e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al generar el PDF");
         }
     }
