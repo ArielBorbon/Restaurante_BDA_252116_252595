@@ -38,7 +38,7 @@ import javax.persistence.criteria.Root;
  *
  * @author PC Gamer
  */
-public class ComandasDAO {
+public class ComandasDAO implements IComandasDAO{
 
     public ComandasDAO() {
     }
@@ -46,6 +46,7 @@ public class ComandasDAO {
     
     
     
+    @Override
      public Comanda registrarComanda(NuevaComandaDTO comandaDTO, List<NuevoDetalleComandaDTO> detallesDTO) {
         EntityManager em = ManejadorConexiones.getEntityManager();
         em.getTransaction().begin();
@@ -97,7 +98,7 @@ public class ComandasDAO {
     }
     
      
-     
+     @Override
         public String generarFolioComanda() {
         EntityManager em = ManejadorConexiones.getEntityManager();
         try {
@@ -128,7 +129,7 @@ public class ComandasDAO {
      
      
      
-     
+     @Override
     public double calcularTotalDetalleComanda(NuevoDetalleComandaDTO detalleDTO) {
     ProductosDAO productosDAO = new ProductosDAO();
     Producto producto = productosDAO.buscarProductoPorNombre(detalleDTO.getNombreProducto());
@@ -141,7 +142,7 @@ public class ComandasDAO {
 }
 
      
-     
+     @Override
     public double calcularTotalComanda(List<NuevoDetalleComandaDTO> detallesDTO) {
         double total = 0;
         
@@ -153,7 +154,7 @@ public class ComandasDAO {
     }
 
      
-     
+     @Override
     public Comanda modificarComanda(NuevaComandaDTO comandaDTO, List<NuevoDetalleComandaDTO> nuevosDetallesDTO) {
     EntityManager em = ManejadorConexiones.getEntityManager();
     em.getTransaction().begin();
@@ -213,7 +214,7 @@ public class ComandasDAO {
     
     
     
-    
+    @Override
     public void eliminarComanda(NuevaComandaDTO comandaDTO) {
     EntityManager em = ManejadorConexiones.getEntityManager();
     em.getTransaction().begin();
@@ -250,7 +251,7 @@ public class ComandasDAO {
     
     
     
-        
+     @Override   
     public void cambiarEstadoComandaACancelada(String folio) {
         EntityManager em = ManejadorConexiones.getEntityManager();
         em.getTransaction().begin();
@@ -273,7 +274,7 @@ public class ComandasDAO {
     }
 
     
-    
+    @Override
         public void cambiarEstadoComandaAEntregada(String folio) {
         EntityManager em = ManejadorConexiones.getEntityManager();
         em.getTransaction().begin();
@@ -296,7 +297,7 @@ public class ComandasDAO {
     }
 
     
-    
+    @Override
 public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> detallesDTO) {
     EntityManager em = ManejadorConexiones.getEntityManager();
     
@@ -349,6 +350,7 @@ public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> det
 }
 
 
+    @Override
     public void restarStockIngredientesPorProductosComanda(List<NuevoDetalleComandaDTO> detallesDTO) {
     EntityManager em = ManejadorConexiones.getEntityManager();
     em.getTransaction().begin();
@@ -400,7 +402,7 @@ public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> det
         }
 
         em.getTransaction().commit();
-    } catch (Exception e) {
+    } catch (RuntimeException e) {
         em.getTransaction().rollback();
         throw new RuntimeException("Error al restar stock de ingredientes", e);
     } finally {
@@ -412,6 +414,7 @@ public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> det
     
     
     
+    @Override
     public List<Comanda> mostrarComandasTodas() {
     EntityManager em = ManejadorConexiones.getEntityManager();
 
@@ -426,6 +429,7 @@ public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> det
 
     
     
+    @Override
     public void modificarNota(NuevoDetalleComandaDTO detalleDTO, String nuevaNota) {
     EntityManager em = ManejadorConexiones.getEntityManager();
 
