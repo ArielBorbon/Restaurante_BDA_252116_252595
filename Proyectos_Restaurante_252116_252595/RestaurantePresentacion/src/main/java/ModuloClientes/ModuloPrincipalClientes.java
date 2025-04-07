@@ -5,6 +5,7 @@
 package ModuloClientes;
 
 import BO.ClienteBO.ClienteBO;
+import DAO.Clientes.Encriptador;
 import Entidades.Clientes.Cliente;
 import Entidades.Clientes.ClientesFrecuentes;
 import Fabricas.FabricaClientes;
@@ -17,6 +18,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -206,12 +208,29 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
 
             List<Cliente> clientesFiltrados = clienteBO.filtrarClientes(
                     nombreFiltro.isEmpty() ? null : nombreFiltro,
-                    telefonoFiltro.isEmpty() ? null : telefonoFiltro,
                     correoFiltro.isEmpty() ? null : correoFiltro);
-            formClientesTabla.recargarTabla(clientesFiltrados);
+
+            List<Cliente> clientesFiltradosPorTelefono = new ArrayList<>();
+
+            for (Cliente cliente : clientesFiltrados) {
+                String telefonoDesencriptado = "";
+                try {
+                    telefonoDesencriptado = Encriptador.desencriptar(cliente.getNumTelefono());
+                } catch (Exception e) {
+                    e.printStackTrace(); 
+                }
+
+                if (telefonoFiltro.isEmpty() || telefonoDesencriptado.contains(telefonoFiltro)) {
+                    clientesFiltradosPorTelefono.add(cliente);
+                }
+            }
+
+            formClientesTabla.recargarTabla(clientesFiltradosPorTelefono);
 
         } catch (NegocioException ex) {
             Logger.getLogger(ModuloPrincipalClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ModuloPrincipalClientes.class.getName()).log(Level.SEVERE, "Error al desencriptar teléfono", ex);
         }
     }//GEN-LAST:event_btnFiltroActionPerformed
 
@@ -223,7 +242,7 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
         } catch (NegocioException ex) {
             Logger.getLogger(ModuloPrincipalClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_btnReporteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

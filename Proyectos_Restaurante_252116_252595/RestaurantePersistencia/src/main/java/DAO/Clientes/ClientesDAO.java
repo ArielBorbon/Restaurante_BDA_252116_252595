@@ -50,7 +50,13 @@ public class ClientesDAO implements IClientesDAO {
         }
 
         cliente.setNombre(nuevoClienteDTO.getNombre());
-        cliente.setNumTelefono(nuevoClienteDTO.getNumTelefono());
+        try {
+            
+            String telefonoEncriptado = Encriptador.encriptar(nuevoClienteDTO.getNumTelefono());
+            cliente.setNumTelefono(telefonoEncriptado);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         cliente.setFechaRegistro(Calendar.getInstance());
         cliente.setCorreo(nuevoClienteDTO.getCorreo());
 
@@ -120,7 +126,7 @@ public class ClientesDAO implements IClientesDAO {
     }
 
     @Override
-    public List<Cliente> filtrarClientes(String nombre, String telefono, String correo) {
+    public List<Cliente> filtrarClientes(String nombre, String correo) {
         EntityManager em = ManejadorConexiones.getEntityManager();
 
         StringBuilder jpql = new StringBuilder("SELECT c FROM Cliente c WHERE 1=1");
@@ -128,9 +134,7 @@ public class ClientesDAO implements IClientesDAO {
         if (nombre != null && !nombre.trim().isEmpty()) {
             jpql.append(" AND LOWER(c.nombre) LIKE LOWER(:nombre)");
         }
-        if (telefono != null) {
-            jpql.append(" AND c.numTelefono LIKE :telefono");
-        }
+        
         if (correo != null && !correo.trim().isEmpty()) {
             jpql.append(" AND LOWER(c.correo) LIKE LOWER(:correo)");
         }
@@ -140,9 +144,7 @@ public class ClientesDAO implements IClientesDAO {
         if (nombre != null && !nombre.trim().isEmpty()) {
             query.setParameter("nombre", "%" + nombre.trim() + "%");
         }
-        if (telefono != null) {
-            query.setParameter("telefono", "%" + telefono.trim() + "%");
-        }
+        
         if (correo != null && !correo.trim().isEmpty()) {
             query.setParameter("correo", "%" + correo.trim() + "%");
         }
@@ -162,7 +164,7 @@ public class ClientesDAO implements IClientesDAO {
             clienteFrecuente.setTotalGastado(clienteFrecuente.getTotalGastado() + totalGastado);
             entityManager.merge(clienteFrecuente);
         }
- 
+
         entityManager.getTransaction().commit();
     }
 
@@ -194,7 +196,7 @@ public class ClientesDAO implements IClientesDAO {
     public ClientesFrecuentes obtenerPorCorreo(String Correo) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         try {
-            String jpql = "SELECT c FROM Cliente c WHERE c.correo = :correo";      
+            String jpql = "SELECT c FROM Cliente c WHERE c.correo = :correo";
             return entityManager.createQuery(jpql, ClientesFrecuentes.class)
                     .setParameter("correo", Correo)
                     .getSingleResult();
@@ -205,23 +207,18 @@ public class ClientesDAO implements IClientesDAO {
         }
     }
 
-    public List<Cliente> filtrarClientesReporte(String telefono, String correo) {
+    public List<Cliente> filtrarClientesReporte(String correo) {
         EntityManager em = ManejadorConexiones.getEntityManager();
 
         StringBuilder jpql = new StringBuilder("SELECT c FROM Cliente c WHERE 1=1");
 
-        if (telefono != null) {
-            jpql.append(" AND c.numTelefono LIKE :telefono");
-        }
         if (correo != null && !correo.trim().isEmpty()) {
             jpql.append(" AND LOWER(c.correo) LIKE LOWER(:correo)");
         }
 
         TypedQuery<Cliente> query = em.createQuery(jpql.toString(), Cliente.class);
 
-        if (telefono != null) {
-            query.setParameter("telefono", "%" + telefono.trim() + "%");
-        }
+        
         if (correo != null && !correo.trim().isEmpty()) {
             query.setParameter("correo", "%" + correo.trim() + "%");
         }

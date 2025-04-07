@@ -5,6 +5,7 @@
 package ModuloClientes;
 
 import BO.ClienteBO.ClienteBO;
+import DAO.Clientes.Encriptador;
 import Entidades.Clientes.Cliente;
 import Entidades.Clientes.ClientesFrecuentes;
 import Fabricas.FabricaClientes;
@@ -17,6 +18,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,9 +34,10 @@ public class ReporteClientes extends javax.swing.JFrame {
 
     /**
      * Creates new form ReporteClientes
+     *
      * @throws NegocioException.NegocioException
      */
-    public ReporteClientes() throws NegocioException{
+    public ReporteClientes() throws NegocioException {
         initComponents();
         formClientesTabla.setVisible(true);
         this.pnlFormClientes.add(formClientesTabla);
@@ -60,7 +63,7 @@ public class ReporteClientes extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
         btnImprimirReporte = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Reporte Clientes");
         jLabel1.setFont(new Font("Arial", Font.BOLD, 32));
@@ -177,12 +180,29 @@ public class ReporteClientes extends javax.swing.JFrame {
             }
 
             List<Cliente> clientesFiltrados = clienteBO.filtrarClientesReporte(
-                    telefonoFiltro.isEmpty() ? null : telefonoFiltro,
                     correoFiltro.isEmpty() ? null : correoFiltro);
-            formClientesTabla.recargarTabla(clientesFiltrados);
+
+            List<Cliente> clientesFiltradosPorTelefono = new ArrayList<>();
+
+            for (Cliente cliente : clientesFiltrados) {
+                String telefonoDesencriptado = "";
+                try {
+                    telefonoDesencriptado = Encriptador.desencriptar(cliente.getNumTelefono());
+                } catch (Exception e) {
+                    e.printStackTrace(); 
+                }
+
+                if (telefonoFiltro.isEmpty() || telefonoDesencriptado.contains(telefonoFiltro)) {
+                    clientesFiltradosPorTelefono.add(cliente);
+                }
+            }
+
+            formClientesTabla.recargarTabla(clientesFiltradosPorTelefono);
 
         } catch (NegocioException ex) {
             Logger.getLogger(ModuloPrincipalClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ModuloPrincipalClientes.class.getName()).log(Level.SEVERE, "Error al desencriptar teléfono", ex);
         }
     }//GEN-LAST:event_btnFiltroActionPerformed
 
@@ -197,7 +217,7 @@ public class ReporteClientes extends javax.swing.JFrame {
             Logger.getLogger(ModuloPrincipalClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnImprimirReporteActionPerformed
-    
+
     private void generarReporteClientesFrecuentes() throws NegocioException {
         ClienteBO clienteBO = FabricaClientes.crearClienteBO();
         List<Cliente> clientes = clienteBO.obtenerListaClientesBO();
@@ -248,7 +268,7 @@ public class ReporteClientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al generar el PDF");
         }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFiltro;
     private javax.swing.JButton btnImprimirReporte;

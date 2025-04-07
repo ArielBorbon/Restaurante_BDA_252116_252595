@@ -5,6 +5,7 @@
 package ModuloClientes;
 
 import BO.ClienteBO.ClienteBO;
+import DAO.Clientes.Encriptador;
 import Entidades.Clientes.Cliente;
 import Entidades.Clientes.ClientesFrecuentes;
 import Fabricas.FabricaClientes;
@@ -49,10 +50,17 @@ public class FormClientesTabla extends javax.swing.JPanel {
                 fechaRegistro = sdf.format(c.getFechaRegistro().getTime()); // Formato: YYYY-MM-DD
             }
 
+            String telefonoDesencriptado = "";
+            try {
+                telefonoDesencriptado = Encriptador.desencriptar(c.getNumTelefono());
+            } catch (Exception e) {
+                e.printStackTrace();  
+            }
+
             Object[] fila = {
                 c.getNombre(),
                 c.getCorreo(),
-                c.getNumTelefono(),
+                telefonoDesencriptado,
                 fechaRegistro,
                 (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getPuntos() : "N/A",
                 (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getVisitas() : "N/A",
@@ -118,16 +126,22 @@ public class FormClientesTabla extends javax.swing.JPanel {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         for (Cliente c : clientesFiltrados) {
-            
+
             String fechaRegistro = "";
             if (c.getFechaRegistro() != null) {
                 fechaRegistro = sdf.format(c.getFechaRegistro().getTime()); // Formato: YYYY-MM-DD
             }
-            
+            String telefonoDesencriptado = "";
+            try {
+                telefonoDesencriptado = Encriptador.desencriptar(c.getNumTelefono());
+            } catch (Exception e) {
+                e.printStackTrace();  
+            }
+
             Object[] fila = {
                 c.getNombre(),
                 c.getCorreo(),
-                c.getNumTelefono(),
+                telefonoDesencriptado,
                 fechaRegistro,
                 (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getPuntos() : "N/A",
                 (c instanceof ClientesFrecuentes) ? ((ClientesFrecuentes) c).getVisitas() : "N/A",
