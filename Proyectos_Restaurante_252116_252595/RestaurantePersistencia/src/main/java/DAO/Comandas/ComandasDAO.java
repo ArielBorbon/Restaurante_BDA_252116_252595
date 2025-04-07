@@ -401,6 +401,31 @@ public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> det
         em.close();
     }
 }
+    
+    
+    
+    
+    
+    public List<Comanda> mostrarComandasTodas() {
+    EntityManager em = ManejadorConexiones.getEntityManager();
+
+    try {
+        String jpql = "SELECT c FROM Comanda c";
+        TypedQuery<Comanda> query = em.createQuery(jpql, Comanda.class);
+        return query.getResultList();
+    } finally {
+        em.close();
+    }
+}
+
+    
+    
+    
+    
+    
+    
+    
+    
 
     
     

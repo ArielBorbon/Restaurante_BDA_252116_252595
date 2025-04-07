@@ -4,29 +4,9 @@
  */
 package DAO.Comandas;
 
-import DAO.Clientes.ClientesDAO;
-import DAO.Ingredientes.IngredientesDAO;
-import DAO.Mesas.MesasDAO;
-import DAO.Productos.ProductosDAO;
-import DTOS.Clientes.NuevoClienteDTO;
-import DTOS.Comandas.NuevaComandaDTO;
-import DTOS.Comandas.NuevoDetalleComandaDTO;
-import DTOS.Ingredientes.NuevoIngredienteDTO;
-import DTOS.Mesa.NuevaMesaDTO;
-import DTOS.Productos.NuevoProductoDTO;
-import DTOS.Productos.NuevoProductoOcupaIngredienteDTO;
 import Entidades.Comandas.Comanda;
-import Entidades.Comandas.EstadoComanda;
-import Entidades.Ingredientes.Ingrediente;
-import Entidades.Ingredientes.Unidad_Medida;
-import Entidades.Mesa.EstadoMesa;
-import Entidades.Productos.Estado_Producto;
-import Entidades.Productos.Tipo_Producto;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -312,6 +292,19 @@ public class ComandasDAOTest {
 //}
 //
 //    
+    
+    
+//    @Test
+//    public void verListaComandas(){
+//        ComandasDAO comandasDAO = new ComandasDAO();
+//        List<Comanda> comandas = comandasDAO.mostrarComandasTodas();
+//        
+//        for (Comanda comanda : comandas) {
+//            System.out.println(comanda.getClienteFrecuente() + " " + comanda.getEstado() + " " + comanda.getTotal());
+//            
+//        }
+//        
+//    }
     
     
 }
