@@ -39,6 +39,12 @@ import javax.persistence.criteria.Root;
  * @author PC Gamer
  */
 public class ComandasDAO {
+
+    public ComandasDAO() {
+    }
+    
+    
+    
     
      public Comanda registrarComanda(NuevaComandaDTO comandaDTO, List<NuevoDetalleComandaDTO> detallesDTO) {
         EntityManager em = ManejadorConexiones.getEntityManager();

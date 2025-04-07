@@ -4,8 +4,7 @@
  */
 package DAO.Comandas;
 
-import Entidades.Comandas.Comanda;
-import java.util.List;
+import DTOS.Comandas.NuevoDetalleComandaDTO;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -309,7 +308,18 @@ public class ComandasDAOTest {
     
 //    @Test
 //    public void pruebaModificarNota(){
-//        NuevoDet
+//        NuevoDetalleComandaDTO detalle = new NuevoDetalleComandaDTO();
+//        ComandasDAO comandasDAO = new ComandasDAO();
+//        String nota = "Me Equivoque era bien insano Perdon";
+//        detalle.setCantidad(3);
+//        detalle.setFolioComanda("OB-20250406-001");
+//        detalle.setImporteTotal(0);
+//        detalle.setNombreProducto("Coca Cola");
+//        detalle.setNotas_producto("Sin Insanidad");
+//        detalle.setPrecioUnitario(300);
+//            comandasDAO.modificarNota(detalle, nota);
+//            
+//            
 //    }
     
     
