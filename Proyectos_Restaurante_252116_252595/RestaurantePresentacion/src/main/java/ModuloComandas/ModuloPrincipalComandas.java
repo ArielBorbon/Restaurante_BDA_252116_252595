@@ -63,6 +63,11 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
 
         btnReporteComandas.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnReporteComandas.setText("Reporte De Comandas");
+        btnReporteComandas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteComandasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -119,6 +124,10 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
     private void btnCancelarComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarComandaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarComandaActionPerformed
+
+    private void btnReporteComandasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteComandasActionPerformed
+        
+    }//GEN-LAST:event_btnReporteComandasActionPerformed
 
     /**
      * @param args the command line arguments
