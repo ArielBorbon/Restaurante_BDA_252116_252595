@@ -9,12 +9,15 @@ package ModuloComandas;
  * @author PC Gamer
  */
 public class ModuloPrincipalComandas extends javax.swing.JFrame {
-
+    private FormTablaComandas formTablaComanda = new FormTablaComandas();
     /**
      * Creates new form ModuloPrincipalComandas
      */
     public ModuloPrincipalComandas() {
         initComponents();
+        pnlTabla.add(formTablaComanda);
+        formTablaComanda.setVisible(true);
+        
     }
 
     /**
@@ -27,20 +30,19 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        pnlTabla = new javax.swing.JPanel();
         btnAñadirComanda = new javax.swing.JButton();
         btnDetallesComanda = new javax.swing.JButton();
         btnCancelarComanda = new javax.swing.JButton();
         btnMarcarComoCompletada = new javax.swing.JButton();
         btnReporteComandas = new javax.swing.JButton();
-        btnEditarNota = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
         jLabel1.setText("Modulo Comandas");
 
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        pnlTabla.setLayout(new java.awt.BorderLayout());
 
         btnAñadirComanda.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnAñadirComanda.setText("Añadir Comanda");
@@ -62,9 +64,6 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
         btnReporteComandas.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnReporteComandas.setText("Reporte De Comandas");
 
-        btnEditarNota.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-        btnEditarNota.setText("Editar Nota");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -75,12 +74,10 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(21, 21, 21)
-                                .addComponent(jLabel1)
-                                .addGap(111, 111, 111)
-                                .addComponent(btnEditarNota))
+                                .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(pnlTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnDetallesComanda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -98,11 +95,9 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEditarNota)
-                            .addComponent(jLabel1))
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(pnlTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(88, 88, 88)
                         .addComponent(btnAñadirComanda)
@@ -164,10 +159,9 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
     private javax.swing.JButton btnAñadirComanda;
     private javax.swing.JButton btnCancelarComanda;
     private javax.swing.JButton btnDetallesComanda;
-    private javax.swing.JButton btnEditarNota;
     private javax.swing.JButton btnMarcarComoCompletada;
     private javax.swing.JButton btnReporteComandas;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel pnlTabla;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,12 @@
  */
 package ModuloComandas;
 
+import BO.ComandasBO.ComandaBO;
+import Entidades.Comandas.Comanda;
+import Fabricas.FabricaComandas;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author PC Gamer
@@ -15,7 +21,42 @@ public class FormTablaComandas extends javax.swing.JPanel {
      */
     public FormTablaComandas() {
         initComponents();
+        llenarTablaComandasAbiertas();
     }
+    
+    
+    
+    
+    public void llenarTablaComandasAbiertas() {
+    ComandaBO comandasBO = FabricaComandas.crearComandaBO();
+    List<Comanda> comandasAbiertas = comandasBO.mostrarComandasAbiertasBO();
+
+    String[] columnas = { "Folio", "Mesa", "Estado", "Total", "Fecha", "Cliente" };
+    DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+
+    for (Comanda c : comandasAbiertas) {
+        String folio = c.getFolio();
+        int numeroMesa = c.getMesa() != null ? c.getMesa().getNum_mesa() : -1;
+        String estado = c.getEstado() != null ? c.getEstado().toString() : "N/A";
+        double total = c.getTotal();
+        String fecha = c.getFechaHora() != null ? c.getFechaHora().getTime().toString() : "Sin Fecha";
+
+        String cliente = (c.getClienteFrecuente() != null) 
+            ? c.getClienteFrecuente().getNombre()
+            : "Cliente General";
+
+        Object[] fila = { folio, numeroMesa, estado, total, fecha, cliente };
+        modelo.addRow(fila);
+    }
+
+    tblComandasAbiertas.setModel(modelo);
+}
+
+    
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,9 +68,9 @@ public class FormTablaComandas extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblComandasAbiertas = new javax.swing.JTable();
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblComandasAbiertas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -40,7 +81,7 @@ public class FormTablaComandas extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblComandasAbiertas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -57,6 +98,6 @@ public class FormTablaComandas extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblComandasAbiertas;
     // End of variables declaration//GEN-END:variables
 }
