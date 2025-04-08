@@ -363,7 +363,7 @@ public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> det
 
         Map<String, Double> ingredientesPorRestar = new HashMap<>();
 
-        for (NuevoDetalleComandaDTO detalle : detallesDTO) {
+        for (NuevoDetalleComandaDTO detalle  : detallesDTO) {
             Producto producto = productosDAO.buscarProductoPorNombre(detalle.getNombreProducto());
             int cantidadPlatillos = detalle.getCantidad();
 
