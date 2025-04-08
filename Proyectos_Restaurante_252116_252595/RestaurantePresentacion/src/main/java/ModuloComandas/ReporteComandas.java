@@ -15,8 +15,10 @@ import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.FileOutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -181,7 +183,19 @@ public class ReporteComandas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void filtroFechaInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroFechaInicioActionPerformed
-        
+        String fechaInicioText = filtroFechaInicio.getText();
+        String fechaFinText = filtroFechaFin.getText();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            Date fechaInicio = sdf.parse(fechaInicioText);
+            Date fechaFin = sdf.parse(fechaFinText);
+
+            formTablaComanda.llenarTablaComandasAbiertasConFiltro(fechaInicio, fechaFin);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this, "Error al introducir las fechas. Asegúrate de que el formato sea correcto (yyyy-MM-dd).");
+        }
     }//GEN-LAST:event_filtroFechaInicioActionPerformed
 
     private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
@@ -236,8 +250,37 @@ public class ReporteComandas extends javax.swing.JFrame {
     }
 
     private void generarReporteClientesFrecuentes() throws NegocioException {
+        String fechaInicioTexto = filtroFechaInicio.getText();
+        String fechaFinTexto = filtroFechaFin.getText();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaInicio = null;
+        Date fechaFin = null;
+        try {
+            if (!fechaInicioTexto.isEmpty()) {
+                fechaInicio = sdf.parse(fechaInicioTexto);
+            }
+            if (!fechaFinTexto.isEmpty()) {
+                fechaFin = sdf.parse(fechaFinTexto);
+            }
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this, "Error al introducir las fechas. Formato esperado: yyyy-MM-dd");
+            return;
+        }
+
         ComandaBO comandasBO = FabricaComandas.crearComandaBO();
         List<Comanda> comandasAbiertas = comandasBO.mostrarComandasAbiertasBO();
+
+        List<Comanda> comandasFiltradas = new ArrayList<>();
+        for (Comanda c : comandasAbiertas) {
+            Date fechaComanda = c.getFechaHora() != null ? c.getFechaHora().getTime() : null;
+            if (fechaComanda != null) {
+                if ((fechaInicio == null || !fechaComanda.before(fechaInicio))
+                        && (fechaFin == null || !fechaComanda.after(fechaFin))) {
+                    comandasFiltradas.add(c);
+                }
+            }
+        }
 
         Document document = new Document();
         try {
@@ -258,9 +301,7 @@ public class ReporteComandas extends javax.swing.JFrame {
             tabla.addCell("Fecha");
             tabla.addCell("Cliente");
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-            for (Comanda c : comandasAbiertas) {
+            for (Comanda c : comandasFiltradas) {
                 String folio = c.getFolio();
                 int numeroMesa = c.getMesa() != null ? c.getMesa().getNum_mesa() : -1;
                 String estado = c.getEstado() != null ? c.getEstado().toString() : "N/A";

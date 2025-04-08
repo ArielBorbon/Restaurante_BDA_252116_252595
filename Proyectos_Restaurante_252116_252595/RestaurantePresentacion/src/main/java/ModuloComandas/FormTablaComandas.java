@@ -7,6 +7,8 @@ package ModuloComandas;
 import BO.ComandasBO.ComandaBO;
 import Entidades.Comandas.Comanda;
 import Fabricas.FabricaComandas;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,40 +25,31 @@ public class FormTablaComandas extends javax.swing.JPanel {
         initComponents();
         llenarTablaComandasAbiertas();
     }
-    
-    
-    
-    
+
     public void llenarTablaComandasAbiertas() {
-    ComandaBO comandasBO = FabricaComandas.crearComandaBO();
-    List<Comanda> comandasAbiertas = comandasBO.mostrarComandasAbiertasBO();
+        ComandaBO comandasBO = FabricaComandas.crearComandaBO();
+        List<Comanda> comandasAbiertas = comandasBO.mostrarComandasAbiertasBO();
 
-    String[] columnas = { "Folio", "Mesa", "Estado", "Total", "Fecha", "Cliente" };
-    DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+        String[] columnas = {"Folio", "Mesa", "Estado", "Total", "Fecha", "Cliente"};
+        DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
 
-    for (Comanda c : comandasAbiertas) {
-        String folio = c.getFolio();
-        int numeroMesa = c.getMesa() != null ? c.getMesa().getNum_mesa() : -1;
-        String estado = c.getEstado() != null ? c.getEstado().toString() : "N/A";
-        double total = c.getTotal();
-        String fecha = c.getFechaHora() != null ? c.getFechaHora().getTime().toString() : "Sin Fecha";
+        for (Comanda c : comandasAbiertas) {
+            String folio = c.getFolio();
+            int numeroMesa = c.getMesa() != null ? c.getMesa().getNum_mesa() : -1;
+            String estado = c.getEstado() != null ? c.getEstado().toString() : "N/A";
+            double total = c.getTotal();
+            String fecha = c.getFechaHora() != null ? c.getFechaHora().getTime().toString() : "Sin Fecha";
 
-        String cliente = (c.getClienteFrecuente() != null) 
-            ? c.getClienteFrecuente().getNombre()
-            : "Cliente General";
+            String cliente = (c.getClienteFrecuente() != null)
+                    ? c.getClienteFrecuente().getNombre()
+                    : "Cliente General";
 
-        Object[] fila = { folio, numeroMesa, estado, total, fecha, cliente };
-        modelo.addRow(fila);
+            Object[] fila = {folio, numeroMesa, estado, total, fecha, cliente};
+            modelo.addRow(fila);
+        }
+
+        tblComandasAbiertas.setModel(modelo);
     }
-
-    tblComandasAbiertas.setModel(modelo);
-}
-
-    
-    
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -94,7 +87,38 @@ public class FormTablaComandas extends javax.swing.JPanel {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+    // Metodo para utilizar el filtro de reporte comandas :)
+    public void llenarTablaComandasAbiertasConFiltro(Date fechaInicio, Date fechaFin) {
+        ComandaBO comandasBO = FabricaComandas.crearComandaBO();
+        List<Comanda> comandasAbiertas = comandasBO.mostrarComandasAbiertasBO();
 
+        String[] columnas = {"Folio", "Mesa", "Estado", "Total", "Fecha", "Cliente"};
+        DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        for (Comanda c : comandasAbiertas) {
+            Date fechaComanda = c.getFechaHora() != null ? c.getFechaHora().getTime() : null;
+
+            // Verificar si la fecha de la comanda está dentro del rango
+            if (fechaComanda != null && !fechaComanda.before(fechaInicio) && !fechaComanda.after(fechaFin)) {
+                String folio = c.getFolio();
+                int numeroMesa = c.getMesa() != null ? c.getMesa().getNum_mesa() : -1;
+                String estado = c.getEstado() != null ? c.getEstado().toString() : "N/A";
+                double total = c.getTotal();
+                String fecha = sdf.format(fechaComanda);
+
+                String cliente = (c.getClienteFrecuente() != null)
+                        ? c.getClienteFrecuente().getNombre()
+                        : "Cliente General";
+
+                Object[] fila = {folio, numeroMesa, estado, total, fecha, cliente};
+                modelo.addRow(fila);
+            }
+        }
+
+        tblComandasAbiertas.setModel(modelo);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;

@@ -7,6 +7,7 @@ package DAO.Comandas;
 import DTOS.Comandas.NuevaComandaDTO;
 import DTOS.Comandas.NuevoDetalleComandaDTO;
 import Entidades.Comandas.Comanda;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -40,4 +41,6 @@ public interface IComandasDAO {
     void modificarNota(NuevoDetalleComandaDTO detalleDTO, String nuevaNota);
     
     List<Comanda> mostrarComandasAbiertas();
+    
+    List<Comanda> filtrarPorFecha(Calendar fechaInicio, Calendar fechaFin);
 }

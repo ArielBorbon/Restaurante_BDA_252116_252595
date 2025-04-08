@@ -487,7 +487,17 @@ public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> det
     }
 }
 
-    
+    @Override
+    public List<Comanda> filtrarPorFecha(Calendar fechaInicio, Calendar fechaFin) {
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        String jpql = "SELECT c FROM Comanda c WHERE c.fechaHora BETWEEN :fechaInicio AND :fechaFin";
+        
+        TypedQuery<Comanda> query = entityManager.createQuery(jpql, Comanda.class);
+        query.setParameter("fechaInicio", fechaInicio);
+        query.setParameter("fechaFin", fechaFin);
+        
+        return query.getResultList();
+    }
     
     
 
