@@ -128,12 +128,23 @@ public class MesasDAOTest {
     
     
     
-    //    @Test
-    //    public void testCrearMesaEnOrden(){
-    //        mesasDAO.crearMesaEnOrden();
-    //        
-    //    }
-    
+//        @Test
+//        public void testCrearMesaEnOrden(){
+//            mesasDAO.crearMesaEnOrden();
+//            mesasDAO.crearMesaEnOrden();
+//            mesasDAO.crearMesaEnOrden();
+//            mesasDAO.crearMesaEnOrden();
+//            mesasDAO.crearMesaEnOrden();
+//            mesasDAO.crearMesaEnOrden();
+//            mesasDAO.crearMesaEnOrden();
+//            mesasDAO.crearMesaEnOrden();
+//            mesasDAO.crearMesaEnOrden();
+//            mesasDAO.crearMesaEnOrden();
+//            mesasDAO.crearMesaEnOrden();
+//            
+//            
+//        }
+////    
     
     
 //    @Test

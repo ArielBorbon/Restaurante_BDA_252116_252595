@@ -13,6 +13,8 @@ import Entidades.Comandas.EstadoComanda;
 import Fabricas.FabricaComandas;
 import ModuloComandas.AñadirComanda.AñadirComanda;
 import ModuloComandas.ModificarComanda.ModificarComanda;
+import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -29,6 +31,7 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
         initComponents();
         pnlTabla.add(formTablaComanda);
         formTablaComanda.setVisible(true);
+        getContentPane().setBackground(new Color(0xe71d1d));
         
     }
 
@@ -217,14 +220,25 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
         dto.setFecha_hora(comanda.getFechaHora());
         
         
-//        NuevoDetalleComandaDTO nuevoDetalleDTO = new NuevoDetalleComandaDTO();
-//        
-//        
-//
-//        comandasBO.modificarComandaBO(dto, detalles);
-//
-//        // Restar stock
-//        comandasBO.restarStockIngredientesPorProductosComandaBO(detalles);
+        List<NuevoDetalleComandaDTO> detallesDTO = new ArrayList<NuevoDetalleComandaDTO>();
+        
+            for (DetalleComanda detalle : detalles) {
+                NuevoDetalleComandaDTO detalleDTO = new NuevoDetalleComandaDTO();
+                detalleDTO.setCantidad(detalle.getCantidad());
+                detalleDTO.setFolioComanda(folio);
+                detalleDTO.setImporteTotal(detalle.getImporteTotal());
+                detalleDTO.setNombreProducto(detalle.getProducto().getNombre());
+                detalleDTO.setNotas_producto(detalle.getNotasEspeciales());
+                detalleDTO.setPrecioUnitario(detalle.getPrecioUnitario());
+                detallesDTO.add(detalleDTO);
+            }
+        
+        
+
+        comandasBO.modificarComandaBO(dto, detallesDTO);
+
+        // Restar stock
+        comandasBO.restarStockIngredientesPorProductosComandaBO(detallesDTO);
 
         JOptionPane.showMessageDialog(this, "Comanda marcada como entregada y stock actualizado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
