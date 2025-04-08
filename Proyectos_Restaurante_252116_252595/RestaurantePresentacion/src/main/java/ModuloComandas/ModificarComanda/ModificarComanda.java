@@ -14,6 +14,7 @@ import Entidades.Comandas.EstadoComanda;
 import Fabricas.FabricaComandas;
 import ModuloComandas.FormTablaComandas;
 import NegocioException.NegocioException;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -37,6 +38,7 @@ public ModificarComanda(String folioComanda, FormTablaComandas formTablaComanda)
     initComponents();
     this.folioComanda = folioComanda;
     this.formTablaComanda = formTablaComanda;
+    getContentPane().setBackground(new Color(0xe71d1d));
 
     cargarDatosComanda();
 }
@@ -155,6 +157,7 @@ private void cargarDatosComanda() {
             tblProductosHastaElMomento.getColumnModel().getColumn(4).setResizable(false);
         }
 
+        btnAgregarProducto.setBackground(new java.awt.Color(204, 255, 204));
         btnAgregarProducto.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnAgregarProducto.setText("Agregar Producto");
         btnAgregarProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -163,6 +166,7 @@ private void cargarDatosComanda() {
             }
         });
 
+        btnEliminarProducto.setBackground(new java.awt.Color(255, 102, 102));
         btnEliminarProducto.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnEliminarProducto.setText("Eliminar Producto");
         btnEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +190,7 @@ private void cargarDatosComanda() {
         btnBuscadorClientes.setText("Buscador Clientes");
         btnBuscadorClientes.setEnabled(false);
 
+        btnModificarComanda.setBackground(new java.awt.Color(204, 204, 204));
         btnModificarComanda.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
         btnModificarComanda.setText("Modificar Comanda");
         btnModificarComanda.addActionListener(new java.awt.event.ActionListener() {
@@ -194,6 +199,7 @@ private void cargarDatosComanda() {
             }
         });
 
+        btnAtras.setBackground(new java.awt.Color(255, 51, 51));
         btnAtras.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnAtras.setText("Atras");
 
@@ -203,6 +209,7 @@ private void cargarDatosComanda() {
         jLabel4.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         jLabel4.setText("Agregar A Mesa");
 
+        btnEditarNota.setBackground(new java.awt.Color(255, 255, 204));
         btnEditarNota.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnEditarNota.setText("Editar Nota");
         btnEditarNota.addActionListener(new java.awt.event.ActionListener() {

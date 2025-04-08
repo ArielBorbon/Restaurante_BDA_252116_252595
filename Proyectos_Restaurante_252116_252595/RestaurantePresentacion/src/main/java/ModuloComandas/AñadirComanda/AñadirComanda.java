@@ -14,6 +14,7 @@ import Entidades.Mesa.Mesa;
 import Fabricas.FabricaComandas;
 import Fabricas.FabricaMesas;
 import NegocioException.NegocioException;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -34,6 +35,7 @@ public class AñadirComanda extends javax.swing.JFrame {
     public AñadirComanda() {
         initComponents();
         llenarComboBoxMesasDisponibles();
+        getContentPane().setBackground(new Color(0xe71d1d));
     }
 
     /**
@@ -125,6 +127,7 @@ public class AñadirComanda extends javax.swing.JFrame {
             tblProductosHastaElMomento.getColumnModel().getColumn(4).setResizable(false);
         }
 
+        btnAgregarProducto.setBackground(new java.awt.Color(204, 255, 204));
         btnAgregarProducto.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnAgregarProducto.setText("Agregar Producto");
         btnAgregarProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -133,6 +136,7 @@ public class AñadirComanda extends javax.swing.JFrame {
             }
         });
 
+        btnEliminarProducto.setBackground(new java.awt.Color(255, 102, 102));
         btnEliminarProducto.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnEliminarProducto.setText("Eliminar Producto");
         btnEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -151,6 +155,7 @@ public class AñadirComanda extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jLabel2.setText("Asignar A un cliente");
 
+        btnBuscadorClientes.setBackground(new java.awt.Color(204, 255, 255));
         btnBuscadorClientes.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnBuscadorClientes.setText("Buscador Clientes");
 
@@ -162,6 +167,7 @@ public class AñadirComanda extends javax.swing.JFrame {
             }
         });
 
+        btnCrearComanda.setBackground(new java.awt.Color(255, 153, 102));
         btnCrearComanda.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
         btnCrearComanda.setText("Crear Comanda");
         btnCrearComanda.addActionListener(new java.awt.event.ActionListener() {
@@ -170,8 +176,14 @@ public class AñadirComanda extends javax.swing.JFrame {
             }
         });
 
+        btnAtras.setBackground(new java.awt.Color(255, 51, 51));
         btnAtras.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnAtras.setText("Atras");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel3.setText("(Puede Quedar En Blanco)");
@@ -179,6 +191,7 @@ public class AñadirComanda extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         jLabel4.setText("Agregar A Mesa");
 
+        btnEditarNota.setBackground(new java.awt.Color(255, 255, 204));
         btnEditarNota.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnEditarNota.setText("Editar Nota");
         btnEditarNota.addActionListener(new java.awt.event.ActionListener() {
@@ -397,6 +410,10 @@ public class AñadirComanda extends javax.swing.JFrame {
     private void cmbAgregarAMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAgregarAMesaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbAgregarAMesaActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnAtrasActionPerformed
 
     /**
      * @param args the command line arguments

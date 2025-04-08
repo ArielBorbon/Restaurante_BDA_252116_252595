@@ -56,6 +56,7 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
 
         pnlTabla.setLayout(new java.awt.BorderLayout());
 
+        btnAñadirComanda.setBackground(new java.awt.Color(153, 255, 153));
         btnAñadirComanda.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnAñadirComanda.setText("Añadir Comanda");
         btnAñadirComanda.addActionListener(new java.awt.event.ActionListener() {
@@ -64,6 +65,7 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
             }
         });
 
+        btnDetallesComanda.setBackground(new java.awt.Color(204, 204, 204));
         btnDetallesComanda.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnDetallesComanda.setText("Detalles Comanda");
         btnDetallesComanda.addActionListener(new java.awt.event.ActionListener() {
@@ -72,6 +74,7 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarComanda.setBackground(new java.awt.Color(255, 153, 153));
         btnCancelarComanda.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnCancelarComanda.setText("Cancelar Comanda");
         btnCancelarComanda.addActionListener(new java.awt.event.ActionListener() {
@@ -80,6 +83,7 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
             }
         });
 
+        btnMarcarComoCompletada.setBackground(new java.awt.Color(255, 255, 204));
         btnMarcarComoCompletada.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnMarcarComoCompletada.setText("Marcar Completada");
         btnMarcarComoCompletada.addActionListener(new java.awt.event.ActionListener() {
@@ -88,6 +92,7 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
             }
         });
 
+        btnReporteComandas.setBackground(new java.awt.Color(153, 255, 255));
         btnReporteComandas.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnReporteComandas.setText("Reporte De Comandas");
         btnReporteComandas.addActionListener(new java.awt.event.ActionListener() {

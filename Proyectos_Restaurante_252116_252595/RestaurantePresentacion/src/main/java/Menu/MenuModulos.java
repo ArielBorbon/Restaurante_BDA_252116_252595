@@ -91,6 +91,7 @@ public class MenuModulos extends javax.swing.JFrame {
             }
         });
 
+        btnComandas.setBackground(new Color(0xe71d1d));
         btnComandas.setFont(new java.awt.Font("Arial Black", 1, 28)); // NOI18N
         btnComandas.setText("Comandas");
         btnComandas.addActionListener(new java.awt.event.ActionListener() {
