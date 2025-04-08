@@ -113,6 +113,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Detalles Comanda"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDetallesComandaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCancelarComanda">
       <Properties>
@@ -132,6 +135,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Marcar Completada"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMarcarComoCompletadaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnReporteComandas">
       <Properties>

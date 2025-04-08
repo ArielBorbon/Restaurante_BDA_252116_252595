@@ -4,7 +4,17 @@
  */
 package ModuloComandas;
 
+import BO.ComandasBO.ComandaBO;
+import DTOS.Comandas.NuevaComandaDTO;
+import DTOS.Comandas.NuevoDetalleComandaDTO;
+import Entidades.Comandas.Comanda;
+import Entidades.Comandas.DetalleComanda;
+import Entidades.Comandas.EstadoComanda;
+import Fabricas.FabricaComandas;
 import ModuloComandas.AñadirComanda.AñadirComanda;
+import ModuloComandas.ModificarComanda.ModificarComanda;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -56,6 +66,11 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
 
         btnDetallesComanda.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnDetallesComanda.setText("Detalles Comanda");
+        btnDetallesComanda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDetallesComandaActionPerformed(evt);
+            }
+        });
 
         btnCancelarComanda.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnCancelarComanda.setText("Cancelar Comanda");
@@ -67,6 +82,11 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
 
         btnMarcarComoCompletada.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnMarcarComoCompletada.setText("Marcar Completada");
+        btnMarcarComoCompletada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMarcarComoCompletadaActionPerformed(evt);
+            }
+        });
 
         btnReporteComandas.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         btnReporteComandas.setText("Reporte De Comandas");
@@ -141,6 +161,76 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
         AñadirComanda añadirComanda = new AñadirComanda();
         añadirComanda.setVisible(true);
     }//GEN-LAST:event_btnAñadirComandaActionPerformed
+
+    private void btnDetallesComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesComandaActionPerformed
+        
+            int filaSeleccionada = formTablaComanda.getTblComandasAbiertas().getSelectedRow();
+
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Selecciona una comanda para modificar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    String folioComanda = (String) formTablaComanda.getTblComandasAbiertas().getValueAt(filaSeleccionada, 0); 
+
+    ModificarComanda modificarComanda = new ModificarComanda(folioComanda , formTablaComanda);
+    modificarComanda.setVisible(true);
+        
+        
+    }//GEN-LAST:event_btnDetallesComandaActionPerformed
+
+    private void btnMarcarComoCompletadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarcarComoCompletadaActionPerformed
+        try {
+        int filaSeleccionada = formTablaComanda.getTblComandasAbiertas().getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona una comanda para marcar como completada.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String folio = (String) formTablaComanda.getTblComandasAbiertas().getValueAt(filaSeleccionada, 0);
+        ComandaBO comandasBO = FabricaComandas.crearComandaBO();
+
+        Comanda comanda = comandasBO.obtenerComandaPorFolioBO(folio);
+        List<DetalleComanda> detalles = comandasBO.obtenerListaDetallesComandaBO(comanda);
+
+        if (comanda.getEstado() == EstadoComanda.ENTREGADA) {
+            JOptionPane.showMessageDialog(this, "Esta comanda ya fue marcada como entregada.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        NuevaComandaDTO dto = new NuevaComandaDTO();
+        dto.setFolio(folio);
+        
+            if (comanda.getClienteFrecuente() != null) {
+                dto.setCorreoCliente(comanda.getClienteFrecuente().getCorreo());
+            }else{
+                dto.setCorreoCliente(null);
+            }
+     
+        dto.setEstado_comanda(EstadoComanda.ENTREGADA);
+        dto.setNum_mesa(comanda.getMesa().getNum_mesa());
+        dto.setFecha_hora(comanda.getFechaHora());
+        
+        
+//        NuevoDetalleComandaDTO nuevoDetalleDTO = new NuevoDetalleComandaDTO();
+//        
+//        
+//
+//        comandasBO.modificarComandaBO(dto, detalles);
+//
+//        // Restar stock
+//        comandasBO.restarStockIngredientesPorProductosComandaBO(detalles);
+
+        JOptionPane.showMessageDialog(this, "Comanda marcada como entregada y stock actualizado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+
+        formTablaComanda.llenarTablaComandasAbiertas();
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al completar la comanda: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_btnMarcarComoCompletadaActionPerformed
 
     /**
      * @param args the command line arguments

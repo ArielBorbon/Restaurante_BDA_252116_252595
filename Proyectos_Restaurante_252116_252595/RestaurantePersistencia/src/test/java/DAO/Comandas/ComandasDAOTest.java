@@ -4,7 +4,11 @@
  */
 package DAO.Comandas;
 
-import DTOS.Comandas.NuevoDetalleComandaDTO;
+import Entidades.Comandas.Comanda;
+import Entidades.Comandas.DetalleComanda;
+import Excepciones.PersistenciaException;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -321,6 +325,41 @@ public class ComandasDAOTest {
 //            
 //            
 //    }
+    
+    
+//    @Test
+//    public void pruebaBuscarPorFolio() throws PersistenciaException{
+//        ComandasDAO comandaDAO = new ComandasDAO();
+//        Comanda comanda = comandaDAO.obtenerComandaPorFolio("OB-20250408-001");
+//        
+//        assertNull (comanda.getClienteFrecuente());
+//        assertEquals("ABIERTA" , comanda.getEstado().toString());
+//        assertEquals("OB-20250408-001" , comanda.getFolio());
+//        assertEquals(500.0 , comanda.getTotal());
+//        assertEquals (2 , comanda.getMesa().getId());   
+//    }
+//    
+//    @Test
+//    public void pruebaListaDetallesComanda() throws PersistenciaException{
+//                ComandasDAO comandaDAO = new ComandasDAO();
+//        Comanda comanda = comandaDAO.obtenerComandaPorFolio("OB-20250408-001");
+//        List<DetalleComanda> detalles = comandaDAO.obtenerListaDetallesComanda(comanda);
+//        
+//        for (DetalleComanda detalle : detalles) {
+//            assertEquals(1 , detalle.getId());
+//            assertEquals(2 , detalle.getCantidad());
+//            assertEquals(500 , detalle.getImporteTotal());
+//            assertEquals("" , detalle.getNotasEspeciales());
+//            assertEquals(250 , detalle.getPrecioUnitario());
+//            assertEquals(1 , detalle.getComanda().getId());
+//            assertEquals(2, detalle.getProducto().getId());
+//            
+//        }
+//    }
+    
+    
+    
+    
     
     
     

@@ -31,4 +31,6 @@ public interface IMesaBO {
     boolean verRelacionesMesaBO(int num_mesa);
     
     public Mesa crearMesaEnOrdenBO();
+    
+    public Mesa obtenerMesaPorNumMesaBO(int numeroMesa);
 }

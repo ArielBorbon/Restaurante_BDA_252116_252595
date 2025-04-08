@@ -19,6 +19,7 @@ import Entidades.Ingredientes.Ingrediente;
 import Entidades.Ingredientes.Unidad_Medida;
 import Entidades.Mesa.Mesa;
 import Entidades.Productos.Producto;
+import Excepciones.PersistenciaException;
 import ManejadorConexiones.ManejadorConexiones;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -500,7 +502,37 @@ public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> det
     }
     
     
+    @Override
+    public Comanda obtenerComandaPorFolio(String folio) throws PersistenciaException {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        try {
+            TypedQuery<Comanda> query = em.createQuery(
+                "SELECT c FROM Comanda c WHERE c.folio = :folio", Comanda.class);
+            query.setParameter("folio", folio);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al obtener la comanda por folio", e);
+        }
+    }
 
+    
+    @Override
+    public List<DetalleComanda> obtenerListaDetallesComanda(Comanda comanda) throws PersistenciaException {
+    EntityManager em = ManejadorConexiones.getEntityManager();
+    try {
+        TypedQuery<DetalleComanda> query = em.createQuery(
+            "SELECT d FROM DetalleComanda d WHERE d.comanda.id = :idComanda", DetalleComanda.class);
+        query.setParameter("idComanda", comanda.getId());
+        return query.getResultList();
+    } catch (Exception e) {
+        throw new PersistenciaException("Error al obtener los detalles de la comanda", e);
+    }
+}
+
+
+    
     
     
     

@@ -11,8 +11,10 @@ import DAO.Productos.ProductosDAO;
 import DTOS.Comandas.NuevaComandaDTO;
 import DTOS.Comandas.NuevoDetalleComandaDTO;
 import Entidades.Comandas.Comanda;
+import Entidades.Comandas.DetalleComanda;
 import Entidades.Productos.Producto;
-import Fabricas.FabricaComandas;
+import Excepciones.PersistenciaException;
+import NegocioException.NegocioException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -221,5 +223,32 @@ public class ComandaBO implements IComandaBO {
 
         return comandas; 
     }
+    
+    
+    
+    
+    
+    
+        public Comanda obtenerComandaPorFolioBO(String folio) throws NegocioException {
+        try {
+            return comandasDAO.obtenerComandaPorFolio(folio);
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error en la lógica al buscar la comanda por folio", e);
+        }
+    }
+    
+    
+        public List<DetalleComanda> obtenerListaDetallesComandaBO(Comanda comanda) throws NegocioException {
+        try {
+            return comandasDAO.obtenerListaDetallesComanda(comanda);
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al recuperar detalles de la comanda", e);
+        }
+    }
+
+    
+    
+    
+    
 
 }

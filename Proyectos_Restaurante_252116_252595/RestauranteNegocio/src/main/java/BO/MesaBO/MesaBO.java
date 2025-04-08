@@ -67,7 +67,10 @@ public class MesaBO implements IMesaBO  {
     }    
     
     
-    
+    @Override
+    public Mesa obtenerMesaPorNumMesaBO(int numeroMesa)   {
+        return mesaDAO.obtenerMesaPorNumMesa(numeroMesa);
+    }
     
     
     

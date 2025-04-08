@@ -7,6 +7,8 @@ package BO.ComandasBO;
 import DTOS.Comandas.NuevaComandaDTO;
 import DTOS.Comandas.NuevoDetalleComandaDTO;
 import Entidades.Comandas.Comanda;
+import Entidades.Comandas.DetalleComanda;
+import NegocioException.NegocioException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -33,4 +35,6 @@ public interface IComandaBO {
     List<Comanda> mostrarComandasAbiertasBO();
     
     List<Comanda> filtrarPorFecha(Calendar fechaInicio, Calendar fechaFin);
+    Comanda obtenerComandaPorFolioBO(String folio) throws NegocioException;
+    List<DetalleComanda> obtenerListaDetallesComandaBO(Comanda comanda) throws NegocioException;
 }

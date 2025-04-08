@@ -10,6 +10,7 @@ import Fabricas.FabricaComandas;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -50,6 +51,15 @@ public class FormTablaComandas extends javax.swing.JPanel {
 
         tblComandasAbiertas.setModel(modelo);
     }
+
+    public JTable getTblComandasAbiertas() {
+        return tblComandasAbiertas;
+    }
+    
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
