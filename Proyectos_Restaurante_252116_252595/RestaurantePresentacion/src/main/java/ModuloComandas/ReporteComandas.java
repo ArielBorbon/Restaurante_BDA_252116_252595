@@ -4,8 +4,23 @@
  */
 package ModuloComandas;
 
+import BO.ComandasBO.ComandaBO;
+import Entidades.Comandas.Comanda;
+import Fabricas.FabricaComandas;
+import NegocioException.NegocioException;
+import com.lowagie.text.Document;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -166,11 +181,11 @@ public class ReporteComandas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void filtroFechaInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroFechaInicioActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_filtroFechaInicioActionPerformed
 
     private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
-        
+
     }//GEN-LAST:event_btnFiltroActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -178,7 +193,11 @@ public class ReporteComandas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnImprimirReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirReporteActionPerformed
-        
+        try {
+            generarReporteClientesFrecuentes();
+        } catch (NegocioException ex) {
+            Logger.getLogger(ReporteComandas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnImprimirReporteActionPerformed
 
     /**
@@ -214,6 +233,59 @@ public class ReporteComandas extends javax.swing.JFrame {
                 new ReporteComandas().setVisible(true);
             }
         });
+    }
+
+    private void generarReporteClientesFrecuentes() throws NegocioException {
+        ComandaBO comandasBO = FabricaComandas.crearComandaBO();
+        List<Comanda> comandasAbiertas = comandasBO.mostrarComandasAbiertasBO();
+
+        Document document = new Document();
+        try {
+            String ruta = "reporte_comandas.pdf";
+            PdfWriter.getInstance(document, new FileOutputStream(ruta));
+            document.open();
+
+            document.add(new Paragraph("REPORTE: COMANDAS"));
+            document.add(new Paragraph(" "));
+
+            PdfPTable tabla = new PdfPTable(6);
+            tabla.setWidthPercentage(100);
+
+            tabla.addCell("Folio");
+            tabla.addCell("Mesa");
+            tabla.addCell("Estado");
+            tabla.addCell("Total");
+            tabla.addCell("Fecha");
+            tabla.addCell("Cliente");
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            for (Comanda c : comandasAbiertas) {
+                String folio = c.getFolio();
+                int numeroMesa = c.getMesa() != null ? c.getMesa().getNum_mesa() : -1;
+                String estado = c.getEstado() != null ? c.getEstado().toString() : "N/A";
+                double total = c.getTotal();
+                String fecha = c.getFechaHora() != null ? sdf.format(c.getFechaHora().getTime()) : "Sin Fecha";
+                String cliente = (c.getClienteFrecuente() != null)
+                        ? c.getClienteFrecuente().getNombre()
+                        : "Cliente General";
+
+                tabla.addCell(folio);
+                tabla.addCell(String.valueOf(numeroMesa));
+                tabla.addCell(estado);
+                tabla.addCell(String.valueOf(total));
+                tabla.addCell(fecha);
+                tabla.addCell(cliente);
+            }
+
+            document.add(tabla);
+            document.close();
+
+            JOptionPane.showMessageDialog(this, "Reporte generado con éxito: " + ruta);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al generar el PDF");
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
