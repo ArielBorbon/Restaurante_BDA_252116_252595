@@ -133,7 +133,8 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarComandaActionPerformed
 
     private void btnReporteComandasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteComandasActionPerformed
-        
+        ReporteComandas reporteComandas = new ReporteComandas();
+        reporteComandas.setVisible(true);
     }//GEN-LAST:event_btnReporteComandasActionPerformed
 
     private void btnAñadirComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirComandaActionPerformed
