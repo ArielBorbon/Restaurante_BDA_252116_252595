@@ -4,18 +4,13 @@
  */
 package ModuloComandas.AñadirComanda;
 
-import BO.ClienteBO.ClienteBO;
 import BO.ComandasBO.ComandaBO;
 import BO.MesaBO.MesaBO;
-import DAO.Clientes.ClientesDAO;
 import DTOS.Comandas.NuevaComandaDTO;
 import DTOS.Comandas.NuevoDetalleComandaDTO;
 import DTOS.Mesa.NuevaMesaDTO;
-import Entidades.Clientes.Cliente;
 import Entidades.Comandas.EstadoComanda;
 import Entidades.Mesa.Mesa;
-import Excepciones.PersistenciaException;
-import Fabricas.FabricaClientes;
 import Fabricas.FabricaComandas;
 import Fabricas.FabricaMesas;
 import NegocioException.NegocioException;
@@ -25,10 +20,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -317,34 +309,29 @@ public class AñadirComanda extends javax.swing.JFrame {
 
     private void btnCrearComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearComandaActionPerformed
         try {
-            // Verificar que se haya agregado al menos un producto
             int filas = tblProductosHastaElMomento.getRowCount();
             if (filas == 0) {
                 JOptionPane.showMessageDialog(this, "Agrega al menos un producto antes de crear la comanda.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // Verificar que se haya seleccionado una mesa
             String mesaSeleccionada = (String) cmbAgregarAMesa.getSelectedItem();
             if (mesaSeleccionada == null || mesaSeleccionada.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Selecciona una mesa para la comanda.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // Log para verificar si se seleccionó un cliente
-            if (clienteIdSeleccionado != null) {
-                System.out.println("ID Cliente seleccionado: " + clienteIdSeleccionado);
-            } else {
-                System.out.println("No se seleccionó cliente.");
+            String clienteNombre = txtClienteSeleccionadoNombre.toString();
+            if (clienteNombre == null || clienteNombre.isEmpty()) {
+                clienteNombre = null;
+
             }
 
-            // Crear la comanda
             ComandaBO comandasBO = FabricaComandas.crearComandaBO();
             String folio = comandasBO.generarFolioComandaBO();
 
             int numeroMesa = Integer.parseInt(mesaSeleccionada);
 
-            // Crear detalles de la comanda a partir de los productos en la tabla
             List<NuevoDetalleComandaDTO> detalles = new ArrayList<>();
             for (int i = 0; i < filas; i++) {
                 NuevoDetalleComandaDTO detalle = new NuevoDetalleComandaDTO();
@@ -357,14 +344,12 @@ public class AñadirComanda extends javax.swing.JFrame {
                 detalles.add(detalle);
             }
 
-            // Verificar si hay suficiente stock para los productos seleccionados
             boolean hayStock = comandasBO.verificarStockNecesarioProductosBO(detalles);
             if (!hayStock) {
                 JOptionPane.showMessageDialog(this, "No hay stock suficiente para los productos seleccionados.", "Stock insuficiente", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            // Verificar y ocupar la mesa seleccionada
             MesaBO mesaBO = FabricaMesas.crearMesaBO();
             NuevaMesaDTO nuevaMesaDTO = new NuevaMesaDTO();
             Mesa mesa = mesaBO.obtenerMesaPorNumMesaBO(numeroMesa);
@@ -372,38 +357,24 @@ public class AñadirComanda extends javax.swing.JFrame {
             nuevaMesaDTO.setEstado(mesa.getEstado());
             mesaBO.ocuparMesaBO(nuevaMesaDTO);
 
-            // Obtener la fecha y hora actual
             Calendar fecha_hora = Calendar.getInstance();
-
-            // Crear una nueva comanda
+            // Creamos la comanda
             NuevaComandaDTO nuevaComanda = new NuevaComandaDTO();
             nuevaComanda.setFolio(folio);
             nuevaComanda.setFecha_hora(fecha_hora);
             nuevaComanda.setEstado_comanda(EstadoComanda.ABIERTA);
-
-            // Asignar el cliente solo si fue seleccionado
-            if (clienteIdSeleccionado != null) {
-                nuevaComanda.setCorreoCliente(clienteIdSeleccionado.toString());
-            } else {
-                nuevaComanda.setCorreoCliente(null); // Cliente no seleccionado
-            }
-
+            nuevaComanda.setCorreoCliente(clienteNombre);
             nuevaComanda.setNum_mesa(numeroMesa);
 
-            // Registrar la comanda
             comandasBO.registrarComandaBO(nuevaComanda, detalles);
+            //  comandasBO.restarStockIngredientesPorProductosComandaBO(detalles);
 
-            // Mostrar mensaje de éxito
             JOptionPane.showMessageDialog(this, "¡Comanda creada exitosamente con folio: " + folio + "!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-            // Cerrar el formulario
             dispose();
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Error al crear la comanda: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Ha ocurrido un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnCrearComandaActionPerformed
@@ -420,33 +391,8 @@ public class AñadirComanda extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
 
-    private Long clienteIdSeleccionado = null;
-
     private void btnBuscadorClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscadorClientesActionPerformed
-        try {
-            String nombreCliente = txtClienteSeleccionadoNombre.getText().trim();
-
-            if (nombreCliente.isEmpty()) {
-                clienteIdSeleccionado = null;
-                JOptionPane.showMessageDialog(this, "Cliente no seleccionado. Puedes continuar sin cliente.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            } else {
-                ClienteBO clienteBO = FabricaClientes.crearClienteBO();
-                Long idClienteFrecuente = clienteBO.obtenerIdClienteFrecuentePorNombreCliente(nombreCliente);
-
-                if (idClienteFrecuente == null) {
-                    JOptionPane.showMessageDialog(this, "Cliente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    clienteIdSeleccionado = idClienteFrecuente;
-                    txtClienteSeleccionadoNombre.setText(nombreCliente);
-                    JOptionPane.showMessageDialog(this, "Cliente encontrado: " + nombreCliente, "Cliente encontrado", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-        } catch (NegocioException e) {
-            JOptionPane.showMessageDialog(this, "Error al buscar el cliente: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(AñadirComanda.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnBuscadorClientesActionPerformed
 
     /**
