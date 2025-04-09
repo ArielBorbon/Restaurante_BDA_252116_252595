@@ -7,6 +7,7 @@ package DAO.Clientes;
 import DTOS.Clientes.NuevoClienteDTO;
 import DTOS.Clientes.NuevoClienteFrecuenteDTO;
 import Entidades.Clientes.Cliente;
+import Excepciones.PersistenciaException;
 import java.util.List;
 
 /**
@@ -25,4 +26,6 @@ public interface IClientesDAO {
     public abstract List<NuevoClienteFrecuenteDTO> obtenerClientesFrecuentes();
     public abstract Cliente obtenerPorCorreo(String Correo);
     public abstract List<Cliente> filtrarClientesReporte(String correo);
+    public abstract Long obtenerIdPorNombre(String nombre);
+    public abstract Long obtenerIdClienteFrecuentePorNombreCliente(String nombreCliente) throws PersistenciaException;
 }

@@ -8,6 +8,7 @@ import DAO.Clientes.ClientesDAO;
 import DTOS.Clientes.NuevoClienteDTO;
 import NegocioException.NegocioException;
 import Entidades.Clientes.Cliente;
+import Excepciones.PersistenciaException;
 import java.util.List;
 
 /**
@@ -80,11 +81,34 @@ public class ClienteBO implements IClienteBO {
         return clientesDAO.mostrarListaClientes();
     }
 
+    @Override
     public List<Cliente> filtrarClientes(String nombre, String correo) throws NegocioException {
         return clientesDAO.filtrarClientes(nombre, correo);
     }
 
+    @Override
     public List<Cliente> filtrarClientesReporte(String correo) throws NegocioException {
         return clientesDAO.filtrarClientesReporte(correo);
+    }
+
+    @Override
+    public List<Cliente> filtrarPorNombre(String nombre) {
+        ClientesDAO clienteDAO = new ClientesDAO();
+
+        return clienteDAO.filtrarPorNombre(nombre);
+    }
+    
+    @Override
+    public Long obtenerIdPorNombreCliente(String nombre) throws NegocioException {
+        return clientesDAO.obtenerIdPorNombre(nombre);
+    }
+    
+    @Override
+    public Long obtenerIdClienteFrecuentePorNombreCliente(String nombreCliente) throws PersistenciaException {
+        try {
+            return clientesDAO.obtenerIdClienteFrecuentePorNombreCliente(nombreCliente);
+        } catch (PersistenciaException e) {
+            throw new PersistenciaException("Error al obtener idClienteFrecuente por nombre", e);
+        }
     }
 }

@@ -7,22 +7,14 @@ package ModuloClientes;
 import BO.ClienteBO.ClienteBO;
 import DAO.Clientes.Encriptador;
 import Entidades.Clientes.Cliente;
-import Entidades.Clientes.ClientesFrecuentes;
 import Fabricas.FabricaClientes;
 import NegocioException.NegocioException;
-import com.lowagie.text.Document;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Font;
-import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *

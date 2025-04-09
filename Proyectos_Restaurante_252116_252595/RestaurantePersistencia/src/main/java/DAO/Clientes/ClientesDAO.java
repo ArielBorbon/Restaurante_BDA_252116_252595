@@ -8,6 +8,7 @@ import DTOS.Clientes.NuevoClienteDTO;
 import DTOS.Clientes.NuevoClienteFrecuenteDTO;
 import Entidades.Clientes.Cliente;
 import Entidades.Clientes.ClientesFrecuentes;
+import Excepciones.PersistenciaException;
 import ManejadorConexiones.ManejadorConexiones;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -69,11 +70,11 @@ public class ClientesDAO implements IClientesDAO {
     public List<Cliente> filtrarPorNombre(String filtroNombre) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         String jpqlQuery = """
-            SELECT c FROM Cliente c WHERE c.nombre LIKE :filtroNombre
+        SELECT c FROM Cliente c WHERE c.nombre LIKE :filtroNombre
                            """;
         TypedQuery<Cliente> query = entityManager.createQuery(jpqlQuery, Cliente.class);
-        query.setParameter("filtroNombre", "%" + filtroNombre + "%");
-        return query.getResultList();
+        query.setParameter("filtroNombre", "%" + filtroNombre + "%"); // Esto asegura que busque coincidencias parciales
+        return query.getResultList(); // Devuelve una lista de clientes
     }
 
     @Override
@@ -226,5 +227,31 @@ public class ClientesDAO implements IClientesDAO {
         }
 
         return query.getResultList();
+    }
+
+    @Override
+    public Long obtenerIdPorNombre(String nombre) {
+        EntityManager entityManager = ManejadorConexiones.getEntityManager();
+        String jpqlQuery = "SELECT c.id FROM Cliente c WHERE c.nombre LIKE :nombre";
+        TypedQuery<Long> query = entityManager.createQuery(jpqlQuery, Long.class);
+        query.setParameter("nombre", "%" + nombre + "%");
+        List<Long> results = query.getResultList();
+        if (results.isEmpty()) {
+            return null; // Si no se encuentra el cliente
+        }
+        return results.get(0); // Devuelve el primer ID encontrado
+    }
+
+    @Override
+    public Long obtenerIdClienteFrecuentePorNombreCliente(String nombreCliente) throws PersistenciaException {
+        try {
+            EntityManager entityManager = ManejadorConexiones.getEntityManager();
+            String jpql = "SELECT c.id FROM ClientesFrecuentes c WHERE c.nombre LIKE :nombreCliente";
+            TypedQuery<Long> query = entityManager.createQuery(jpql, Long.class);
+            query.setParameter("nombreCliente", "%" + nombreCliente + "%");  // Usar LIKE para una búsqueda parcial
+            return query.getSingleResult();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al obtener idClienteFrecuente por nombre", e);
+        }
     }
 }
