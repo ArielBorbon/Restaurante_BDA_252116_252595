@@ -5,6 +5,7 @@
 package BO.IngredienteBO;
 
 import DAO.Ingredientes.IngredientesDAO;
+import DTOS.Ingredientes.IngredienteConCantidadNecesariaDTO;
 import DTOS.Ingredientes.NuevoIngredienteDTO;
 import Entidades.Ingredientes.Ingrediente;
 import NegocioException.NegocioException;
@@ -189,6 +190,16 @@ public class IngredienteBO implements IIngredienteBO {
         public List<Ingrediente> obtenerIngredientesPorNombreProductoBO(String nombreProducto){
             return ingredienteDAO.obtenerIngredientesPorNombreProducto(nombreProducto);
         }
+        
+        
+        
+        @Override
+        public List<IngredienteConCantidadNecesariaDTO> obtenerIngredientesConCantidadPorProductoBO(String nombreProducto){
+            return ingredienteDAO.obtenerIngredientesConCantidadPorProducto(nombreProducto);
+        }
+        
+        
+        
         
 }
         

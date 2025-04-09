@@ -10,6 +10,7 @@ import Entidades.Clientes.Cliente;
 import Entidades.Clientes.ClientesFrecuentes;
 import Fabricas.FabricaClientes;
 import NegocioException.NegocioException;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -89,6 +90,11 @@ public class FormClientesTabla extends javax.swing.JPanel {
                 "Nombre", "Correo", "Teléfono", "Fecha Registro", "Puntos", "Visitas", "Total Acumulado"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -106,6 +112,10 @@ public class FormClientesTabla extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+
+    }//GEN-LAST:event_jTable1MouseClicked
 
     public JTable getTablabaClientes() {
         return this.jTable1;

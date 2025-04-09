@@ -31,4 +31,6 @@ public interface IMesasDAO {
     List<Mesa> obtenerListaMesasTodas();
     
     Mesa crearMesaEnOrden();
+    
+    boolean existenMesas();
 }

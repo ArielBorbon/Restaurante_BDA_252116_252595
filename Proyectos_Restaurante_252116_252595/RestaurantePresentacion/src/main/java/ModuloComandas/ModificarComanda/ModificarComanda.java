@@ -202,6 +202,11 @@ private void cargarDatosComanda() {
         btnAtras.setBackground(new java.awt.Color(255, 51, 51));
         btnAtras.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnAtras.setText("Atras");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel3.setText("(Puede Quedar En Blanco)");
@@ -409,6 +414,10 @@ try {
     private void txtNumMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumMesaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumMesaActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnAtrasActionPerformed
 
 
 

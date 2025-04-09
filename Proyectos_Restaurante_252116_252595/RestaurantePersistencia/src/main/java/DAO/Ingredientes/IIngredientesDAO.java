@@ -4,6 +4,7 @@
  */
 package DAO.Ingredientes;
 
+import DTOS.Ingredientes.IngredienteConCantidadNecesariaDTO;
 import DTOS.Ingredientes.NuevoIngredienteDTO;
 import Entidades.Ingredientes.Ingrediente;
 import java.util.List;
@@ -26,5 +27,7 @@ public interface IIngredientesDAO {
     
     boolean tieneRelacionesActivas(String nombreIngrediente, String unidadMedida);
     
-    public List<Ingrediente> obtenerIngredientesPorNombreProducto(String nombreProducto);
+    List<Ingrediente> obtenerIngredientesPorNombreProducto(String nombreProducto);
+    
+    List<IngredienteConCantidadNecesariaDTO> obtenerIngredientesConCantidadPorProducto(String nombreProducto);
 }

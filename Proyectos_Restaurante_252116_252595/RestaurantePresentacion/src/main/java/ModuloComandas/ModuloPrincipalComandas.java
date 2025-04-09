@@ -5,13 +5,16 @@
 package ModuloComandas;
 
 import BO.ComandasBO.ComandaBO;
+import BO.MesaBO.MesaBO;
 import DTOS.Comandas.NuevaComandaDTO;
 import DTOS.Comandas.NuevoDetalleComandaDTO;
+import DTOS.Mesa.NuevaMesaDTO;
 import Entidades.Clientes.ClientesFrecuentes;
 import Entidades.Comandas.Comanda;
 import Entidades.Comandas.DetalleComanda;
 import Entidades.Comandas.EstadoComanda;
 import Fabricas.FabricaComandas;
+import Fabricas.FabricaMesas;
 import ModuloComandas.AñadirComanda.AñadirComanda;
 import ModuloComandas.ModificarComanda.ModificarComanda;
 import java.awt.Color;
@@ -54,8 +57,9 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
         btnCancelarComanda = new javax.swing.JButton();
         btnMarcarComoCompletada = new javax.swing.JButton();
         btnReporteComandas = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
         jLabel1.setText("Modulo Comandas");
@@ -107,6 +111,15 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
             }
         });
 
+        btnSalir.setBackground(new java.awt.Color(255, 102, 102));
+        btnSalir.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -128,7 +141,9 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
                             .addComponent(btnAñadirComanda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnMarcarComoCompletada, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(24, 24, 24)
+                        .addComponent(btnSalir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnReporteComandas, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(43, 43, 43))
         );
@@ -152,7 +167,9 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
                         .addComponent(btnCancelarComanda)
                         .addGap(0, 67, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnReporteComandas)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnReporteComandas)
+                    .addComponent(btnSalir))
                 .addGap(27, 27, 27))
         );
 
@@ -160,7 +177,53 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarComandaActionPerformed
-        // TODO add your handling code here:
+         int filaSeleccionada = formTablaComanda.getTblComandasAbiertas().getSelectedRow();
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Selecciona una comanda para cancelar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    String folio = (String) formTablaComanda.getTblComandasAbiertas().getValueAt(filaSeleccionada, 0); // Asumiendo que el folio está en la columna 0
+
+    int opcion = JOptionPane.showConfirmDialog(this, 
+        "¿Estás seguro de que deseas cancelar la comanda con folio: " + folio + "?", 
+        "Confirmar cancelación", 
+        JOptionPane.YES_NO_OPTION);
+
+    if (opcion != JOptionPane.YES_OPTION) {
+        return;
+    }
+
+    try {
+        ComandaBO comandaBO = FabricaComandas.crearComandaBO();
+        Comanda comanda = comandaBO.obtenerComandaPorFolioBO(folio);
+
+        if (comanda.getEstado() == EstadoComanda.CANCELADA) {
+            JOptionPane.showMessageDialog(this, "La comanda ya está cancelada.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if (comanda.getEstado() == EstadoComanda.ENTREGADA) {
+            JOptionPane.showMessageDialog(this, "No puedes cancelar una comanda ya entregada.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        comandaBO.cancelarComandaBO(folio);
+
+        MesaBO mesaBO = FabricaMesas.crearMesaBO();
+        NuevaMesaDTO nuevaMesaDTO = new NuevaMesaDTO();
+        nuevaMesaDTO.setEstado(comanda.getMesa().getEstado());
+        nuevaMesaDTO.setNum_mesa(comanda.getMesa().getNum_mesa());
+        mesaBO.disponibilizarMesaBO(nuevaMesaDTO);
+
+        JOptionPane.showMessageDialog(this, "¡Comanda cancelada exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+        formTablaComanda.llenarTablaComandasAbiertas();
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al cancelar la comanda: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
     }//GEN-LAST:event_btnCancelarComandaActionPerformed
 
     private void btnReporteComandasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteComandasActionPerformed
@@ -169,7 +232,7 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReporteComandasActionPerformed
 
     private void btnAñadirComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirComandaActionPerformed
-        AñadirComanda añadirComanda = new AñadirComanda();
+        AñadirComanda añadirComanda = new AñadirComanda(formTablaComanda);
         añadirComanda.setVisible(true);
     }//GEN-LAST:event_btnAñadirComandaActionPerformed
 
@@ -242,6 +305,13 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
             // Restar stock
             comandasBO.restarStockIngredientesPorProductosComandaBO(detallesDTO);
             
+            //quitarle lo ocupado a la mesa
+            MesaBO mesaBO = FabricaMesas.crearMesaBO();
+            NuevaMesaDTO nuevaMesaDTO = new NuevaMesaDTO();
+            nuevaMesaDTO.setEstado(comanda.getMesa().getEstado());
+            nuevaMesaDTO.setNum_mesa(comanda.getMesa().getNum_mesa());
+            mesaBO.disponibilizarMesaBO(nuevaMesaDTO);
+            
             // Actualiza las visitas, total y puntos de los clientes
             if (comanda.getClienteFrecuente() != null) {
                 ClientesFrecuentes clienteFrecuente = comanda.getClienteFrecuente();
@@ -258,40 +328,11 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnMarcarComoCompletadaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ModuloPrincipalComandas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ModuloPrincipalComandas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ModuloPrincipalComandas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ModuloPrincipalComandas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ModuloPrincipalComandas().setVisible(true);
-            }
-        });
-    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAñadirComanda;
@@ -299,6 +340,7 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
     private javax.swing.JButton btnDetallesComanda;
     private javax.swing.JButton btnMarcarComoCompletada;
     private javax.swing.JButton btnReporteComandas;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel pnlTabla;
     // End of variables declaration//GEN-END:variables

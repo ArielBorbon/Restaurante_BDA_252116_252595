@@ -58,13 +58,13 @@ public class MenuModulos extends javax.swing.JFrame {
         btnClientes = new javax.swing.JButton();
         btnComandas = new javax.swing.JButton();
         lblPersona = new javax.swing.JLabel();
-        btnMesas = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/DeshuesaderoLogo.png"))); // NOI18N
 
-        btnIngredientes.setBackground(new Color(0x4dd3e0));
+        btnIngredientes.setBackground(new Color(0xb8893c));
         btnIngredientes.setFont(new java.awt.Font("Arial Black", 0, 28)); // NOI18N
         btnIngredientes.setText("Ingredientes");
         btnIngredientes.addActionListener(new java.awt.event.ActionListener() {
@@ -103,11 +103,12 @@ public class MenuModulos extends javax.swing.JFrame {
         lblPersona.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         lblPersona.setText("Admin: Ariel Eduardo Jimenez Garcia");
 
-        btnMesas.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
-        btnMesas.setText("Mesas");
-        btnMesas.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir.setBackground(new java.awt.Color(255, 0, 51));
+        btnSalir.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMesasActionPerformed(evt);
+                btnSalirActionPerformed(evt);
             }
         });
 
@@ -115,26 +116,27 @@ public class MenuModulos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnIngredientes)
-                .addGap(335, 335, 335))
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblPersona)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnClientes)
-                        .addGap(206, 206, 206)
-                        .addComponent(btnMesas))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnComandas)
                         .addGap(80, 80, 80)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
-                        .addComponent(btnProductos)))
-                .addGap(25, 25, 25))
+                        .addComponent(btnProductos)
+                        .addGap(25, 25, 25))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblPersona)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnClientes)
+                        .addGap(261, 261, 261)
+                        .addComponent(btnSalir)
+                        .addGap(17, 17, 17))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnIngredientes)
+                .addGap(335, 335, 335))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,13 +156,13 @@ public class MenuModulos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnClientes)
-                            .addComponent(btnMesas))
+                        .addComponent(btnClientes)
                         .addGap(31, 31, 31))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblPersona)
-                        .addGap(16, 16, 16))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblPersona)
+                            .addComponent(btnSalir))
+                        .addGap(11, 11, 11))))
         );
 
         pack();
@@ -201,9 +203,9 @@ public class MenuModulos extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnComandasActionPerformed
 
-    private void btnMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnMesasActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,8 +216,8 @@ public class MenuModulos extends javax.swing.JFrame {
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnComandas;
     private javax.swing.JButton btnIngredientes;
-    private javax.swing.JButton btnMesas;
     private javax.swing.JButton btnProductos;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblPersona;
     // End of variables declaration//GEN-END:variables

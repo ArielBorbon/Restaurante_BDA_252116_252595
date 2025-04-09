@@ -4,6 +4,7 @@
  */
 package BO.IngredienteBO;
 
+import DTOS.Ingredientes.IngredienteConCantidadNecesariaDTO;
 import DTOS.Ingredientes.NuevoIngredienteDTO;
 import Entidades.Ingredientes.Ingrediente;
 import NegocioException.NegocioException;
@@ -27,5 +28,7 @@ public interface IIngredienteBO {
     
     boolean tieneRelacionesActivasBO(String nombre, String unidadMedida) throws NegocioException;
     
-    public List<Ingrediente> obtenerIngredientesPorNombreProductoBO(String nombreProducto);
+    List<Ingrediente> obtenerIngredientesPorNombreProductoBO(String nombreProducto);
+    
+    List<IngredienteConCantidadNecesariaDTO> obtenerIngredientesConCantidadPorProductoBO(String nombreProducto);
 }

@@ -21,7 +21,7 @@ public class AgregarIngrediente extends javax.swing.JFrame {
     public AgregarIngrediente(FormIngredientesTabla formIngredientesTabla) {
         initComponents();
         this.formIngredientesTabla = formIngredientesTabla;
-        getContentPane().setBackground(new Color(0x4dd3e0));
+        getContentPane().setBackground(new Color(0xb8893c));
     }
 
     /**

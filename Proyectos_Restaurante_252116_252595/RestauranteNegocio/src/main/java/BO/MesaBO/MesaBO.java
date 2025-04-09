@@ -160,6 +160,14 @@ public class MesaBO implements IMesaBO  {
         
     }
     
+    
+    
+    
+    public boolean existenMesasBO() {
+    return mesaDAO.existenMesas();
+}
+
+    
 
     
     

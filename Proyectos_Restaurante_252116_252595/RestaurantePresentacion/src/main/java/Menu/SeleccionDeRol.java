@@ -4,7 +4,10 @@
  */
 package Menu;
 
+import BO.MesaBO.MesaBO;
+import Fabricas.FabricaMesas;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,6 +21,12 @@ public class SeleccionDeRol extends javax.swing.JFrame {
     public SeleccionDeRol() {
         initComponents();
         getContentPane().setBackground(new Color(0xF4FC89));
+        btnInsertarMesas.setVisible(false);
+        
+        MesaBO mesaBO = FabricaMesas.crearMesaBO();
+        if (!mesaBO.existenMesasBO()) {
+            btnInsertarMesas.setVisible(true);
+        }
     }
 
     /**
@@ -34,6 +43,8 @@ public class SeleccionDeRol extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnAdministrador = new javax.swing.JButton();
         btnMesero = new javax.swing.JButton();
+        btnInsertarMesas = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,6 +74,24 @@ public class SeleccionDeRol extends javax.swing.JFrame {
             }
         });
 
+        btnInsertarMesas.setBackground(new java.awt.Color(153, 255, 153));
+        btnInsertarMesas.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btnInsertarMesas.setText("Insertar Mesas");
+        btnInsertarMesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertarMesasActionPerformed(evt);
+            }
+        });
+
+        jButton1.setBackground(new java.awt.Color(255, 51, 51));
+        jButton1.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,7 +111,12 @@ public class SeleccionDeRol extends javax.swing.JFrame {
                         .addGap(394, 394, 394)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAdministrador))))
+                            .addComponent(btnAdministrador)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(203, 203, 203)
+                        .addComponent(btnInsertarMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -98,7 +132,14 @@ public class SeleccionDeRol extends javax.swing.JFrame {
                 .addComponent(btnAdministrador)
                 .addGap(61, 61, 61)
                 .addComponent(btnMesero)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnInsertarMesas)
+                        .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(19, 19, 19))))
         );
 
         pack();
@@ -117,6 +158,21 @@ public class SeleccionDeRol extends javax.swing.JFrame {
        menu.setVisible(true);
        dispose();
     }//GEN-LAST:event_btnMeseroActionPerformed
+
+    private void btnInsertarMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarMesasActionPerformed
+        for (int i = 0; i < 20; i++) {
+            MesaBO mesaBO = FabricaMesas.crearMesaBO();
+            mesaBO.crearMesaEnOrdenBO();
+        }
+        btnInsertarMesas.setVisible(false);
+        
+        
+         JOptionPane.showMessageDialog(null, "20 Mesas Añadidas Exitosamente","Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnInsertarMesasActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,7 +212,9 @@ public class SeleccionDeRol extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdministrador;
+    private javax.swing.JButton btnInsertarMesas;
     private javax.swing.JButton btnMesero;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -267,6 +267,21 @@ public class MesasDAO implements IMesasDAO {
     
     
     
+    @Override
+    public boolean existenMesas() {
+    EntityManager em = ManejadorConexiones.getEntityManager();
+    try {
+        Long cantidad = em.createQuery("SELECT COUNT(m) FROM Mesa m", Long.class).getSingleResult();
+        return cantidad > 0;
+    } finally {
+        em.close();
+    }
+}
+
+    
+    
+    
+    
     
     
     

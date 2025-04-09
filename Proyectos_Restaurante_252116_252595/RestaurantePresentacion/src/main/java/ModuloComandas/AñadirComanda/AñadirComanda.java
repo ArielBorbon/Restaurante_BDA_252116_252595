@@ -13,10 +13,10 @@ import DTOS.Mesa.NuevaMesaDTO;
 import Entidades.Clientes.Cliente;
 import Entidades.Comandas.EstadoComanda;
 import Entidades.Mesa.Mesa;
-import Excepciones.PersistenciaException;
 import Fabricas.FabricaClientes;
 import Fabricas.FabricaComandas;
 import Fabricas.FabricaMesas;
+import ModuloComandas.FormTablaComandas;
 import NegocioException.NegocioException;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -25,8 +25,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,14 +33,16 @@ import javax.swing.table.DefaultTableModel;
  * @author PC Gamer
  */
 public class AñadirComanda extends javax.swing.JFrame {
-
+    private FormTablaComandas formComandasAbiertas ;
+    private String nombreCliente;
     /**
      * Creates new form AñadirComanda
      */
-    public AñadirComanda() {
+    public AñadirComanda(FormTablaComandas formTablaComandas) {
         initComponents();
         llenarComboBoxMesasDisponibles();
         getContentPane().setBackground(new Color(0xe71d1d));
+        this.formComandasAbiertas = formTablaComandas;
     }
 
     /**
@@ -127,6 +128,7 @@ public class AñadirComanda extends javax.swing.JFrame {
         });
 
         txtClienteSeleccionadoNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtClienteSeleccionadoNombre.setEnabled(false);
         txtClienteSeleccionadoNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtClienteSeleccionadoNombreActionPerformed(evt);
@@ -326,12 +328,22 @@ public class AñadirComanda extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Selecciona una mesa para la comanda.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            
+    String clienteNombre = txtClienteSeleccionadoNombre.getText().trim();
+        if (clienteNombre.isEmpty()) {
+            clienteNombre = null;
+        }
+        
+        ClienteBO clienteBO = FabricaClientes.crearClienteBO();
+        List<Cliente> clienteLoco = clienteBO.filtrarPorNombre(clienteNombre);
+        Cliente clienteLoco2 = new Cliente();
+   
+        if (!clienteLoco.isEmpty()) { 
+            clienteLoco2 = clienteLoco.get(0); 
+            clienteNombre = clienteLoco2.getCorreo();
+        }
 
-            String clienteNombre = txtClienteSeleccionadoNombre.toString();
-            if (clienteNombre == null || clienteNombre.isEmpty()) {
-                clienteNombre = null;
-
-            }
+        
 
             ComandaBO comandasBO = FabricaComandas.crearComandaBO();
             String folio = comandasBO.generarFolioComandaBO();
@@ -377,11 +389,15 @@ public class AñadirComanda extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "¡Comanda creada exitosamente con folio: " + folio + "!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
+            
+            formComandasAbiertas.llenarTablaComandasAbiertas();
             dispose();
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Error al crear la comanda: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
+        } catch (NegocioException ex) {
+            Logger.getLogger(AñadirComanda.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnCrearComandaActionPerformed
 
@@ -401,97 +417,37 @@ public class AñadirComanda extends javax.swing.JFrame {
 
 
     private void btnBuscadorClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscadorClientesActionPerformed
+
         try {
-            String nombreCliente = txtClienteSeleccionadoNombre.getText().trim();
-
-            if (nombreCliente.isEmpty()) {
-                clienteIdSeleccionado = null;
-                JOptionPane.showMessageDialog(this, "Cliente no seleccionado. Puedes continuar sin cliente.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            ClienteBO clienteBO = FabricaClientes.crearClienteBO();
-            List<Cliente> clientesSimilares = clienteBO.filtrarPorNombre(nombreCliente);
-
-            // Si no se encuentran clientes similares
-            if (clientesSimilares.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No se encontraron clientes con el nombre proporcionado.", "No Encontrado", JOptionPane.ERROR_MESSAGE);
-            } else {
-                DefaultTableModel model = new DefaultTableModel();
-                model.addColumn("Nombre Cliente");
-
-                for (Cliente cliente : clientesSimilares) {
-                    model.addRow(new Object[]{cliente.getNombre()});
-                }
-
-                JTable table = new JTable(model);
-
-                JScrollPane scrollPane = new JScrollPane(table);
-                int option = JOptionPane.showConfirmDialog(this, scrollPane, "Selecciona un Cliente", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-                if (option == JOptionPane.OK_OPTION) {
-                    int selectedRow = table.getSelectedRow(); 
-
-                    if (selectedRow != -1) {
-                        String nombreClienteSeleccionado = (String) table.getValueAt(selectedRow, 0);
-
-                        Cliente clienteSeleccionado = null;
-                        for (Cliente cliente : clientesSimilares) {
-                            if (cliente.getNombre().equals(nombreClienteSeleccionado)) {
-                                clienteSeleccionado = cliente;
-                                break;
-                            }
-                        }
-
-                        if (clienteSeleccionado != null) {
-                            txtClienteSeleccionadoNombre.setText(clienteSeleccionado.getNombre());
-                            JOptionPane.showMessageDialog(this, "Cliente seleccionado: " + clienteSeleccionado.getNombre(), "Cliente Seleccionado", JOptionPane.INFORMATION_MESSAGE);
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(this, "No se seleccionó ningún cliente.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-                    }
-                }
-            }
-        } catch (NegocioException e) {
-            JOptionPane.showMessageDialog(this, "Error al buscar los clientes: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+            AñadirClienteComanda añadirClienteComanda = new AñadirClienteComanda(this);
+            añadirClienteComanda.setVisible(true);
+        } catch (NegocioException ex) {
+            Logger.getLogger(AñadirComanda.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
     }//GEN-LAST:event_btnBuscadorClientesActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AñadirComanda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AñadirComanda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AñadirComanda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AñadirComanda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AñadirComanda().setVisible(true);
-            }
-        });
+    public String getNombreCliente() {
+        return nombreCliente;
     }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public JTextField getTxtClienteSeleccionadoNombre() {
+        return txtClienteSeleccionadoNombre;
+    }
+
+    public void setTxtClienteSeleccionadoNombre(JTextField txtClienteSeleccionadoNombre) {
+        this.txtClienteSeleccionadoNombre = txtClienteSeleccionadoNombre;
+    }
+    
+    
+    
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarProducto;

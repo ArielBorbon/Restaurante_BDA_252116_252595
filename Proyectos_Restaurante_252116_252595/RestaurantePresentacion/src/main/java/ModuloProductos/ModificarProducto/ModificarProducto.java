@@ -7,6 +7,7 @@ package ModuloProductos.ModificarProducto;
 import BO.IngredienteBO.IngredienteBO;
 import ModuloProductos.AñadirProducto.*;
 import BO.ProductoBO.ProductoBO;
+import DTOS.Ingredientes.IngredienteConCantidadNecesariaDTO;
 import DTOS.Productos.NuevoProductoDTO;
 import DTOS.Productos.NuevoProductoOcupaIngredienteDTO;
 import Entidades.Ingredientes.Ingrediente;
@@ -51,14 +52,26 @@ public class ModificarProducto extends javax.swing.JFrame {
     cmbTipo.setSelectedItem(productoOriginal.getTipo().toString());
 
     IngredienteBO ingBO = FabricaIngredientes.crearIngredienteBO();
-    List<Ingrediente> ingredientes = ingBO.obtenerIngredientesPorNombreProductoBO(productoOriginal.getNombre());
-    DefaultTableModel modelo = (DefaultTableModel) tblTablaIngredientesHastaElMomento.getModel();
-    modelo.setRowCount(0);
+    
+    //esta lista tiene la cantidad que ocupa, la cual necesitamos colocar en la tercera columna
+// en lugar de traer la lista de Ingrediente...
+// List<Ingrediente> ingredientes = ingBO.obtenerIngredientesPorNombreProductoBO(...);
 
-    for (Ingrediente ing : ingredientes) {
-        Object[] fila = { ing.getNombre(), ing.getUnidad_medida(), 0 }; 
-        modelo.addRow(fila);
-    }
+List<IngredienteConCantidadNecesariaDTO> listaProductoOcupa =
+    ingBO.obtenerIngredientesConCantidadPorProductoBO(productoOriginal.getNombre());
+
+DefaultTableModel modelo = (DefaultTableModel) tblTablaIngredientesHastaElMomento.getModel();
+modelo.setRowCount(0);
+
+for (IngredienteConCantidadNecesariaDTO dto : listaProductoOcupa) {
+    Object[] fila = {
+        dto.getNombreIngrediente(),
+        dto.getUnidadMedida(),  
+        dto.getCantidadIngredienteNecesaria()
+    };
+    modelo.addRow(fila);
+}
+
 }
 
     
@@ -88,7 +101,8 @@ public class ModificarProducto extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnModificarProducto = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnModificarCantidad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -170,12 +184,21 @@ public class ModificarProducto extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 102, 102));
-        jButton2.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setBackground(new java.awt.Color(255, 102, 102));
+        btnCancelar.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnModificarCantidad.setBackground(new java.awt.Color(255, 255, 153));
+        btnModificarCantidad.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btnModificarCantidad.setText("Modificar Cantidad");
+        btnModificarCantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarCantidadActionPerformed(evt);
             }
         });
 
@@ -197,7 +220,7 @@ public class ModificarProducto extends javax.swing.JFrame {
                                 .addComponent(txtPrecio))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(129, 129, 129)
-                                .addComponent(jButton2))
+                                .addComponent(btnCancelar))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(27, 27, 27)
                                 .addComponent(btnModificarProducto)))
@@ -207,17 +230,20 @@ public class ModificarProducto extends javax.swing.JFrame {
                                 .addComponent(btnAgregarIngrediente)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnEliminarIngrediente))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(58, 58, 58))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnModificarCantidad)))
+                .addGap(58, 58, 58))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnModificarCantidad)
+                    .addComponent(jLabel1))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(2, 2, 2)
@@ -243,7 +269,7 @@ public class ModificarProducto extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnModificarProducto)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                        .addComponent(btnCancelar)
                         .addGap(70, 70, 70))))
         );
 
@@ -345,17 +371,56 @@ public class ModificarProducto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbTipoActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnModificarCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarCantidadActionPerformed
+       int filaSeleccionada = tblTablaIngredientesHastaElMomento.getSelectedRow();
+
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Selecciona una fila primero.", "Sin selección", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    String nombreIngrediente = (String) tblTablaIngredientesHastaElMomento.getValueAt(filaSeleccionada, 0);
+    String unidad = (String) tblTablaIngredientesHastaElMomento.getValueAt(filaSeleccionada, 1);
+
+    String nuevaCantidadStr = JOptionPane.showInputDialog(this, "Ingresa la nueva cantidad para " + nombreIngrediente + " (" + unidad + "):");
+
+    if (nuevaCantidadStr == null) {
+        // Cancelado
+        return;
+    }
+
+    try {
+        double nuevaCantidad = Double.parseDouble(nuevaCantidadStr);
+        if (nuevaCantidad < 0) {
+            JOptionPane.showMessageDialog(this, "La cantidad no puede ser negativa.", "Cantidad inválida", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (nuevaCantidad == 0) {
+            JOptionPane.showMessageDialog(this, "Agrega al menos 1 del ingrediente" , "Cantidad invalida" , JOptionPane.ERROR_MESSAGE);
+            return;
+            }
+        
+
+        tblTablaIngredientesHastaElMomento.setValueAt(nuevaCantidad, filaSeleccionada, 2);
+        JOptionPane.showMessageDialog(this, "Cantidad necesaria cambiada exitosamente.", "Modificación exitosa", JOptionPane.INFORMATION_MESSAGE);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Ingresa un número válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_btnModificarCantidadActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarIngrediente;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminarIngrediente;
+    private javax.swing.JButton btnModificarCantidad;
     private javax.swing.JButton btnModificarProducto;
     private javax.swing.JComboBox<String> cmbTipo;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

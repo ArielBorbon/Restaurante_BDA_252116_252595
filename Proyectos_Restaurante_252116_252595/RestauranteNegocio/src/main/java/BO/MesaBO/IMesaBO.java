@@ -22,15 +22,17 @@ public interface IMesaBO {
     
     Mesa disponibilizarMesaBO(NuevaMesaDTO nuevaMesaDTO);
     
-    public List<Mesa> obtenerListaMesasDisponiblesBO();
+    List<Mesa> obtenerListaMesasDisponiblesBO();
     
-    public List<Mesa> obtenerListaMesasOcupadasBO();
+    List<Mesa> obtenerListaMesasOcupadasBO();
     
-    public List<Mesa> obtenerListaMesasTodasBO();
+    List<Mesa> obtenerListaMesasTodasBO();
     
     boolean verRelacionesMesaBO(int num_mesa);
     
-    public Mesa crearMesaEnOrdenBO();
+    Mesa crearMesaEnOrdenBO();
     
-    public Mesa obtenerMesaPorNumMesaBO(int numeroMesa);
+    Mesa obtenerMesaPorNumMesaBO(int numeroMesa);
+    
+    boolean existenMesasBO();
 }
