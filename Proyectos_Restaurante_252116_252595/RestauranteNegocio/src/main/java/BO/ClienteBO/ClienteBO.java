@@ -83,10 +83,8 @@ public class ClienteBO implements IClienteBO {
     public List<Cliente> filtrarClientes(String nombre, String correo) throws NegocioException {
         return clientesDAO.filtrarClientes(nombre, correo);
     }
-    
+
     public List<Cliente> filtrarClientesReporte(String correo) throws NegocioException {
         return clientesDAO.filtrarClientesReporte(correo);
     }
-    
-    
 }

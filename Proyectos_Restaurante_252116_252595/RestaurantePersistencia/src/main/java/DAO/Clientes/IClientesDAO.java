@@ -5,6 +5,7 @@
 package DAO.Clientes;
 
 import DTOS.Clientes.NuevoClienteDTO;
+import DTOS.Clientes.NuevoClienteFrecuenteDTO;
 import Entidades.Clientes.Cliente;
 import java.util.List;
 
@@ -20,5 +21,8 @@ public interface IClientesDAO {
     public abstract List<Cliente> mostrarListaClientes();
     public abstract Cliente buscarPorTelefono(String filtroNumero);
     public abstract List<Cliente> filtrarClientes(String nombre, String correo);
+    public void actualizarClienteFrecuente(Long idCliente, int puntos, int visitas, double totalGastado);
+    public abstract List<NuevoClienteFrecuenteDTO> obtenerClientesFrecuentes();
     public abstract Cliente obtenerPorCorreo(String Correo);
+    public abstract List<Cliente> filtrarClientesReporte(String correo);
 }

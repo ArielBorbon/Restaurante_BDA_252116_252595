@@ -16,4 +16,5 @@ public interface IClienteBO {
     public Cliente registrarClienteBO(NuevoClienteDTO nuevoClienteDTO) throws NegocioException;
     public Cliente buscarPorTelefono(String filtroNumero) throws NegocioException;
     public List<Cliente> obtenerListaClientesBO();
+    
 }

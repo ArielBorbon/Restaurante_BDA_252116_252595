@@ -221,34 +221,31 @@ public class ComandaBO implements IComandaBO {
             throw new RuntimeException("No se encontraron comandas en el rango de fechas especificado.");
         }
 
-        return comandas; 
+        return comandas;
     }
-    
-    
-    
-    
-    
-    
-        public Comanda obtenerComandaPorFolioBO(String folio) throws NegocioException {
+
+    public Comanda obtenerComandaPorFolioBO(String folio) throws NegocioException {
         try {
             return comandasDAO.obtenerComandaPorFolio(folio);
         } catch (PersistenciaException e) {
             throw new NegocioException("Error en la lógica al buscar la comanda por folio", e);
         }
     }
-    
-    
-        public List<DetalleComanda> obtenerListaDetallesComandaBO(Comanda comanda) throws NegocioException {
+
+    public List<DetalleComanda> obtenerListaDetallesComandaBO(Comanda comanda) throws NegocioException {
         try {
             return comandasDAO.obtenerListaDetallesComanda(comanda);
         } catch (PersistenciaException e) {
             throw new NegocioException("Error al recuperar detalles de la comanda", e);
         }
     }
+    
+    @Override
+    public void actualizarClienteFrecuente(Long idCliente, double totalGastado) {
+        int puntos = (int) (totalGastado / 20);
+        int visitas = 1;
 
-    
-    
-    
-    
-
+        ClientesDAO clientesDAO = new ClientesDAO();
+        clientesDAO.actualizarClienteFrecuente(idCliente, puntos, visitas, totalGastado);
+    }
 }

@@ -7,6 +7,7 @@ package ModuloComandas;
 import BO.ComandasBO.ComandaBO;
 import DTOS.Comandas.NuevaComandaDTO;
 import DTOS.Comandas.NuevoDetalleComandaDTO;
+import Entidades.Clientes.ClientesFrecuentes;
 import Entidades.Comandas.Comanda;
 import Entidades.Comandas.DetalleComanda;
 import Entidades.Comandas.EstadoComanda;
@@ -23,7 +24,9 @@ import javax.swing.JOptionPane;
  * @author PC Gamer
  */
 public class ModuloPrincipalComandas extends javax.swing.JFrame {
+
     private FormTablaComandas formTablaComanda = new FormTablaComandas();
+
     /**
      * Creates new form ModuloPrincipalComandas
      */
@@ -32,7 +35,7 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
         pnlTabla.add(formTablaComanda);
         formTablaComanda.setVisible(true);
         getContentPane().setBackground(new Color(0xe71d1d));
-        
+
     }
 
     /**
@@ -171,57 +174,57 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAñadirComandaActionPerformed
 
     private void btnDetallesComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesComandaActionPerformed
-        
-            int filaSeleccionada = formTablaComanda.getTblComandasAbiertas().getSelectedRow();
 
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Selecciona una comanda para modificar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+        int filaSeleccionada = formTablaComanda.getTblComandasAbiertas().getSelectedRow();
 
-    String folioComanda = (String) formTablaComanda.getTblComandasAbiertas().getValueAt(filaSeleccionada, 0); 
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona una comanda para modificar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-    ModificarComanda modificarComanda = new ModificarComanda(folioComanda , formTablaComanda);
-    modificarComanda.setVisible(true);
-        
-        
+        String folioComanda = (String) formTablaComanda.getTblComandasAbiertas().getValueAt(filaSeleccionada, 0);
+
+        ModificarComanda modificarComanda = new ModificarComanda(folioComanda, formTablaComanda);
+        modificarComanda.setVisible(true);
+
+
     }//GEN-LAST:event_btnDetallesComandaActionPerformed
 
     private void btnMarcarComoCompletadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarcarComoCompletadaActionPerformed
         try {
-        int filaSeleccionada = formTablaComanda.getTblComandasAbiertas().getSelectedRow();
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "Selecciona una comanda para marcar como completada.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+            int filaSeleccionada = formTablaComanda.getTblComandasAbiertas().getSelectedRow();
+            if (filaSeleccionada == -1) {
+                JOptionPane.showMessageDialog(this, "Selecciona una comanda para marcar como completada.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-        String folio = (String) formTablaComanda.getTblComandasAbiertas().getValueAt(filaSeleccionada, 0);
-        ComandaBO comandasBO = FabricaComandas.crearComandaBO();
+            String folio = (String) formTablaComanda.getTblComandasAbiertas().getValueAt(filaSeleccionada, 0);
+            ComandaBO comandasBO = FabricaComandas.crearComandaBO();
 
-        Comanda comanda = comandasBO.obtenerComandaPorFolioBO(folio);
-        List<DetalleComanda> detalles = comandasBO.obtenerListaDetallesComandaBO(comanda);
+            Comanda comanda = comandasBO.obtenerComandaPorFolioBO(folio);
+            List<DetalleComanda> detalles = comandasBO.obtenerListaDetallesComandaBO(comanda);
 
-        if (comanda.getEstado() == EstadoComanda.ENTREGADA) {
-            JOptionPane.showMessageDialog(this, "Esta comanda ya fue marcada como entregada.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
+            if (comanda.getEstado() == EstadoComanda.ENTREGADA) {
+                JOptionPane.showMessageDialog(this, "Esta comanda ya fue marcada como entregada.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
 
-        NuevaComandaDTO dto = new NuevaComandaDTO();
-        dto.setFolio(folio);
-        
+            NuevaComandaDTO dto = new NuevaComandaDTO();
+            dto.setFolio(folio);
+
             if (comanda.getClienteFrecuente() != null) {
                 dto.setCorreoCliente(comanda.getClienteFrecuente().getCorreo());
-            }else{
+            } else {
                 dto.setCorreoCliente(null);
             }
-     
-        dto.setEstado_comanda(EstadoComanda.ENTREGADA);
-        dto.setNum_mesa(comanda.getMesa().getNum_mesa());
-        dto.setFecha_hora(comanda.getFechaHora());
-        
-        
-        List<NuevoDetalleComandaDTO> detallesDTO = new ArrayList<NuevoDetalleComandaDTO>();
-        
+
+            dto.setEstado_comanda(EstadoComanda.ENTREGADA);
+            dto.setNum_mesa(comanda.getMesa().getNum_mesa());
+            dto.setFecha_hora(comanda.getFechaHora());
+
+            List<NuevoDetalleComandaDTO> detallesDTO = new ArrayList<NuevoDetalleComandaDTO>();
+            double totalComanda = 0.0;
+            
             for (DetalleComanda detalle : detalles) {
                 NuevoDetalleComandaDTO detalleDTO = new NuevoDetalleComandaDTO();
                 detalleDTO.setCantidad(detalle.getCantidad());
@@ -231,24 +234,28 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
                 detalleDTO.setNotas_producto(detalle.getNotasEspeciales());
                 detalleDTO.setPrecioUnitario(detalle.getPrecioUnitario());
                 detallesDTO.add(detalleDTO);
+                totalComanda += detalle.getImporteTotal();
             }
-        
-        
 
-        comandasBO.modificarComandaBO(dto, detallesDTO);
+            comandasBO.modificarComandaBO(dto, detallesDTO);
 
-        // Restar stock
-        comandasBO.restarStockIngredientesPorProductosComandaBO(detallesDTO);
+            // Restar stock
+            comandasBO.restarStockIngredientesPorProductosComandaBO(detallesDTO);
+            
+            // Actualiza las visitas, total y puntos de los clientes
+            if (comanda.getClienteFrecuente() != null) {
+                ClientesFrecuentes clienteFrecuente = comanda.getClienteFrecuente();
+                comandasBO.actualizarClienteFrecuente(clienteFrecuente.getId(), totalComanda);
+            }
 
-        JOptionPane.showMessageDialog(this, "Comanda marcada como entregada y stock actualizado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Comanda marcada como entregada y stock actualizado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
+            formTablaComanda.llenarTablaComandasAbiertas();
 
-        formTablaComanda.llenarTablaComandasAbiertas();
-
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al completar la comanda: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        e.printStackTrace();
-    }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al completar la comanda: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnMarcarComoCompletadaActionPerformed
 
     /**

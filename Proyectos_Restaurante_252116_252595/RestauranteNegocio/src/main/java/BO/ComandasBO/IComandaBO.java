@@ -37,4 +37,6 @@ public interface IComandaBO {
     List<Comanda> filtrarPorFecha(Calendar fechaInicio, Calendar fechaFin);
     Comanda obtenerComandaPorFolioBO(String folio) throws NegocioException;
     List<DetalleComanda> obtenerListaDetallesComandaBO(Comanda comanda) throws NegocioException;
+    
+    void actualizarClienteFrecuente(Long idCliente, double totalGastado);
 }

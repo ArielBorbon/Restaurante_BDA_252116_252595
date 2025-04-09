@@ -40,16 +40,13 @@ import javax.persistence.criteria.Root;
  *
  * @author PC Gamer
  */
-public class ComandasDAO implements IComandasDAO{
+public class ComandasDAO implements IComandasDAO {
 
     public ComandasDAO() {
     }
-    
-    
-    
-    
+
     @Override
-     public Comanda registrarComanda(NuevaComandaDTO comandaDTO, List<NuevoDetalleComandaDTO> detallesDTO) {
+    public Comanda registrarComanda(NuevaComandaDTO comandaDTO, List<NuevoDetalleComandaDTO> detallesDTO) {
         EntityManager em = ManejadorConexiones.getEntityManager();
         em.getTransaction().begin();
 
@@ -57,7 +54,7 @@ public class ComandasDAO implements IComandasDAO{
             MesasDAO mesasDAO = new MesasDAO();
             Mesa mesa = mesasDAO.obtenerMesaPorNumMesa(comandaDTO.getNum_mesa());
             ClientesFrecuentes cliente = null;
-            
+
             if (comandaDTO.getCorreoCliente() != null && !comandaDTO.getCorreoCliente().isBlank()) {
                 ClientesDAO clientesDAO = new ClientesDAO();
                 cliente = clientesDAO.obtenerPorCorreo(comandaDTO.getCorreoCliente());
@@ -72,7 +69,7 @@ public class ComandasDAO implements IComandasDAO{
             comanda.setClienteFrecuente(cliente);
 
             for (NuevoDetalleComandaDTO detalleDTO : detallesDTO) {
-                
+
                 ProductosDAO productosDAO = new ProductosDAO();
                 Producto producto = productosDAO.buscarProductoPorNombre(detalleDTO.getNombreProducto());
 
@@ -87,7 +84,6 @@ public class ComandasDAO implements IComandasDAO{
                 comanda.getDetalles().add(detalle);
             }
 
-
             em.persist(comanda);
             em.getTransaction().commit();
             return comanda;
@@ -98,148 +94,130 @@ public class ComandasDAO implements IComandasDAO{
             em.close();
         }
     }
-    
-     
-     @Override
-        public String generarFolioComanda() {
+
+    @Override
+    public String generarFolioComanda() {
         EntityManager em = ManejadorConexiones.getEntityManager();
         try {
             Calendar hoy = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             String fechaFormateada = sdf.format(hoy.getTime());
-        
+
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Long> cq = cb.createQuery(Long.class);
             Root<Comanda> root = cq.from(Comanda.class);
-        
-            Predicate mismoDia = cb.equal(cb.function("DATE", Date.class, root.get("fechaHora")), 
-                                           cb.function("DATE", Date.class, cb.literal(hoy.getTime())));
+
+            Predicate mismoDia = cb.equal(cb.function("DATE", Date.class, root.get("fechaHora")),
+                    cb.function("DATE", Date.class, cb.literal(hoy.getTime())));
             cq.select(cb.count(root)).where(mismoDia);
             Long conteo = em.createQuery(cq).getSingleResult();
-        
+
             String consecutivo = String.format("%03d", conteo + 1);
             return "OB-" + fechaFormateada + "-" + consecutivo;
         } finally {
             em.close();
         }
-    
+
     }
 
-     
-     
-     
-     
-     
-     
-     @Override
+    @Override
     public double calcularTotalDetalleComanda(NuevoDetalleComandaDTO detalleDTO) {
-    ProductosDAO productosDAO = new ProductosDAO();
-    Producto producto = productosDAO.buscarProductoPorNombre(detalleDTO.getNombreProducto());
+        ProductosDAO productosDAO = new ProductosDAO();
+        Producto producto = productosDAO.buscarProductoPorNombre(detalleDTO.getNombreProducto());
 
-    if (producto == null) {
-        throw new RuntimeException("Producto no encontrado: " + detalleDTO.getNombreProducto());
+        if (producto == null) {
+            throw new RuntimeException("Producto no encontrado: " + detalleDTO.getNombreProducto());
+        }
+
+        return detalleDTO.getCantidad() * producto.getPrecio();
     }
 
-    return detalleDTO.getCantidad() * producto.getPrecio();
-}
-
-     
-     @Override
+    @Override
     public double calcularTotalComanda(List<NuevoDetalleComandaDTO> detallesDTO) {
         double total = 0;
-        
+
         for (NuevoDetalleComandaDTO detalle : detallesDTO) {
             total += calcularTotalDetalleComanda(detalle);
-            }
-        
+        }
+
         return total;
     }
 
-     
-     @Override
-    public Comanda modificarComanda(NuevaComandaDTO comandaDTO, List<NuevoDetalleComandaDTO> nuevosDetallesDTO) {
-    EntityManager em = ManejadorConexiones.getEntityManager();
-    em.getTransaction().begin();
-
-    try {
-
-        TypedQuery<Comanda> query = em.createQuery(
-            "SELECT c FROM Comanda c WHERE c.folio = :folio", Comanda.class);
-        query.setParameter("folio", comandaDTO.getFolio());
-        Comanda comanda = query.getSingleResult();
-
-        if (comanda == null) {
-            throw new RuntimeException("Comanda no encontrada con el folio: " + comandaDTO.getFolio());
-        }
-
- 
-        Query eliminarDetalles = em.createQuery(
-            "DELETE FROM DetalleComanda d WHERE d.comanda = :comanda");
-        eliminarDetalles.setParameter("comanda", comanda);
-        eliminarDetalles.executeUpdate();
-
-        ProductosDAO productosDAO = new ProductosDAO();
-        for (NuevoDetalleComandaDTO detalleDTO : nuevosDetallesDTO) {
-            Producto producto = productosDAO.buscarProductoPorNombre(detalleDTO.getNombreProducto());
-
-            DetalleComanda detalle = new DetalleComanda();
-            detalle.setProducto(producto);
-            detalle.setPrecioUnitario(detalleDTO.getPrecioUnitario());
-            detalle.setNotasEspeciales(detalleDTO.getNotas_producto());
-            detalle.setCantidad(detalleDTO.getCantidad());
-            detalle.setImporteTotal(detalleDTO.getImporteTotal());
-            detalle.setComanda(comanda);
-
-            em.persist(detalle);
-            comanda.getDetalles().add(detalle);
-        }
-
-
-        comanda.setEstado(comandaDTO.getEstado_comanda());
-        comanda.setFechaHora(comandaDTO.getFecha_hora());
-        comanda.setTotal(comandaDTO.getTotal());
-
-        em.merge(comanda);
-        em.getTransaction().commit();
-        return comanda;
-    } catch (Exception e) {
-        em.getTransaction().rollback();
-        throw new RuntimeException("Error al modificar la comanda", e);
-    } finally {
-        em.close();
-    }
-}
-
-    
-    
-    
-    
-    
-    
     @Override
-    public void eliminarComanda(NuevaComandaDTO comandaDTO) {
-    EntityManager em = ManejadorConexiones.getEntityManager();
-    em.getTransaction().begin();
+    public Comanda modificarComanda(NuevaComandaDTO comandaDTO, List<NuevoDetalleComandaDTO> nuevosDetallesDTO) {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        em.getTransaction().begin();
 
         try {
 
             TypedQuery<Comanda> query = em.createQuery(
-                "SELECT c FROM Comanda c WHERE c.folio = :folio", Comanda.class);
+                    "SELECT c FROM Comanda c WHERE c.folio = :folio", Comanda.class);
             query.setParameter("folio", comandaDTO.getFolio());
             Comanda comanda = query.getSingleResult();
-        
+
             if (comanda == null) {
                 throw new RuntimeException("Comanda no encontrada con el folio: " + comandaDTO.getFolio());
             }
-        
+
             Query eliminarDetalles = em.createQuery(
-                "DELETE FROM DetalleComanda d WHERE d.comanda = :comanda");
+                    "DELETE FROM DetalleComanda d WHERE d.comanda = :comanda");
             eliminarDetalles.setParameter("comanda", comanda);
             eliminarDetalles.executeUpdate();
-        
+
+            ProductosDAO productosDAO = new ProductosDAO();
+            for (NuevoDetalleComandaDTO detalleDTO : nuevosDetallesDTO) {
+                Producto producto = productosDAO.buscarProductoPorNombre(detalleDTO.getNombreProducto());
+
+                DetalleComanda detalle = new DetalleComanda();
+                detalle.setProducto(producto);
+                detalle.setPrecioUnitario(detalleDTO.getPrecioUnitario());
+                detalle.setNotasEspeciales(detalleDTO.getNotas_producto());
+                detalle.setCantidad(detalleDTO.getCantidad());
+                detalle.setImporteTotal(detalleDTO.getImporteTotal());
+                detalle.setComanda(comanda);
+
+                em.persist(detalle);
+                comanda.getDetalles().add(detalle);
+            }
+
+            comanda.setEstado(comandaDTO.getEstado_comanda());
+            comanda.setFechaHora(comandaDTO.getFecha_hora());
+            comanda.setTotal(comandaDTO.getTotal());
+
+            em.merge(comanda);
+            em.getTransaction().commit();
+            return comanda;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new RuntimeException("Error al modificar la comanda", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void eliminarComanda(NuevaComandaDTO comandaDTO) {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        em.getTransaction().begin();
+
+        try {
+
+            TypedQuery<Comanda> query = em.createQuery(
+                    "SELECT c FROM Comanda c WHERE c.folio = :folio", Comanda.class);
+            query.setParameter("folio", comandaDTO.getFolio());
+            Comanda comanda = query.getSingleResult();
+
+            if (comanda == null) {
+                throw new RuntimeException("Comanda no encontrada con el folio: " + comandaDTO.getFolio());
+            }
+
+            Query eliminarDetalles = em.createQuery(
+                    "DELETE FROM DetalleComanda d WHERE d.comanda = :comanda");
+            eliminarDetalles.setParameter("comanda", comanda);
+            eliminarDetalles.executeUpdate();
 
             em.remove(comanda);
-        
+
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -249,23 +227,19 @@ public class ComandasDAO implements IComandasDAO{
         }
     }
 
-    
-    
-    
-    
-     @Override   
+    @Override
     public void cambiarEstadoComandaACancelada(String folio) {
         EntityManager em = ManejadorConexiones.getEntityManager();
         em.getTransaction().begin();
-    
+
         try {
             TypedQuery<Comanda> query = em.createQuery(
-                "SELECT c FROM Comanda c WHERE c.folio = :folio", Comanda.class);
+                    "SELECT c FROM Comanda c WHERE c.folio = :folio", Comanda.class);
             query.setParameter("folio", folio);
             Comanda comanda = query.getSingleResult();
-        
+
             comanda.setEstado(EstadoComanda.CANCELADA);
-        
+
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -275,20 +249,19 @@ public class ComandasDAO implements IComandasDAO{
         }
     }
 
-    
     @Override
-        public void cambiarEstadoComandaAEntregada(String folio) {
+    public void cambiarEstadoComandaAEntregada(String folio) {
         EntityManager em = ManejadorConexiones.getEntityManager();
         em.getTransaction().begin();
-    
+
         try {
             TypedQuery<Comanda> query = em.createQuery(
-                "SELECT c FROM Comanda c WHERE c.folio = :folio", Comanda.class);
+                    "SELECT c FROM Comanda c WHERE c.folio = :folio", Comanda.class);
             query.setParameter("folio", folio);
             Comanda comanda = query.getSingleResult();
-        
+
             comanda.setEstado(EstadoComanda.ENTREGADA);
-        
+
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -298,151 +271,141 @@ public class ComandasDAO implements IComandasDAO{
         }
     }
 
-    
     @Override
-public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> detallesDTO) {
-    EntityManager em = ManejadorConexiones.getEntityManager();
-    
-    try {
-        IngredientesDAO ingredientesDAO = new IngredientesDAO();
-        ProductosDAO productosDAO = new ProductosDAO();
+    public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> detallesDTO) {
+        EntityManager em = ManejadorConexiones.getEntityManager();
 
-        Map<String, Double> ingredientesNecesarios = new HashMap<>();
+        try {
+            IngredientesDAO ingredientesDAO = new IngredientesDAO();
+            ProductosDAO productosDAO = new ProductosDAO();
 
-        for (NuevoDetalleComandaDTO detalleDTO : detallesDTO) {
-            String nombreProducto = detalleDTO.getNombreProducto();
-            int cantidadPlatillos = detalleDTO.getCantidad();
+            Map<String, Double> ingredientesNecesarios = new HashMap<>();
 
-            List<IngredienteConCantidadNecesariaDTO> ingredientesProducto =
-                ingredientesDAO.obtenerIngredientesConCantidadPorProducto(nombreProducto);
+            for (NuevoDetalleComandaDTO detalleDTO : detallesDTO) {
+                String nombreProducto = detalleDTO.getNombreProducto();
+                int cantidadPlatillos = detalleDTO.getCantidad();
 
-            for (IngredienteConCantidadNecesariaDTO ingredienteDTO : ingredientesProducto) {
-                String nombreIngrediente = ingredienteDTO.getNombreIngrediente();
-                String unidadMedida = ingredienteDTO.getUnidadMedida();
+                List<IngredienteConCantidadNecesariaDTO> ingredientesProducto
+                        = ingredientesDAO.obtenerIngredientesConCantidadPorProducto(nombreProducto);
 
-                double cantidadRequerida = ingredienteDTO.getCantidadIngredienteNecesaria() * cantidadPlatillos;
+                for (IngredienteConCantidadNecesariaDTO ingredienteDTO : ingredientesProducto) {
+                    String nombreIngrediente = ingredienteDTO.getNombreIngrediente();
+                    String unidadMedida = ingredienteDTO.getUnidadMedida();
 
-                String clave = nombreIngrediente + "|" + unidadMedida.toString();
+                    double cantidadRequerida = ingredienteDTO.getCantidadIngredienteNecesaria() * cantidadPlatillos;
 
-                ingredientesNecesarios.merge(clave, cantidadRequerida, Double::sum);
+                    String clave = nombreIngrediente + "|" + unidadMedida.toString();
+
+                    ingredientesNecesarios.merge(clave, cantidadRequerida, Double::sum);
+                }
             }
-        }
 
-        for (Map.Entry<String, Double> entrada : ingredientesNecesarios.entrySet()) {
-            String clave = entrada.getKey();
-            double cantidadNecesaria = entrada.getValue();
+            for (Map.Entry<String, Double> entrada : ingredientesNecesarios.entrySet()) {
+                String clave = entrada.getKey();
+                double cantidadNecesaria = entrada.getValue();
 
-            String[] partes = clave.split("\\|");
-            String nombreIngrediente = partes[0];
-            Unidad_Medida unidad = Unidad_Medida.valueOf(partes[1]);
-            String unidadString = unidad.toString();
-            Ingrediente ingrediente = ingredientesDAO.buscarIngredientePorNombreYUnidad(nombreIngrediente, unidadString);
+                String[] partes = clave.split("\\|");
+                String nombreIngrediente = partes[0];
+                Unidad_Medida unidad = Unidad_Medida.valueOf(partes[1]);
+                String unidadString = unidad.toString();
+                Ingrediente ingrediente = ingredientesDAO.buscarIngredientePorNombreYUnidad(nombreIngrediente, unidadString);
 
-            if (ingrediente == null || ingrediente.getStock() < cantidadNecesaria) {
-                return false; 
+                if (ingrediente == null || ingrediente.getStock() < cantidadNecesaria) {
+                    return false;
+                }
             }
-        }
 
-        return true; 
-    } catch (Exception e) {
-        throw new RuntimeException("Error al verificar stock de ingredientes necesarios", e);
-    } finally {
-        em.close();
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException("Error al verificar stock de ingredientes necesarios", e);
+        } finally {
+            em.close();
+        }
     }
-}
-
 
     @Override
     public void restarStockIngredientesPorProductosComanda(List<NuevoDetalleComandaDTO> detallesDTO) {
-    EntityManager em = ManejadorConexiones.getEntityManager();
-    em.getTransaction().begin();
-
-    try {
-        IngredientesDAO ingredientesDAO = new IngredientesDAO();
-        ProductosDAO productosDAO = new ProductosDAO();
-
-        Map<String, Double> ingredientesPorRestar = new HashMap<>();
-
-        for (NuevoDetalleComandaDTO detalle  : detallesDTO) {
-            Producto producto = productosDAO.buscarProductoPorNombre(detalle.getNombreProducto());
-            int cantidadPlatillos = detalle.getCantidad();
-
-            List<IngredienteConCantidadNecesariaDTO> ingredientes =
-                ingredientesDAO.obtenerIngredientesConCantidadPorProducto(producto.getNombre());
-
-            for (IngredienteConCantidadNecesariaDTO ingredienteDTO : ingredientes) {
-                String nombre = ingredienteDTO.getNombreIngrediente();
-                String unidad = ingredienteDTO.getUnidadMedida();
-                double cantidadTotal = ingredienteDTO.getCantidadIngredienteNecesaria() * cantidadPlatillos;
-
-                String clave = nombre + "|" + unidad.toString();
-
-                ingredientesPorRestar.merge(clave, cantidadTotal, Double::sum);
-            }
-        }
-
-
-        for (Map.Entry<String, Double> entry : ingredientesPorRestar.entrySet()) {
-            String[] partes = entry.getKey().split("\\|");
-            String nombre = partes[0];
-            Unidad_Medida unidad = Unidad_Medida.valueOf(partes[1]);
-            double cantidadARestar = entry.getValue();
-
-            Ingrediente ingrediente = ingredientesDAO.buscarIngredientePorNombreYUnidad(nombre, unidad.toString());
-
-            if (ingrediente == null) {
-                throw new RuntimeException("Ingrediente no encontrado: " + nombre + " (" + unidad + ")");
-            }
-
-            double nuevoStock = ingrediente.getStock() - cantidadARestar;
-            if (nuevoStock < 0) {
-                throw new RuntimeException("Stock insuficiente al restar: " + nombre + " (" + unidad + ")");
-            }
-
-            ingrediente.setStock(nuevoStock);
-            em.merge(ingrediente);
-        }
-
-        em.getTransaction().commit();
-    } catch (RuntimeException e) {
-        em.getTransaction().rollback();
-        throw new RuntimeException("Error al restar stock de ingredientes", e);
-    } finally {
-        em.close();
-    }
-}
-    
-    
-    
-    
-    
-    @Override
-    public List<Comanda> mostrarComandasTodas() {
-    EntityManager em = ManejadorConexiones.getEntityManager();
-
-    try {
-        String jpql = "SELECT c FROM Comanda c";
-        TypedQuery<Comanda> query = em.createQuery(jpql, Comanda.class);
-        return query.getResultList();
-    } finally {
-        em.close();
-    }
-}
-
-    
-    
-    @Override
-    public void modificarNota(NuevoDetalleComandaDTO detalleDTO, String nuevaNota) {
-    EntityManager em = ManejadorConexiones.getEntityManager();
-
-    try {
+        EntityManager em = ManejadorConexiones.getEntityManager();
         em.getTransaction().begin();
 
+        try {
+            IngredientesDAO ingredientesDAO = new IngredientesDAO();
+            ProductosDAO productosDAO = new ProductosDAO();
 
-        ProductosDAO productosDAO = new ProductosDAO();
-        Producto producto = productosDAO.buscarProductoPorNombre(detalleDTO.getNombreProducto());
+            Map<String, Double> ingredientesPorRestar = new HashMap<>();
 
-        String jpqlDetalle = """
+            for (NuevoDetalleComandaDTO detalle : detallesDTO) {
+                Producto producto = productosDAO.buscarProductoPorNombre(detalle.getNombreProducto());
+                int cantidadPlatillos = detalle.getCantidad();
+
+                List<IngredienteConCantidadNecesariaDTO> ingredientes
+                        = ingredientesDAO.obtenerIngredientesConCantidadPorProducto(producto.getNombre());
+
+                for (IngredienteConCantidadNecesariaDTO ingredienteDTO : ingredientes) {
+                    String nombre = ingredienteDTO.getNombreIngrediente();
+                    String unidad = ingredienteDTO.getUnidadMedida();
+                    double cantidadTotal = ingredienteDTO.getCantidadIngredienteNecesaria() * cantidadPlatillos;
+
+                    String clave = nombre + "|" + unidad.toString();
+
+                    ingredientesPorRestar.merge(clave, cantidadTotal, Double::sum);
+                }
+            }
+
+            for (Map.Entry<String, Double> entry : ingredientesPorRestar.entrySet()) {
+                String[] partes = entry.getKey().split("\\|");
+                String nombre = partes[0];
+                Unidad_Medida unidad = Unidad_Medida.valueOf(partes[1]);
+                double cantidadARestar = entry.getValue();
+
+                Ingrediente ingrediente = ingredientesDAO.buscarIngredientePorNombreYUnidad(nombre, unidad.toString());
+
+                if (ingrediente == null) {
+                    throw new RuntimeException("Ingrediente no encontrado: " + nombre + " (" + unidad + ")");
+                }
+
+                double nuevoStock = ingrediente.getStock() - cantidadARestar;
+                if (nuevoStock < 0) {
+                    throw new RuntimeException("Stock insuficiente al restar: " + nombre + " (" + unidad + ")");
+                }
+
+                ingrediente.setStock(nuevoStock);
+                em.merge(ingrediente);
+            }
+
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            em.getTransaction().rollback();
+            throw new RuntimeException("Error al restar stock de ingredientes", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<Comanda> mostrarComandasTodas() {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+
+        try {
+            String jpql = "SELECT c FROM Comanda c";
+            TypedQuery<Comanda> query = em.createQuery(jpql, Comanda.class);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void modificarNota(NuevoDetalleComandaDTO detalleDTO, String nuevaNota) {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+
+        try {
+            em.getTransaction().begin();
+
+            ProductosDAO productosDAO = new ProductosDAO();
+            Producto producto = productosDAO.buscarProductoPorNombre(detalleDTO.getNombreProducto());
+
+            String jpqlDetalle = """
             SELECT d FROM DetalleComanda d
             WHERE d.comanda.folio = :folio
             AND d.producto = :producto
@@ -450,64 +413,61 @@ public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> det
             AND d.precioUnitario = :precioUnitario
         """;
 
-        TypedQuery<DetalleComanda> query = em.createQuery(jpqlDetalle, DetalleComanda.class);
-        query.setParameter("folio", detalleDTO.getFolioComanda());
-        query.setParameter("producto", producto);
-        query.setParameter("cantidad", detalleDTO.getCantidad());
-        query.setParameter("precioUnitario", detalleDTO.getPrecioUnitario());
+            TypedQuery<DetalleComanda> query = em.createQuery(jpqlDetalle, DetalleComanda.class);
+            query.setParameter("folio", detalleDTO.getFolioComanda());
+            query.setParameter("producto", producto);
+            query.setParameter("cantidad", detalleDTO.getCantidad());
+            query.setParameter("precioUnitario", detalleDTO.getPrecioUnitario());
 
-        DetalleComanda detalle = query.getResultStream().findFirst()
-            .orElseThrow(() -> new RuntimeException("No se encontró el detalle de comanda para el folio y producto dados."));
+            DetalleComanda detalle = query.getResultStream().findFirst()
+                    .orElseThrow(() -> new RuntimeException("No se encontró el detalle de comanda para el folio y producto dados."));
 
+            detalle.setNotasEspeciales(nuevaNota);
+            em.merge(detalle);
 
-        detalle.setNotasEspeciales(nuevaNota);
-        em.merge(detalle);
-
-        em.getTransaction().commit();
-    } catch (Exception e) {
-        if (em.getTransaction().isActive()) {
-            em.getTransaction().rollback();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Error al modificar la nota del detalle de comanda", e);
+        } finally {
+            em.close();
         }
-        throw new RuntimeException("Error al modificar la nota del detalle de comanda", e);
-    } finally {
-        em.close();
     }
-}
 
-    
     @Override
     public List<Comanda> mostrarComandasAbiertas() {
-    EntityManager em = ManejadorConexiones.getEntityManager();
+        EntityManager em = ManejadorConexiones.getEntityManager();
 
-    try {
-        String jpql = "SELECT c FROM Comanda c WHERE c.estado = :estado";
-        TypedQuery<Comanda> query = em.createQuery(jpql, Comanda.class);
-        query.setParameter("estado", EstadoComanda.ABIERTA);
-        return query.getResultList();
-    } finally {
-        em.close();
+        try {
+            String jpql = "SELECT c FROM Comanda c WHERE c.estado = :estado";
+            TypedQuery<Comanda> query = em.createQuery(jpql, Comanda.class);
+            query.setParameter("estado", EstadoComanda.ABIERTA);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
     }
-}
 
     @Override
     public List<Comanda> filtrarPorFecha(Calendar fechaInicio, Calendar fechaFin) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         String jpql = "SELECT c FROM Comanda c WHERE c.fechaHora BETWEEN :fechaInicio AND :fechaFin";
-        
+
         TypedQuery<Comanda> query = entityManager.createQuery(jpql, Comanda.class);
         query.setParameter("fechaInicio", fechaInicio);
         query.setParameter("fechaFin", fechaFin);
-        
+
         return query.getResultList();
     }
-    
-    
+
     @Override
     public Comanda obtenerComandaPorFolio(String folio) throws PersistenciaException {
         EntityManager em = ManejadorConexiones.getEntityManager();
         try {
             TypedQuery<Comanda> query = em.createQuery(
-                "SELECT c FROM Comanda c WHERE c.folio = :folio", Comanda.class);
+                    "SELECT c FROM Comanda c WHERE c.folio = :folio", Comanda.class);
             query.setParameter("folio", folio);
             return query.getSingleResult();
         } catch (NoResultException e) {
@@ -517,24 +477,18 @@ public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> det
         }
     }
 
-    
     @Override
     public List<DetalleComanda> obtenerListaDetallesComanda(Comanda comanda) throws PersistenciaException {
-    EntityManager em = ManejadorConexiones.getEntityManager();
-    try {
-        TypedQuery<DetalleComanda> query = em.createQuery(
-            "SELECT d FROM DetalleComanda d WHERE d.comanda.id = :idComanda", DetalleComanda.class);
-        query.setParameter("idComanda", comanda.getId());
-        return query.getResultList();
-    } catch (Exception e) {
-        throw new PersistenciaException("Error al obtener los detalles de la comanda", e);
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        try {
+            TypedQuery<DetalleComanda> query = em.createQuery(
+                    "SELECT d FROM DetalleComanda d WHERE d.comanda.id = :idComanda", DetalleComanda.class);
+            query.setParameter("idComanda", comanda.getId());
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al obtener los detalles de la comanda", e);
+        }
     }
-}
-
-
-    
-    
-    
     
     
 }

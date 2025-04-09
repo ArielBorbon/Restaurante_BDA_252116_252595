@@ -51,7 +51,7 @@ public class ClientesDAO implements IClientesDAO {
 
         cliente.setNombre(nuevoClienteDTO.getNombre());
         try {
-            
+
             String telefonoEncriptado = Encriptador.encriptar(nuevoClienteDTO.getNumTelefono());
             cliente.setNumTelefono(telefonoEncriptado);
         } catch (Exception e) {
@@ -134,7 +134,7 @@ public class ClientesDAO implements IClientesDAO {
         if (nombre != null && !nombre.trim().isEmpty()) {
             jpql.append(" AND LOWER(c.nombre) LIKE LOWER(:nombre)");
         }
-        
+
         if (correo != null && !correo.trim().isEmpty()) {
             jpql.append(" AND LOWER(c.correo) LIKE LOWER(:correo)");
         }
@@ -144,7 +144,7 @@ public class ClientesDAO implements IClientesDAO {
         if (nombre != null && !nombre.trim().isEmpty()) {
             query.setParameter("nombre", "%" + nombre.trim() + "%");
         }
-        
+
         if (correo != null && !correo.trim().isEmpty()) {
             query.setParameter("correo", "%" + correo.trim() + "%");
         }
@@ -152,7 +152,8 @@ public class ClientesDAO implements IClientesDAO {
         return query.getResultList();
     }
 
-    public void actualizarClienteFrecuente(int idCliente, int puntos, int visitas, double totalGastado) {
+    @Override
+    public void actualizarClienteFrecuente(Long idCliente, int puntos, int visitas, double totalGastado) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         entityManager.getTransaction().begin();
 
@@ -168,6 +169,7 @@ public class ClientesDAO implements IClientesDAO {
         entityManager.getTransaction().commit();
     }
 
+    @Override
     public List<NuevoClienteFrecuenteDTO> obtenerClientesFrecuentes() {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         String jpqlQuery = "SELECT c FROM ClienteFrecuente c";
@@ -207,6 +209,7 @@ public class ClientesDAO implements IClientesDAO {
         }
     }
 
+    @Override
     public List<Cliente> filtrarClientesReporte(String correo) {
         EntityManager em = ManejadorConexiones.getEntityManager();
 
@@ -218,7 +221,6 @@ public class ClientesDAO implements IClientesDAO {
 
         TypedQuery<Cliente> query = em.createQuery(jpql.toString(), Cliente.class);
 
-        
         if (correo != null && !correo.trim().isEmpty()) {
             query.setParameter("correo", "%" + correo.trim() + "%");
         }
