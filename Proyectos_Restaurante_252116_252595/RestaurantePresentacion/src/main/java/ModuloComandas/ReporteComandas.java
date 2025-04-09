@@ -14,6 +14,7 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,15 +32,15 @@ import javax.swing.JOptionPane;
  */
 public class ReporteComandas extends javax.swing.JFrame {
 
-    private FormTablaComandas formTablaComanda = new FormTablaComandas();
+    private FormTablaComandaCompleta formTablaComandaCompleta = new FormTablaComandaCompleta();
 
     /**
      * Creates new form ReporteComandas
      */
     public ReporteComandas() {
         initComponents();
-        pnlTabla.add(formTablaComanda);
-        formTablaComanda.setVisible(true);
+        pnlTabla.add(formTablaComandaCompleta);
+        formTablaComandaCompleta.setVisible(true);
     }
 
     /**
@@ -192,7 +194,7 @@ public class ReporteComandas extends javax.swing.JFrame {
             Date fechaInicio = sdf.parse(fechaInicioText);
             Date fechaFin = sdf.parse(fechaFinText);
 
-            formTablaComanda.llenarTablaComandasAbiertasConFiltro(fechaInicio, fechaFin);
+            formTablaComandaCompleta.llenarTablaComandasConFiltro(fechaInicio, fechaFin);
         } catch (ParseException e) {
             JOptionPane.showMessageDialog(this, "Error al introducir las fechas. Asegúrate de que el formato sea correcto (yyyy-MM-dd).");
         }
@@ -208,13 +210,13 @@ public class ReporteComandas extends javax.swing.JFrame {
 
     private void btnImprimirReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirReporteActionPerformed
         try {
-            generarReporteClientesFrecuentes();
+            generarReporteComandas();
         } catch (NegocioException ex) {
             Logger.getLogger(ReporteComandas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnImprimirReporteActionPerformed
 
-    private void generarReporteClientesFrecuentes() throws NegocioException {
+    private void generarReporteComandas() throws NegocioException {
         String fechaInicioTexto = filtroFechaInicio.getText();
         String fechaFinTexto = filtroFechaFin.getText();
 
@@ -247,10 +249,21 @@ public class ReporteComandas extends javax.swing.JFrame {
             }
         }
 
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar Reporte de Comandas");
+        fileChooser.setSelectedFile(new File("reporte_comandas.pdf"));
+        
+        int seleccionRuta = fileChooser.showSaveDialog(this);
+
+        if (seleccionRuta != JFileChooser.APPROVE_OPTION) {
+            return; 
+        }
+
+        File archivoDestino = fileChooser.getSelectedFile();
+
         Document document = new Document();
         try {
-            String ruta = "reporte_comandas.pdf";
-            PdfWriter.getInstance(document, new FileOutputStream(ruta));
+            PdfWriter.getInstance(document, new FileOutputStream(archivoDestino));
             document.open();
 
             document.add(new Paragraph("REPORTE: COMANDAS"));
@@ -287,7 +300,7 @@ public class ReporteComandas extends javax.swing.JFrame {
             document.add(tabla);
             document.close();
 
-            JOptionPane.showMessageDialog(this, "Reporte generado con éxito: " + ruta);
+            JOptionPane.showMessageDialog(this, "Reporte generado con éxito:\n" + archivoDestino.getAbsolutePath());
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al generar el PDF");

@@ -16,12 +16,14 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -242,48 +244,66 @@ public class ReporteClientes extends javax.swing.JFrame {
             }
         }
 
-        Document document = new Document();
-        try {
-            String ruta = "reporte_clientes_frecuentes.pdf";
-            PdfWriter.getInstance(document, new FileOutputStream(ruta));
-            document.open();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar Reporte de Clientes Frecuentes");
+        fileChooser.setSelectedFile(new File("reporte_clientes_frecuentes.pdf")); 
 
-            document.add(new Paragraph("REPORTE: CLIENTES FRECUENTES"));
-            document.add(new Paragraph(" "));
+        int selectorRuta = fileChooser.showSaveDialog(this); 
 
-            PdfPTable tabla = new PdfPTable(6);
-            tabla.setWidthPercentage(100);
+        if (selectorRuta == JFileChooser.APPROVE_OPTION) {
+            File archivoSeleccionado = fileChooser.getSelectedFile();
+            String ruta = archivoSeleccionado.getAbsolutePath();
 
-            tabla.addCell("Nombre");
-            tabla.addCell("Correo");
-            tabla.addCell("Teléfono");
-            tabla.addCell("Fecha Registro");
-            tabla.addCell("Puntos");
-            tabla.addCell("Total Gastado");
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-            for (Cliente c : clientesFiltradosPorTelefono) {
-                if (c instanceof ClientesFrecuentes) {
-                    ClientesFrecuentes cf = (ClientesFrecuentes) c;
-
-                    tabla.addCell(cf.getNombre());
-                    tabla.addCell(cf.getCorreo() != null ? cf.getCorreo() : "");
-                    tabla.addCell(cf.getNumTelefono());
-                    tabla.addCell(cf.getFechaRegistro() != null
-                            ? sdf.format(cf.getFechaRegistro().getTime())
-                            : "");
-                    tabla.addCell(String.valueOf(cf.getPuntos()));
-                    tabla.addCell(String.valueOf(cf.getTotalGastado()));
-                }
+            if (!ruta.toLowerCase().endsWith(".pdf")) {
+                ruta += ".pdf";
             }
 
-            document.add(tabla);
-            document.close();
+            Document document = new Document();
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(ruta));
+                document.open();
 
-            JOptionPane.showMessageDialog(this, "Reporte generado con éxito: " + ruta);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al generar el PDF");
+                document.add(new Paragraph("REPORTE: CLIENTES FRECUENTES"));
+                document.add(new Paragraph(" "));
+
+                PdfPTable tabla = new PdfPTable(6);
+                tabla.setWidthPercentage(100);
+
+                tabla.addCell("Nombre");
+                tabla.addCell("Correo");
+                tabla.addCell("Teléfono");
+                tabla.addCell("Fecha Registro");
+                tabla.addCell("Puntos");
+                tabla.addCell("Visitas");
+                tabla.addCell("Total Gastado");
+                
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+                for (Cliente c : clientesFiltradosPorTelefono) {
+                    if (c instanceof ClientesFrecuentes) {
+                        ClientesFrecuentes cf = (ClientesFrecuentes) c;
+
+                        tabla.addCell(cf.getNombre());
+                        tabla.addCell(cf.getCorreo() != null ? cf.getCorreo() : "");
+                        tabla.addCell(cf.getNumTelefono());
+                        tabla.addCell(cf.getFechaRegistro() != null
+                                ? sdf.format(cf.getFechaRegistro().getTime())
+                                : "");
+                        tabla.addCell(String.valueOf(cf.getPuntos()));
+                        tabla.addCell(String.valueOf(cf.getVisitas()));
+                        tabla.addCell(String.valueOf(cf.getTotalGastado()));
+                    }
+                }
+
+                document.add(tabla);
+                document.close();
+
+                JOptionPane.showMessageDialog(this, "Reporte generado con éxito: " + ruta);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al generar el PDF");
+                e.printStackTrace();
+            }
         }
     }
 
