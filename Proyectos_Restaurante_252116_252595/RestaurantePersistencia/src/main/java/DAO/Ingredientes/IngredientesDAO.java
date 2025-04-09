@@ -198,7 +198,7 @@ public class IngredientesDAO implements IIngredientesDAO {
     
     
         @Override
-public List<IngredienteConCantidadNecesariaDTO> obtenerIngredientesConCantidadPorProducto(String nombreProducto) {
+    public List<IngredienteConCantidadNecesariaDTO> obtenerIngredientesConCantidadPorProducto(String nombreProducto) {
     EntityManager em = ManejadorConexiones.getEntityManager();
     
     try {
