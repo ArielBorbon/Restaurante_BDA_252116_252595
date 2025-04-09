@@ -4,13 +4,17 @@
  */
 package ModuloComandas.AñadirComanda;
 
+import BO.ClienteBO.ClienteBO;
 import BO.ComandasBO.ComandaBO;
 import BO.MesaBO.MesaBO;
 import DTOS.Comandas.NuevaComandaDTO;
 import DTOS.Comandas.NuevoDetalleComandaDTO;
 import DTOS.Mesa.NuevaMesaDTO;
+import Entidades.Clientes.Cliente;
 import Entidades.Comandas.EstadoComanda;
 import Entidades.Mesa.Mesa;
+import Excepciones.PersistenciaException;
+import Fabricas.FabricaClientes;
 import Fabricas.FabricaComandas;
 import Fabricas.FabricaMesas;
 import NegocioException.NegocioException;
@@ -21,6 +25,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -391,8 +397,65 @@ public class AñadirComanda extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
 
+    private Long clienteIdSeleccionado = null;
+
+
     private void btnBuscadorClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscadorClientesActionPerformed
-        // TODO add your handling code here:
+        try {
+            String nombreCliente = txtClienteSeleccionadoNombre.getText().trim();
+
+            if (nombreCliente.isEmpty()) {
+                clienteIdSeleccionado = null;
+                JOptionPane.showMessageDialog(this, "Cliente no seleccionado. Puedes continuar sin cliente.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            ClienteBO clienteBO = FabricaClientes.crearClienteBO();
+            List<Cliente> clientesSimilares = clienteBO.filtrarPorNombre(nombreCliente);
+
+            // Si no se encuentran clientes similares
+            if (clientesSimilares.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No se encontraron clientes con el nombre proporcionado.", "No Encontrado", JOptionPane.ERROR_MESSAGE);
+            } else {
+                DefaultTableModel model = new DefaultTableModel();
+                model.addColumn("Nombre Cliente");
+
+                for (Cliente cliente : clientesSimilares) {
+                    model.addRow(new Object[]{cliente.getNombre()});
+                }
+
+                JTable table = new JTable(model);
+
+                JScrollPane scrollPane = new JScrollPane(table);
+                int option = JOptionPane.showConfirmDialog(this, scrollPane, "Selecciona un Cliente", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+                if (option == JOptionPane.OK_OPTION) {
+                    int selectedRow = table.getSelectedRow(); 
+
+                    if (selectedRow != -1) {
+                        String nombreClienteSeleccionado = (String) table.getValueAt(selectedRow, 0);
+
+                        Cliente clienteSeleccionado = null;
+                        for (Cliente cliente : clientesSimilares) {
+                            if (cliente.getNombre().equals(nombreClienteSeleccionado)) {
+                                clienteSeleccionado = cliente;
+                                break;
+                            }
+                        }
+
+                        if (clienteSeleccionado != null) {
+                            txtClienteSeleccionadoNombre.setText(clienteSeleccionado.getNombre());
+                            JOptionPane.showMessageDialog(this, "Cliente seleccionado: " + clienteSeleccionado.getNombre(), "Cliente Seleccionado", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No se seleccionó ningún cliente.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            }
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, "Error al buscar los clientes: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnBuscadorClientesActionPerformed
 
     /**
