@@ -29,7 +29,26 @@ public class FormIngredientesTabla extends javax.swing.JPanel {
     }
 
 
-    
+    /*
+Este método se encarga de cargar la lista de ingredientes en una tabla, mostrando su nombre, unidad de medida y stock disponible.
+
+1. **Método**: `cargarIngredientesEnTabla()`
+2. **Tipo de retorno**: `void`
+3. **Excepciones**: 
+   - Lanza `NegocioException` si ocurre un error al obtener la lista de ingredientes.
+
+4. **Funcionalidad**:
+   - Se crea una instancia de `IngredienteBO` utilizando la fábrica `FabricaIngredientes`.
+   - Se define un arreglo de `String` llamado `columnas`, que contiene los nombres de las columnas que se mostrarán en la tabla: "Nombre", "Unidad de Medida" y "Stock".
+   - Se crea un modelo de tabla (`DefaultTableModel`) utilizando las columnas definidas, inicializándolo con 0 filas. Se sobrescribe el método `isCellEditable` para hacer que las celdas de la tabla no sean editables.
+   - Se obtiene la lista de ingredientes llamando al método `obtenerListaIngredientesBO` del objeto `ingredienteBO`.
+   - Se itera sobre cada ingrediente en la lista:
+     - Se crea un arreglo de objetos (`Object[]`) que representa una fila de la tabla con los datos del ingrediente (nombre, unidad de medida y stock).
+     - Se agrega la fila al modelo de la tabla.
+   - Finalmente, se establece el modelo de la tabla (`tblIngredientes`) con el modelo creado, actualizando así la visualización de los ingredientes.
+
+Este método es esencial para presentar de manera clara y organizada la información de los ingredientes en la interfaz de usuario, facilitando la consulta de datos sobre los ingredientes disponibles.
+*/
     
     private void cargarIngredientesEnTabla() throws NegocioException {
         
@@ -120,6 +139,24 @@ public class FormIngredientesTabla extends javax.swing.JPanel {
     public JTable getTablaIngredientes() {
         return tblIngredientes;
     }
+    
+    
+    
+    
+    /*
+Este método se encarga de recargar la tabla de ingredientes, actualizando su contenido con la información más reciente.
+
+1. **Método**: `recargarTabla()`
+2. **Tipo de retorno**: `void`
+3. **Excepciones**: 
+   - Lanza `NegocioException` si ocurre un error al cargar los ingredientes.
+
+4. **Funcionalidad**:
+   - Llama al método `cargarIngredientesEnTabla()`, que se encarga de obtener la lista actualizada de ingredientes y llenar la tabla correspondiente con esta información.
+
+Este método es esencial para asegurar que la tabla de ingredientes muestre siempre la información más reciente, permitiendo a los usuarios ver los datos actualizados sin necesidad de reiniciar la aplicación o la ventana.
+*/
+    
     
     public void recargarTabla() throws NegocioException {
         cargarIngredientesEnTabla();

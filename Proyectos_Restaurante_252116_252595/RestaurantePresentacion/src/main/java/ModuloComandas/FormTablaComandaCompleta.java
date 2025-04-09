@@ -64,6 +64,28 @@ public class FormTablaComandaCompleta extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+    /*
+Este método se encarga de llenar una tabla con la información de todas las comandas registradas en el sistema.
+
+1. **Método**: `llenarTablaComandas()`
+2. **Tipo de retorno**: `void`
+3. **Funcionalidad**:
+   - Se crea una instancia de `ComandaBO` utilizando la fábrica `FabricaComandas`.
+   - Se obtiene una lista de todas las comandas llamando al método `mostrarComandasTodasBO` del objeto `comandasBO`.
+   - Se define un arreglo de `String` llamado `columnas`, que contiene los nombres de las columnas que se mostrarán en la tabla: "Folio", "Mesa", "Estado", "Total", "Fecha" y "Cliente".
+   - Se crea un modelo de tabla (`DefaultTableModel`) utilizando las columnas definidas, inicializándolo con 0 filas.
+   - Se itera sobre cada comanda en la lista de comandas:
+     - Se extraen los datos relevantes de cada comanda, como el folio, número de mesa, estado, total, fecha y nombre del cliente.
+     - Se maneja la posibilidad de que algunos valores sean `null`, proporcionando valores predeterminados como "N/A" o "Sin Fecha" cuando sea necesario.
+     - Se crea un arreglo de objetos (`Object[]`) que representa una fila de la tabla con los datos extraídos.
+     - Se agrega la fila al modelo de la tabla.
+   - Finalmente, se establece el modelo de la tabla (`tblComandas`) con el modelo creado, actualizando así la visualización de la tabla con la información de las comandas.
+
+Este método es esencial para presentar de manera visual y organizada la información de las comandas en la interfaz de usuario, facilitando la consulta y gestión de datos.
+*/
+    
     public void llenarTablaComandas() {
         ComandaBO comandasBO = FabricaComandas.crearComandaBO();
         List<Comanda> comandas = comandasBO.mostrarComandasTodasBO();
@@ -92,6 +114,33 @@ public class FormTablaComandaCompleta extends javax.swing.JPanel {
     public JTable getTblComandas() {
         return tblComandas;
     }
+    
+    
+    
+    /*
+Este método se encarga de llenar una tabla con la información de las comandas registradas en el sistema que se encuentran dentro de un rango de fechas específico.
+
+1. **Método**: `llenarTablaComandasConFiltro(Date fechaInicio, Date fechaFin)`
+2. **Parámetros**: 
+   - `fechaInicio`: Un objeto de tipo `Date` que representa la fecha de inicio del rango para filtrar las comandas.
+   - `fechaFin`: Un objeto de tipo `Date` que representa la fecha de fin del rango para filtrar las comandas.
+3. **Tipo de retorno**: `void`
+4. **Funcionalidad**:
+   - Se crea una instancia de `ComandaBO` utilizando la fábrica `FabricaComandas`.
+   - Se obtiene una lista de todas las comandas llamando al método `mostrarComandasTodasBO` del objeto `comandasBO`.
+   - Se define un arreglo de `String` llamado `columnas`, que contiene los nombres de las columnas que se mostrarán en la tabla: "Folio", "Mesa", "Estado", "Total", "Fecha" y "Cliente".
+   - Se crea un modelo de tabla (`DefaultTableModel`) utilizando las columnas definidas, inicializándolo con 0 filas.
+   - Se utiliza un objeto `SimpleDateFormat` para formatear las fechas en el formato "yyyy-MM-dd".
+   - Se itera sobre cada comanda en la lista de comandas:
+     - Se extrae la fecha de la comanda, manejando el caso en que pueda ser `null`.
+     - Se verifica si la fecha de la comanda está dentro del rango especificado (entre `fechaInicio` y `fechaFin`).
+     - Si la fecha está dentro del rango, se extraen los datos relevantes de la comanda, como el folio, número de mesa, estado, total y nombre del cliente.
+     - Se crea un arreglo de objetos (`Object[]`) que representa una fila de la tabla con los datos extraídos.
+     - Se agrega la fila al modelo de la tabla.
+   - Finalmente, se establece el modelo de la tabla (`tblComandas`) con el modelo creado, actualizando así la visualización de la tabla con la información filtrada de las comandas.
+
+Este método es esencial para presentar de manera visual y organizada la información de las comandas que cumplen con el criterio de fecha en la interfaz de usuario, facilitando la consulta y gestión de datos.
+*/
     
     public void llenarTablaComandasConFiltro(Date fechaInicio, Date fechaFin) {
         ComandaBO comandasBO = FabricaComandas.crearComandaBO();

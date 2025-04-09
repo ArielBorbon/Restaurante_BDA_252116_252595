@@ -44,7 +44,31 @@ public ModificarComanda(String folioComanda, FormTablaComandas formTablaComanda)
 }
 
 
+/*
+Este método se encarga de cargar y mostrar los datos de una comanda específica en la interfaz de usuario, utilizando el folio de la comanda.
 
+1. **Método**: `cargarDatosComanda()`
+2. **Tipo de retorno**: `void`
+3. **Funcionalidad**:
+   - Se utiliza un bloque `try-catch` para manejar posibles excepciones durante la carga de datos.
+   - Se crea una instancia de `ComandaBO` utilizando la fábrica `FabricaComandas`.
+   - Se obtiene la comanda correspondiente al `folioComanda` llamando al método `obtenerComandaPorFolioBO` del objeto `comandaBO`.
+   - Se verifica si la comanda tiene un cliente frecuente asociado:
+     - Si es así, se establece el nombre del cliente en el campo de texto `txtClienteSeleccionadoNombre`.
+     - Si no, se muestra "Sin Cliente" en el mismo campo.
+   - Se establece el número de mesa en el campo de texto `txtNumMesa` utilizando el número de la mesa asociada a la comanda.
+   - Se obtiene la lista de detalles de la comanda llamando al método `obtenerListaDetallesComandaBO` del objeto `comandaBO`.
+   - Se crea un modelo de tabla (`DefaultTableModel`) con las columnas "Producto", "Unidades", "Precio Unitario", "Nota" y "Total".
+   - Se itera sobre cada detalle de la comanda:
+     - Se crea un arreglo de objetos (`Object[]`) que representa una fila de la tabla con los datos del detalle.
+     - Se agrega la fila al modelo de la tabla.
+   - Finalmente, se establece el modelo de la tabla (`tblProductosHastaElMomento`) con el modelo creado, actualizando así la visualización de los productos de la comanda.
+
+4. **Manejo de excepciones**:
+   - Si ocurre una `NegocioException`, se muestra un mensaje de error al usuario mediante un `JOptionPane`, y se imprime la traza de la excepción en la consola.
+
+Este método es esencial para presentar de manera clara y organizada la información de una comanda específica en la interfaz de usuario, facilitando la consulta de detalles de la comanda.
+*/
 private void cargarDatosComanda() {
     try {
         ComandaBO comandaBO = FabricaComandas.crearComandaBO();

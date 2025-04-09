@@ -29,6 +29,31 @@ public class FormProductosTablaDisponibles extends javax.swing.JPanel {
         cargarProductosEnTablaDisponibles();
     }
 
+    
+    
+    
+    
+    /*
+Este método se encarga de cargar en una tabla la lista de productos disponibles, mostrando su nombre, precio y tipo.
+
+1. **Método**: `cargarProductosEnTablaDisponibles()`
+2. **Tipo de retorno**: `void`
+3. **Excepciones**: 
+   - Lanza `NegocioException` si ocurre un error al obtener la lista de productos.
+
+4. **Funcionalidad**:
+   - Se crea una instancia de `ProductoBO` utilizando la fábrica `FabricaProductos`.
+   - Se define un arreglo de `String` llamado `columnas`, que contiene los nombres de las columnas que se mostrarán en la tabla: "Nombre", "Precio" y "Tipo".
+   - Se crea un modelo de tabla (`DefaultTableModel`) utilizando las columnas definidas, inicializándolo con 0 filas. Se sobrescribe el método `isCellEditable` para hacer que las celdas de la tabla no sean editables.
+   - Se obtiene la lista de productos disponibles llamando al método `filtrarPorNombreProductoDisponiblesBO` del objeto `productoBO`, pasando una cadena vacía como argumento para obtener todos los productos disponibles.
+   - Se itera sobre cada producto en la lista:
+     - Se crea un arreglo de objetos (`Object[]`) que representa una fila de la tabla con los datos del producto (nombre, precio y tipo).
+     - Se agrega la fila al modelo de la tabla.
+   - Finalmente, se establece el modelo de la tabla (`tblProductos`) con el modelo creado, actualizando así la visualización de los productos disponibles.
+
+Este método es esencial para presentar de manera clara y organizada la información de los productos disponibles en la interfaz de usuario, facilitando la consulta de datos sobre los productos que se pueden ofrecer.
+*/
+    
     private void cargarProductosEnTablaDisponibles() throws NegocioException {
         
         ProductoBO productoBO = FabricaProductos.crearProductoBO();
@@ -55,7 +80,19 @@ public class FormProductosTablaDisponibles extends javax.swing.JPanel {
     tblProductos.setModel(modeloTabla);
 }
     
-    
+    /*
+Este método se encarga de cargar la lista de productos disponibles en la tabla, actuando como un envoltorio para el método `cargarProductosEnTablaDisponibles`.
+
+1. **Método**: `cargarProductosEnTablaDisponiblesExterno()`
+2. **Tipo de retorno**: `void`
+3. **Excepciones**: 
+   - Lanza `NegocioException` si ocurre un error al cargar la lista de productos disponibles.
+
+4. **Funcionalidad**:
+   - Llama al método `cargarProductosEnTablaDisponibles()`, que se encarga de obtener la lista de productos disponibles y llenar la tabla correspondiente con esta información.
+
+Este método es útil para proporcionar una interfaz más clara o para ser llamado desde otros contextos donde se necesite recargar la tabla de productos disponibles, asegurando que la tabla muestre siempre la información más actualizada.
+*/
     public void cargarProductosEnTablaDisponiblesExterno() throws NegocioException{
         cargarProductosEnTablaDisponibles();
     }
