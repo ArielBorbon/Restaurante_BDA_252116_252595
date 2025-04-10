@@ -55,14 +55,14 @@ public class ReporteComandas extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        filtroFechaInicio = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        filtroFechaFin = new javax.swing.JTextField();
         pnlTabla = new javax.swing.JPanel();
         btnFiltro = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         btnImprimirReporte = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        filtroFechaInicio = new com.toedter.calendar.JDateChooser();
+        filtroFechaFin = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Reporte Comandas");
@@ -72,12 +72,6 @@ public class ReporteComandas extends javax.swing.JFrame {
 
         jLabel3.setText("Fecha Inicio");
         jLabel3.setFont(new Font("Arial", Font.PLAIN, 14));
-
-        filtroFechaInicio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                filtroFechaInicioActionPerformed(evt);
-            }
-        });
 
         jLabel4.setText("Fecha Fin");
         jLabel4.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -122,38 +116,41 @@ public class ReporteComandas extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(135, 135, 135)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(filtroFechaInicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(166, 166, 166)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(filtroFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(168, 168, 168)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(293, 293, 293)
-                                .addComponent(btnFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addGap(221, 221, 221)
                 .addComponent(btnImprimirReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(168, 168, 168)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(293, 293, 293)
+                                .addComponent(btnFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(135, 135, 135)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(filtroFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                                .addGap(166, 166, 166)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                    .addComponent(filtroFechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pnlTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,14 +159,12 @@ public class ReporteComandas extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(filtroFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(filtroFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(filtroFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filtroFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addComponent(btnFiltro)
                 .addGap(18, 18, 18)
@@ -186,24 +181,16 @@ public class ReporteComandas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void filtroFechaInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroFechaInicioActionPerformed
-        String fechaInicioText = filtroFechaInicio.getText();
-        String fechaFinText = filtroFechaFin.getText();
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-        try {
-            Date fechaInicio = sdf.parse(fechaInicioText);
-            Date fechaFin = sdf.parse(fechaFinText);
-
-            formTablaComandaCompleta.llenarTablaComandasConFiltro(fechaInicio, fechaFin);
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(this, "Error al introducir las fechas. Asegúrate de que el formato sea correcto (yyyy-MM-dd).");
-        }
-    }//GEN-LAST:event_filtroFechaInicioActionPerformed
-
     private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
+        Date fechaInicio = filtroFechaInicio.getDate();
+        Date fechaFin = filtroFechaFin.getDate();
 
+        if (fechaInicio == null || fechaFin == null) {
+            JOptionPane.showMessageDialog(this, "Por favor, selecciona ambas fechas.");
+            return;
+        }
+
+        formTablaComandaCompleta.llenarTablaComandasConFiltro(fechaInicio, fechaFin);
     }//GEN-LAST:event_btnFiltroActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -219,29 +206,22 @@ public class ReporteComandas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnImprimirReporteActionPerformed
 
     private void generarReporteComandas() throws NegocioException {
-        String fechaInicioTexto = filtroFechaInicio.getText();
-        String fechaFinTexto = filtroFechaFin.getText();
+        Date fechaInicio = filtroFechaInicio.getDate();
+        Date fechaFin = filtroFechaFin.getDate();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date fechaInicio = null;
-        Date fechaFin = null;
-        try {
-            if (!fechaInicioTexto.isEmpty()) {
-                fechaInicio = sdf.parse(fechaInicioTexto);
-            }
-            if (!fechaFinTexto.isEmpty()) {
-                fechaFin = sdf.parse(fechaFinTexto);
-            }
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(this, "Error al introducir las fechas. Formato esperado: yyyy-MM-dd");
+        // Verifica si alguna de las fechas es nula
+        if (fechaInicio == null || fechaFin == null) {
+            JOptionPane.showMessageDialog(this, "Por favor, selecciona ambas fechas.");
             return;
         }
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         ComandaBO comandasBO = FabricaComandas.crearComandaBO();
-        List<Comanda> comandasAbiertas = comandasBO.mostrarComandasAbiertasBO();
+        List<Comanda> comanda = comandasBO.mostrarComandasTodasBO();
 
         List<Comanda> comandasFiltradas = new ArrayList<>();
-        for (Comanda c : comandasAbiertas) {
+        for (Comanda c : comanda) {
             Date fechaComanda = c.getFechaHora() != null ? c.getFechaHora().getTime() : null;
             if (fechaComanda != null) {
                 if ((fechaInicio == null || !fechaComanda.before(fechaInicio))
@@ -254,11 +234,11 @@ public class ReporteComandas extends javax.swing.JFrame {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Guardar Reporte de Comandas");
         fileChooser.setSelectedFile(new File("reporte_comandas.pdf"));
-        
+
         int seleccionRuta = fileChooser.showSaveDialog(this);
 
         if (seleccionRuta != JFileChooser.APPROVE_OPTION) {
-            return; 
+            return;
         }
 
         File archivoDestino = fileChooser.getSelectedFile();
@@ -313,8 +293,8 @@ public class ReporteComandas extends javax.swing.JFrame {
     private javax.swing.JButton btnFiltro;
     private javax.swing.JButton btnImprimirReporte;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JTextField filtroFechaFin;
-    private javax.swing.JTextField filtroFechaInicio;
+    private com.toedter.calendar.JDateChooser filtroFechaFin;
+    private com.toedter.calendar.JDateChooser filtroFechaInicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
