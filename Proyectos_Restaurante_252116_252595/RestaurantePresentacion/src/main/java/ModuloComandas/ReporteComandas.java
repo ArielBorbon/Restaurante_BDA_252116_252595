@@ -41,6 +41,7 @@ public class ReporteComandas extends javax.swing.JFrame {
         initComponents();
         pnlTabla.add(formTablaComandaCompleta);
         formTablaComandaCompleta.setVisible(true);
+        getContentPane().setBackground(new Color(0xe71d1d));
     }
 
     /**

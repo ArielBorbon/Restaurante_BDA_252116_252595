@@ -18,6 +18,7 @@ import Fabricas.FabricaIngredientes;
 import Fabricas.FabricaProductos;
 import ModuloProductos.FormProductosTablaTodos;
 import NegocioException.NegocioException;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -41,6 +42,7 @@ public class ModificarProducto extends javax.swing.JFrame {
         this.formProductosTablaTodos = formTabla;
         this.productoOriginal = producto;
         cargarDatosProducto();
+        getContentPane().setBackground(new Color(0x78f332));
     } 
     
     
