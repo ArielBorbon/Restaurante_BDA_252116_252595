@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -185,12 +186,30 @@ public class ReporteComandas extends javax.swing.JFrame {
         Date fechaInicio = filtroFechaInicio.getDate();
         Date fechaFin = filtroFechaFin.getDate();
 
+        // Verifica si alguna de las fechas es nula
         if (fechaInicio == null || fechaFin == null) {
             JOptionPane.showMessageDialog(this, "Por favor, selecciona ambas fechas.");
             return;
         }
 
-        formTablaComandaCompleta.llenarTablaComandasConFiltro(fechaInicio, fechaFin);
+        // Ajustar las fechas para que solo se compare la parte de la fecha, ignorando la hora
+        Calendar calInicio = Calendar.getInstance();
+        Calendar calFin = Calendar.getInstance();
+
+        calInicio.setTime(fechaInicio);
+        calInicio.set(Calendar.HOUR_OF_DAY, 0);
+        calInicio.set(Calendar.MINUTE, 0);
+        calInicio.set(Calendar.SECOND, 0);
+        calInicio.set(Calendar.MILLISECOND, 0);
+
+        calFin.setTime(fechaFin);
+        calFin.set(Calendar.HOUR_OF_DAY, 23);
+        calFin.set(Calendar.MINUTE, 59);
+        calFin.set(Calendar.SECOND, 59);
+        calFin.set(Calendar.MILLISECOND, 999);
+
+        // Pasa las fechas ajustadas al método de llenar la tabla con filtro
+        formTablaComandaCompleta.llenarTablaComandasConFiltro(calInicio.getTime(), calFin.getTime());
     }//GEN-LAST:event_btnFiltroActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -215,7 +234,23 @@ public class ReporteComandas extends javax.swing.JFrame {
             return;
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        // Ajustar las fechas para que solo se compare la parte de la fecha, ignorando la hora
+        Calendar calInicio = Calendar.getInstance();
+        Calendar calFin = Calendar.getInstance();
+
+        calInicio.setTime(fechaInicio);
+        calInicio.set(Calendar.HOUR_OF_DAY, 0);
+        calInicio.set(Calendar.MINUTE, 0);
+        calInicio.set(Calendar.SECOND, 0);
+        calInicio.set(Calendar.MILLISECOND, 0);
+
+        calFin.setTime(fechaFin);
+        calFin.set(Calendar.HOUR_OF_DAY, 23);
+        calFin.set(Calendar.MINUTE, 59);
+        calFin.set(Calendar.SECOND, 59);
+        calFin.set(Calendar.MILLISECOND, 999);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         ComandaBO comandasBO = FabricaComandas.crearComandaBO();
         List<Comanda> comanda = comandasBO.mostrarComandasTodasBO();
@@ -224,13 +259,14 @@ public class ReporteComandas extends javax.swing.JFrame {
         for (Comanda c : comanda) {
             Date fechaComanda = c.getFechaHora() != null ? c.getFechaHora().getTime() : null;
             if (fechaComanda != null) {
-                if ((fechaInicio == null || !fechaComanda.before(fechaInicio))
-                        && (fechaFin == null || !fechaComanda.after(fechaFin))) {
+                // Verificar si la fecha de la comanda está dentro del rango ajustado
+                if (!fechaComanda.before(calInicio.getTime()) && !fechaComanda.after(calFin.getTime())) {
                     comandasFiltradas.add(c);
                 }
             }
         }
 
+        // Seleccionar archivo de salida
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Guardar Reporte de Comandas");
         fileChooser.setSelectedFile(new File("reporte_comandas.pdf"));
@@ -243,6 +279,7 @@ public class ReporteComandas extends javax.swing.JFrame {
 
         File archivoDestino = fileChooser.getSelectedFile();
 
+        // Generar PDF
         Document document = new Document();
         try {
             PdfWriter.getInstance(document, new FileOutputStream(archivoDestino));

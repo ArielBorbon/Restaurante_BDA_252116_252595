@@ -42,7 +42,7 @@ public class FormClientesTabla extends javax.swing.JPanel {
 
         List<Cliente> clientes = clienteBO.obtenerListaClientesBO();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         for (Cliente c : clientes) {
 
@@ -133,7 +133,7 @@ public class FormClientesTabla extends javax.swing.JPanel {
             }
         };
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         for (Cliente c : clientesFiltrados) {
 

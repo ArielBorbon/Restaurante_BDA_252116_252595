@@ -278,7 +278,7 @@ public class ReporteClientes extends javax.swing.JFrame {
                 tabla.addCell("Visitas");
                 tabla.addCell("Total Gastado");
 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
                 for (Cliente c : clientesFiltradosPorTelefono) {
                     if (c instanceof ClientesFrecuentes) {

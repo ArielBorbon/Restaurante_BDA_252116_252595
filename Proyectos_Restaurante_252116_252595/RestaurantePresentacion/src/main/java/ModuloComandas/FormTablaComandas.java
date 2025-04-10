@@ -27,8 +27,6 @@ public class FormTablaComandas extends javax.swing.JPanel {
         llenarTablaComandasAbiertas();
     }
 
-    
-    
     /*
 Este método se encarga de llenar una tabla con la información de todas las comandas que están actualmente abiertas en el sistema.
 
@@ -47,7 +45,7 @@ Este método se encarga de llenar una tabla con la información de todas las com
    - Finalmente, se establece el modelo de la tabla (`tblComandasAbiertas`) con el modelo creado, actualizando así la visualización de la tabla con la información de las comandas abiertas.
 
 Este método es esencial para presentar de manera visual y organizada la información de las comandas abiertas en la interfaz de usuario, facilitando la consulta y gestión de datos.
-*/
+     */
     public void llenarTablaComandasAbiertas() {
         ComandaBO comandasBO = FabricaComandas.crearComandaBO();
         List<Comanda> comandasAbiertas = comandasBO.mostrarComandasAbiertasBO();
@@ -55,12 +53,16 @@ Este método es esencial para presentar de manera visual y organizada la informa
         String[] columnas = {"Folio", "Mesa", "Estado", "Total", "Fecha", "Cliente"};
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
         for (Comanda c : comandasAbiertas) {
+            Date fechaComanda = c.getFechaHora() != null ? c.getFechaHora().getTime() : null;
+
             String folio = c.getFolio();
             int numeroMesa = c.getMesa() != null ? c.getMesa().getNum_mesa() : -1;
             String estado = c.getEstado() != null ? c.getEstado().toString() : "N/A";
             double total = c.getTotal();
-            String fecha = c.getFechaHora() != null ? c.getFechaHora().getTime().toString() : "Sin Fecha";
+            String fecha = sdf.format(fechaComanda);
 
             String cliente = (c.getClienteFrecuente() != null)
                     ? c.getClienteFrecuente().getNombre()
@@ -76,11 +78,6 @@ Este método es esencial para presentar de manera visual y organizada la informa
     public JTable getTblComandasAbiertas() {
         return tblComandasAbiertas;
     }
-    
-    
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -119,7 +116,7 @@ Este método es esencial para presentar de manera visual y organizada la informa
         );
     }// </editor-fold>//GEN-END:initComponents
     // Metodo para utilizar el filtro de reporte comandas :)
-    
+
     /*
 Este método se encarga de llenar una tabla con la información de las comandas abiertas que se encuentran dentro de un rango de fechas específico.
 
@@ -143,9 +140,7 @@ Este método se encarga de llenar una tabla con la información de las comandas 
    - Finalmente, se establece el modelo de la tabla (`tblComandasAbiertas`) con el modelo creado, actualizando así la visualización de la tabla con la información filtrada de las comandas abiertas.
 
 Este método es esencial para presentar de manera visual y organizada la información de las comandas abiertas que cumplen con el criterio de fecha en la interfaz de usuario, facilitando la consulta y gestión de datos.
-*/
-    
-    
+     */
     public void llenarTablaComandasAbiertasConFiltro(Date fechaInicio, Date fechaFin) {
         ComandaBO comandasBO = FabricaComandas.crearComandaBO();
         List<Comanda> comandasAbiertas = comandasBO.mostrarComandasAbiertasBO();
@@ -153,7 +148,7 @@ Este método es esencial para presentar de manera visual y organizada la informa
         String[] columnas = {"Folio", "Mesa", "Estado", "Total", "Fecha", "Cliente"};
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         for (Comanda c : comandasAbiertas) {
             Date fechaComanda = c.getFechaHora() != null ? c.getFechaHora().getTime() : null;

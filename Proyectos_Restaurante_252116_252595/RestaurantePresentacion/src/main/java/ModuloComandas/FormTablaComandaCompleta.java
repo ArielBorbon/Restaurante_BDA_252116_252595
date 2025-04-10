@@ -92,13 +92,17 @@ Este método es esencial para presentar de manera visual y organizada la informa
 
         String[] columnas = {"Folio", "Mesa", "Estado", "Total", "Fecha", "Cliente"};
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
-
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        
         for (Comanda c : comandas) {
+            Date fechaComanda = c.getFechaHora() != null ? c.getFechaHora().getTime() : null;
+            
             String folio = c.getFolio();
             int numeroMesa = c.getMesa() != null ? c.getMesa().getNum_mesa() : -1;
             String estado = c.getEstado() != null ? c.getEstado().toString() : "N/A";
             double total = c.getTotal();
-            String fecha = c.getFechaHora() != null ? c.getFechaHora().getTime().toString() : "Sin Fecha";
+            String fecha = sdf.format(fechaComanda);
 
             String cliente = (c.getClienteFrecuente() != null)
                     ? c.getClienteFrecuente().getNombre()
@@ -149,7 +153,7 @@ Este método es esencial para presentar de manera visual y organizada la informa
         String[] columnas = {"Folio", "Mesa", "Estado", "Total", "Fecha", "Cliente"};
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         for (Comanda c : comandas) {
             Date fechaComanda = c.getFechaHora() != null ? c.getFechaHora().getTime() : null;
