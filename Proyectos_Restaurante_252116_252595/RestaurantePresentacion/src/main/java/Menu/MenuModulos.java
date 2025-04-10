@@ -19,6 +19,7 @@ import java.util.logging.Logger;
  * @author Alberto Jimenez Garcia 252595
  */
 public class MenuModulos extends javax.swing.JFrame {
+
     private String rol;
 
     /**
@@ -30,20 +31,19 @@ public class MenuModulos extends javax.swing.JFrame {
         this.rol = rol;
         ConfigurarBotonesMesero();
     }
-    
-    public void ConfigurarBotonesMesero(){
+
+    public void ConfigurarBotonesMesero() {
         if (this.rol == "Mesero") {
             remove(btnClientes);
             remove(btnProductos);
             remove(btnIngredientes);
             lblPersona.setText("Mesero: Ariel Eduardo Jimenez Garcia");
-            
-        }
-        
-    }
-    
-    //
 
+        }
+
+    }
+
+    //
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -174,9 +174,10 @@ public class MenuModulos extends javax.swing.JFrame {
         try {
             ModuloPrincipalIngredientes moduloIngredientes = new ModuloPrincipalIngredientes();
             moduloIngredientes.setVisible(true);
+            this.dispose();
         } catch (NegocioException ex) {
         }
-        
+
     }//GEN-LAST:event_btnIngredientesActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
@@ -186,7 +187,7 @@ public class MenuModulos extends javax.swing.JFrame {
         } catch (NegocioException ex) {
             Logger.getLogger(MenuModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
+
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
@@ -198,21 +199,20 @@ public class MenuModulos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnComandasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComandasActionPerformed
-    
+
         ModuloPrincipalComandas moduloComanda = new ModuloPrincipalComandas();
         moduloComanda.setVisible(true);
-        
-        
     }//GEN-LAST:event_btnComandasActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        SeleccionDeRol seleccionDeRol = new SeleccionDeRol();
+        seleccionDeRol.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;
