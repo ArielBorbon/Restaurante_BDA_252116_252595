@@ -61,6 +61,7 @@ public class MenuModulos extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menú Principal");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/DeshuesaderoLogo.png"))); // NOI18N
 

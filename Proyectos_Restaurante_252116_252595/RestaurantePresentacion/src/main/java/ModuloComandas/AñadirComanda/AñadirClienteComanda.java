@@ -47,6 +47,7 @@ public AñadirClienteComanda(AñadirComanda añadirComanda) throws NegocioExcept
         pnlTablaClientes = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Agregar Cliente Comanda");
 
         btnSeleccionarCliente.setBackground(new java.awt.Color(204, 255, 204));
         btnSeleccionarCliente.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N

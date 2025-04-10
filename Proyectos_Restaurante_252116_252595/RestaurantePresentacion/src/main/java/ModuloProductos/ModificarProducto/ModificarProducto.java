@@ -105,6 +105,7 @@ for (IngredienteConCantidadNecesariaDTO dto : listaProductoOcupa) {
         btnModificarCantidad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Modificar Producto");
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
         jLabel1.setText("Modificar Producto");

@@ -60,6 +60,7 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Menú Comanda");
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
         jLabel1.setText("Modulo Comandas");

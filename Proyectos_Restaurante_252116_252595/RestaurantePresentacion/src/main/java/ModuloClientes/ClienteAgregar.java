@@ -55,6 +55,7 @@ public class ClienteAgregar extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Agregar Cliente");
 
         jLabel1.setText("Modulo Cliente");
         jLabel1.setFont(new Font("Arial", Font.BOLD, 32));

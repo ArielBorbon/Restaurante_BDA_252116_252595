@@ -66,6 +66,7 @@ public class ReporteClientes extends javax.swing.JFrame {
         btnImprimirReporte = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Reporte Clientes");
 
         jLabel1.setText("Reporte Clientes");
         jLabel1.setFont(new Font("Arial", Font.BOLD, 32));
@@ -246,9 +247,9 @@ public class ReporteClientes extends javax.swing.JFrame {
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Guardar Reporte de Clientes Frecuentes");
-        fileChooser.setSelectedFile(new File("reporte_clientes_frecuentes.pdf")); 
+        fileChooser.setSelectedFile(new File("reporte_clientes_frecuentes.pdf"));
 
-        int selectorRuta = fileChooser.showSaveDialog(this); 
+        int selectorRuta = fileChooser.showSaveDialog(this);
 
         if (selectorRuta == JFileChooser.APPROVE_OPTION) {
             File archivoSeleccionado = fileChooser.getSelectedFile();
@@ -266,7 +267,7 @@ public class ReporteClientes extends javax.swing.JFrame {
                 document.add(new Paragraph("REPORTE: CLIENTES FRECUENTES"));
                 document.add(new Paragraph(" "));
 
-                PdfPTable tabla = new PdfPTable(6);
+                PdfPTable tabla = new PdfPTable(7);
                 tabla.setWidthPercentage(100);
 
                 tabla.addCell("Nombre");
@@ -276,7 +277,6 @@ public class ReporteClientes extends javax.swing.JFrame {
                 tabla.addCell("Puntos");
                 tabla.addCell("Visitas");
                 tabla.addCell("Total Gastado");
-                
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -284,9 +284,16 @@ public class ReporteClientes extends javax.swing.JFrame {
                     if (c instanceof ClientesFrecuentes) {
                         ClientesFrecuentes cf = (ClientesFrecuentes) c;
 
+                        String telefonoDesencriptado = "";
+                        try {
+                            telefonoDesencriptado = Encriptador.desencriptar(cf.getNumTelefono());
+                        } catch (Exception e) {
+                            telefonoDesencriptado = "Error al desencriptar";
+                        }
+
                         tabla.addCell(cf.getNombre());
                         tabla.addCell(cf.getCorreo() != null ? cf.getCorreo() : "");
-                        tabla.addCell(cf.getNumTelefono());
+                        tabla.addCell(telefonoDesencriptado);
                         tabla.addCell(cf.getFechaRegistro() != null
                                 ? sdf.format(cf.getFechaRegistro().getTime())
                                 : "");

@@ -17,7 +17,8 @@ import java.util.Base64;
 public class Encriptador {
 
     private static final String ALGORITMO = "AES";
-
+    
+    // Metodo para encriptar
     public static String encriptar(String texto) throws Exception {
         SecretKey clave = obtenerClaveSecreta();
         Cipher cipher = Cipher.getInstance(ALGORITMO);
@@ -31,7 +32,9 @@ public class Encriptador {
         String clave = "1234567890123456";
         return new SecretKeySpec(clave.getBytes(), ALGORITMO);
     }
-
+    
+    // Metodo para poder desencriptar de manera momentanea y que solo lo 
+    // muestre en los interfaces gráficos
     public static String desencriptar(String textoEncriptado) throws Exception {
         SecretKey clave = obtenerClaveSecreta();
         Cipher cipher = Cipher.getInstance(ALGORITMO);

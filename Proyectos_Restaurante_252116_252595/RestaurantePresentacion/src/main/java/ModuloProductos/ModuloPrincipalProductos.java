@@ -61,6 +61,7 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Menú Producto");
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 

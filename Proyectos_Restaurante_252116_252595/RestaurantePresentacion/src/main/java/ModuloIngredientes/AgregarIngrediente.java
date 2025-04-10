@@ -44,6 +44,7 @@ public class AgregarIngrediente extends javax.swing.JFrame {
         cmbUnidad_Medida = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Agregar Ingrendiente");
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
         jLabel1.setText("Añadir Ingrediente");

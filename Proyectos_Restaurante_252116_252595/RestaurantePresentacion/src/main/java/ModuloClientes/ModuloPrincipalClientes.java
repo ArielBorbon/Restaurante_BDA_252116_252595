@@ -49,6 +49,7 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
         pnlFormClientes = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Menú  Cliente");
 
         jLabel1.setText("Modulo Cliente");
         jLabel1.setFont(new Font("Arial", Font.BOLD, 32));

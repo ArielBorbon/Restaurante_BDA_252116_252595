@@ -60,6 +60,7 @@ public class AñadirProducto extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Agregar Producto");
 
         btnModificarCantidad.setBackground(new java.awt.Color(255, 255, 153));
         btnModificarCantidad.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N

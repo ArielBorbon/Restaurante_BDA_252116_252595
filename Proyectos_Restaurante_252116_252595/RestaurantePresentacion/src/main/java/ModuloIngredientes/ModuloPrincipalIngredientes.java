@@ -52,6 +52,7 @@ public class ModuloPrincipalIngredientes extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Menú Ingredientes");
 
         lblIngredientes.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
         lblIngredientes.setText("Modulo Ingredientes");

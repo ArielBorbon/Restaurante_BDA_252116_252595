@@ -47,6 +47,7 @@ public class SeleccionDeRol extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Selección Rol");
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 1, 48)); // NOI18N
         jLabel1.setText("RESTAURANTE DESHUESADERO");

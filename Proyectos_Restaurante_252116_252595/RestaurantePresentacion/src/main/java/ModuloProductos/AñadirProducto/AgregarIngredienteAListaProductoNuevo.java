@@ -47,6 +47,7 @@ public class AgregarIngredienteAListaProductoNuevo extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Agregar ingrediente a producto");
 
         pnlIngredientesChilos.setLayout(new java.awt.BorderLayout());
 

@@ -89,6 +89,7 @@ Este método es esencial para proporcionar al usuario una lista actualizada de m
         btnEditarNota = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Agregar Comanda");
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
         jLabel1.setText("Añadir Comandas");
