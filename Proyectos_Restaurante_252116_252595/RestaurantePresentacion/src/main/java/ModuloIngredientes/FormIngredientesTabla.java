@@ -15,12 +15,14 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class FormIngredientesTabla extends javax.swing.JPanel {
 
     /**
      * Creates new form FomIngredientesTabla
+     *
      * @throws NegocioException.NegocioException
      */
     public FormIngredientesTabla() throws NegocioException {
@@ -48,20 +50,19 @@ Este método se encarga de cargar la lista de ingredientes en una tabla, mostran
    - Finalmente, se establece el modelo de la tabla (`tblIngredientes`) con el modelo creado, actualizando así la visualización de los ingredientes.
 
 Este método es esencial para presentar de manera clara y organizada la información de los ingredientes en la interfaz de usuario, facilitando la consulta de datos sobre los ingredientes disponibles.
-*/
-    
+     */
     private void cargarIngredientesEnTabla() throws NegocioException {
-        
+
         IngredienteBO ingredienteBO = FabricaIngredientes.crearIngredienteBO();
         String[] columnas = {"Nombre", "Unidad de Medida", "Stock"};
-        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0){
-           
+        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0) {
+
             @Override
             public boolean isCellEditable(int row, int column) {
-            return false; 
-        }
+                return false;
+            }
         };
- 
+
         List<Ingrediente> ingredientes = ingredienteBO.obtenerListaIngredientesBO();
 
         for (Ingrediente ing : ingredientes) {
@@ -69,13 +70,13 @@ Este método es esencial para presentar de manera clara y organizada la informac
                 ing.getNombre(),
                 ing.getUnidad_medida(),
                 ing.getStock()
-                };
+            };
             modeloTabla.addRow(fila);
         }
 
-    tblIngredientes.setModel(modeloTabla);
-}
-    
+        tblIngredientes.setModel(modeloTabla);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -139,10 +140,7 @@ Este método es esencial para presentar de manera clara y organizada la informac
     public JTable getTablaIngredientes() {
         return tblIngredientes;
     }
-    
-    
-    
-    
+
     /*
 Este método se encarga de recargar la tabla de ingredientes, actualizando su contenido con la información más reciente.
 
@@ -155,13 +153,10 @@ Este método se encarga de recargar la tabla de ingredientes, actualizando su co
    - Llama al método `cargarIngredientesEnTabla()`, que se encarga de obtener la lista actualizada de ingredientes y llenar la tabla correspondiente con esta información.
 
 Este método es esencial para asegurar que la tabla de ingredientes muestre siempre la información más reciente, permitiendo a los usuarios ver los datos actualizados sin necesidad de reiniciar la aplicación o la ventana.
-*/
-    
-    
+     */
     public void recargarTabla() throws NegocioException {
         cargarIngredientesEnTabla();
     }
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

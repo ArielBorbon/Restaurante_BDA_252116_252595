@@ -29,7 +29,8 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Alberto Jimenez
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class ReporteComandas extends javax.swing.JFrame {
 
@@ -228,27 +229,26 @@ public class ReporteComandas extends javax.swing.JFrame {
         Date fechaInicio = filtroFechaInicio.getDate();
         Date fechaFin = filtroFechaFin.getDate();
 
-        // Verifica si alguna de las fechas es nula
-        if (fechaInicio == null || fechaFin == null) {
-            JOptionPane.showMessageDialog(this, "Por favor, selecciona ambas fechas.");
-            return;
+        Calendar calInicio = null;
+        Calendar calFin = null;
+
+        if (fechaInicio != null) {
+            calInicio = Calendar.getInstance();
+            calInicio.setTime(fechaInicio);
+            calInicio.set(Calendar.HOUR_OF_DAY, 0);
+            calInicio.set(Calendar.MINUTE, 0);
+            calInicio.set(Calendar.SECOND, 0);
+            calInicio.set(Calendar.MILLISECOND, 0);
         }
 
-        // Ajustar las fechas para que solo se compare la parte de la fecha, ignorando la hora
-        Calendar calInicio = Calendar.getInstance();
-        Calendar calFin = Calendar.getInstance();
-
-        calInicio.setTime(fechaInicio);
-        calInicio.set(Calendar.HOUR_OF_DAY, 0);
-        calInicio.set(Calendar.MINUTE, 0);
-        calInicio.set(Calendar.SECOND, 0);
-        calInicio.set(Calendar.MILLISECOND, 0);
-
-        calFin.setTime(fechaFin);
-        calFin.set(Calendar.HOUR_OF_DAY, 23);
-        calFin.set(Calendar.MINUTE, 59);
-        calFin.set(Calendar.SECOND, 59);
-        calFin.set(Calendar.MILLISECOND, 999);
+        if (fechaFin != null) {
+            calFin = Calendar.getInstance();
+            calFin.setTime(fechaFin);
+            calFin.set(Calendar.HOUR_OF_DAY, 23);
+            calFin.set(Calendar.MINUTE, 59);
+            calFin.set(Calendar.SECOND, 59);
+            calFin.set(Calendar.MILLISECOND, 999);
+        }
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
@@ -259,8 +259,16 @@ public class ReporteComandas extends javax.swing.JFrame {
         for (Comanda c : comanda) {
             Date fechaComanda = c.getFechaHora() != null ? c.getFechaHora().getTime() : null;
             if (fechaComanda != null) {
-                // Verificar si la fecha de la comanda está dentro del rango ajustado
-                if (!fechaComanda.before(calInicio.getTime()) && !fechaComanda.after(calFin.getTime())) {
+                boolean dentroDeRango = true;
+
+                if (calInicio != null && fechaComanda.before(calInicio.getTime())) {
+                    dentroDeRango = false;
+                }
+                if (calFin != null && fechaComanda.after(calFin.getTime())) {
+                    dentroDeRango = false;
+                }
+
+                if (dentroDeRango) {
                     comandasFiltradas.add(c);
                 }
             }

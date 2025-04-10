@@ -20,13 +20,16 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class ModuloPrincipalProductos extends javax.swing.JFrame {
+
     private FormProductosTablaTodos formTabla = new FormProductosTablaTodos();
 
     /**
      * Creates new form ModuloPrincipalProductos
+     *
      * @throws NegocioException.NegocioException
      */
     public ModuloPrincipalProductos() throws NegocioException {
@@ -34,8 +37,7 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
         formTabla.setVisible(true);
         this.jPanel1.add(formTabla);
         getContentPane().setBackground(new Color(0x78f332));
-        
-        
+
     }
 
     /**
@@ -216,143 +218,141 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
 
     private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
         try {
-        ProductoBO productoBO = FabricaProductos.crearProductoBO();
+            ProductoBO productoBO = FabricaProductos.crearProductoBO();
 
-        String nombreFiltro = txtNombre.getText().trim();
-        String tipoSeleccionado = cmbTipo.getSelectedItem().toString();
-        
-        List<Producto> productosFiltrados;
-        
+            String nombreFiltro = txtNombre.getText().trim();
+            String tipoSeleccionado = cmbTipo.getSelectedItem().toString();
+
+            List<Producto> productosFiltrados;
+
             if (tipoSeleccionado.equals("Ninguno")) {
                 productosFiltrados = productoBO.filtrarPorNombreProductoTodosBO(nombreFiltro);
-            
 
-        } else if (nombreFiltro.isBlank() && tipoSeleccionado.equalsIgnoreCase("Todos")) {
-        productosFiltrados = productoBO.mostrarListaProductosTodosBO();
-        
-        } else if (!nombreFiltro.isBlank() && tipoSeleccionado.equalsIgnoreCase("Todos")) {
-            productosFiltrados = productoBO.filtrarPorNombreProductoTodosBO(nombreFiltro);
-        
-        } else if (nombreFiltro.isBlank() && !tipoSeleccionado.equalsIgnoreCase("Todos")) {
-            Tipo_Producto tipo = Tipo_Producto.valueOf(tipoSeleccionado);
-            productosFiltrados = productoBO.filtrarPorTipoProductoTodosBO(tipo);
-        
-        } else {
-            Tipo_Producto tipo = Tipo_Producto.valueOf(tipoSeleccionado);
-            productosFiltrados = productoBO.filtrarPorNombreYTipoProductoTodosBO(nombreFiltro, tipo);
+            } else if (nombreFiltro.isBlank() && tipoSeleccionado.equalsIgnoreCase("Todos")) {
+                productosFiltrados = productoBO.mostrarListaProductosTodosBO();
+
+            } else if (!nombreFiltro.isBlank() && tipoSeleccionado.equalsIgnoreCase("Todos")) {
+                productosFiltrados = productoBO.filtrarPorNombreProductoTodosBO(nombreFiltro);
+
+            } else if (nombreFiltro.isBlank() && !tipoSeleccionado.equalsIgnoreCase("Todos")) {
+                Tipo_Producto tipo = Tipo_Producto.valueOf(tipoSeleccionado);
+                productosFiltrados = productoBO.filtrarPorTipoProductoTodosBO(tipo);
+
+            } else {
+                Tipo_Producto tipo = Tipo_Producto.valueOf(tipoSeleccionado);
+                productosFiltrados = productoBO.filtrarPorNombreYTipoProductoTodosBO(nombreFiltro, tipo);
+            }
+
+            formTabla.llenarTablaFiltrada(productosFiltrados);
+
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, "Error al filtrar productos: " + ex.getMessage());
         }
-
-        formTabla.llenarTablaFiltrada(productosFiltrados); 
-        
-    } catch (NegocioException ex) {
-        JOptionPane.showMessageDialog(this, "Error al filtrar productos: " + ex.getMessage());
-    }
     }//GEN-LAST:event_btnFiltrarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-       AñadirProducto añadirProducto = new AñadirProducto(formTabla);
-       añadirProducto.setVisible(true);
+        AñadirProducto añadirProducto = new AñadirProducto(formTabla);
+        añadirProducto.setVisible(true);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-    try {                                             
-        int filaSeleccionada = formTabla.tblProductos.getSelectedRow();
-        
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "Selecciona un producto para modificar.");
-            return;
-        }
-        
-        String nombreProducto = formTabla.tblProductos.getValueAt(filaSeleccionada, 0).toString();
-        
-        ProductoBO productoBO = FabricaProductos.crearProductoBO();
-        Producto producto = productoBO.buscarProductoPorNombreBO(nombreProducto);
-        
-       
+        try {
+            int filaSeleccionada = formTabla.tblProductos.getSelectedRow();
+
+            if (filaSeleccionada == -1) {
+                JOptionPane.showMessageDialog(this, "Selecciona un producto para modificar.");
+                return;
+            }
+
+            String nombreProducto = formTabla.tblProductos.getValueAt(filaSeleccionada, 0).toString();
+
+            ProductoBO productoBO = FabricaProductos.crearProductoBO();
+            Producto producto = productoBO.buscarProductoPorNombreBO(nombreProducto);
+
             ModificarProducto modificarProducto = new ModificarProducto(formTabla, producto);
             modificarProducto.setVisible(true);
 
-    } catch (NegocioException ex) {
+        } catch (NegocioException ex) {
             Logger.getLogger(ModuloPrincipalProductos.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnHabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHabilitarActionPerformed
-           int filaSeleccionada = formTabla.getTblProductos().getSelectedRow();
+        int filaSeleccionada = formTabla.getTblProductos().getSelectedRow();
 
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Selecciona un producto para habilitar.");
-        return;
-    }
-
-    int confirmacion = JOptionPane.showConfirmDialog(this, 
-        "¿Estás seguro de que deseas habilitar este producto?", 
-        "Confirmar habilitación", 
-        JOptionPane.YES_NO_OPTION);
-
-    if (confirmacion == JOptionPane.YES_OPTION) {
-        try {
-            String nombre = formTabla.tblProductos.getValueAt(filaSeleccionada, 0).toString();
-            double precio = Double.parseDouble(formTabla.tblProductos.getValueAt(filaSeleccionada, 1).toString());
-            Tipo_Producto tipo = Tipo_Producto.valueOf(formTabla.tblProductos.getValueAt(filaSeleccionada, 2).toString());
-
-            NuevoProductoDTO productoDTO = new NuevoProductoDTO();
-            productoDTO.setNombre(nombre);
-            productoDTO.setPrecio(precio);
-            productoDTO.setTipo(tipo);
-
-            ProductoBO productoBO = FabricaProductos.crearProductoBO();
-            productoBO.habilitarProductoBO(productoDTO);
-
-            JOptionPane.showMessageDialog(this, "Producto habilitado correctamente.");
-            formTabla.cargarProductosEnTablaTodosExterno();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al habilitar el producto: " + e.getMessage());
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona un producto para habilitar.");
+            return;
         }
-    }
+
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "¿Estás seguro de que deseas habilitar este producto?",
+                "Confirmar habilitación",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                String nombre = formTabla.tblProductos.getValueAt(filaSeleccionada, 0).toString();
+                double precio = Double.parseDouble(formTabla.tblProductos.getValueAt(filaSeleccionada, 1).toString());
+                Tipo_Producto tipo = Tipo_Producto.valueOf(formTabla.tblProductos.getValueAt(filaSeleccionada, 2).toString());
+
+                NuevoProductoDTO productoDTO = new NuevoProductoDTO();
+                productoDTO.setNombre(nombre);
+                productoDTO.setPrecio(precio);
+                productoDTO.setTipo(tipo);
+
+                ProductoBO productoBO = FabricaProductos.crearProductoBO();
+                productoBO.habilitarProductoBO(productoDTO);
+
+                JOptionPane.showMessageDialog(this, "Producto habilitado correctamente.");
+                formTabla.cargarProductosEnTablaTodosExterno();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al habilitar el producto: " + e.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnHabilitarActionPerformed
 
     private void btnDeshabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshabilitarActionPerformed
-            int filaSeleccionada = formTabla.tblProductos.getSelectedRow();
+        int filaSeleccionada = formTabla.tblProductos.getSelectedRow();
 
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Selecciona un producto para deshabilitar.");
-        return;
-    }
-
-    int confirmacion = JOptionPane.showConfirmDialog(this, 
-        "¿Estás seguro de que deseas deshabilitar este producto?", 
-        "Confirmar deshabilitación", 
-        JOptionPane.YES_NO_OPTION);
-
-    if (confirmacion == JOptionPane.YES_OPTION) {
-        try {
-            String nombre = formTabla.tblProductos.getValueAt(filaSeleccionada, 0).toString();
-            double precio = Double.parseDouble(formTabla.tblProductos.getValueAt(filaSeleccionada, 1).toString());
-            Tipo_Producto tipo = Tipo_Producto.valueOf(formTabla.tblProductos.getValueAt(filaSeleccionada, 2).toString());
-
-            NuevoProductoDTO productoDTO = new NuevoProductoDTO();
-            productoDTO.setNombre(nombre);
-            productoDTO.setPrecio(precio);
-            productoDTO.setTipo(tipo);
-
-            ProductoBO productoBO = FabricaProductos.crearProductoBO();
-            productoBO.deshabilitarProductoBO(productoDTO);
-
-            JOptionPane.showMessageDialog(this, "Producto deshabilitado correctamente.");
-            formTabla.cargarProductosEnTablaTodosExterno(); 
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al deshabilitar el producto: " + e.getMessage());
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona un producto para deshabilitar.");
+            return;
         }
-    }
+
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "¿Estás seguro de que deseas deshabilitar este producto?",
+                "Confirmar deshabilitación",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                String nombre = formTabla.tblProductos.getValueAt(filaSeleccionada, 0).toString();
+                double precio = Double.parseDouble(formTabla.tblProductos.getValueAt(filaSeleccionada, 1).toString());
+                Tipo_Producto tipo = Tipo_Producto.valueOf(formTabla.tblProductos.getValueAt(filaSeleccionada, 2).toString());
+
+                NuevoProductoDTO productoDTO = new NuevoProductoDTO();
+                productoDTO.setNombre(nombre);
+                productoDTO.setPrecio(precio);
+                productoDTO.setTipo(tipo);
+
+                ProductoBO productoBO = FabricaProductos.crearProductoBO();
+                productoBO.deshabilitarProductoBO(productoDTO);
+
+                JOptionPane.showMessageDialog(this, "Producto deshabilitado correctamente.");
+                formTabla.cargarProductosEnTablaTodosExterno();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al deshabilitar el producto: " + e.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnDeshabilitarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-       this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
 

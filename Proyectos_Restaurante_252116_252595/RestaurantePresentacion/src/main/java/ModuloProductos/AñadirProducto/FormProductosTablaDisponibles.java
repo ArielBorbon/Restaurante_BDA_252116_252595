@@ -17,7 +17,8 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class FormProductosTablaDisponibles extends javax.swing.JPanel {
 
@@ -29,10 +30,6 @@ public class FormProductosTablaDisponibles extends javax.swing.JPanel {
         cargarProductosEnTablaDisponibles();
     }
 
-    
-    
-    
-    
     /*
 Este método se encarga de cargar en una tabla la lista de productos disponibles, mostrando su nombre, precio y tipo.
 
@@ -52,20 +49,19 @@ Este método se encarga de cargar en una tabla la lista de productos disponibles
    - Finalmente, se establece el modelo de la tabla (`tblProductos`) con el modelo creado, actualizando así la visualización de los productos disponibles.
 
 Este método es esencial para presentar de manera clara y organizada la información de los productos disponibles en la interfaz de usuario, facilitando la consulta de datos sobre los productos que se pueden ofrecer.
-*/
-    
+     */
     private void cargarProductosEnTablaDisponibles() throws NegocioException {
-        
+
         ProductoBO productoBO = FabricaProductos.crearProductoBO();
         String[] columnas = {"Nombre", "Precio", "Tipo"};
-        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0){
-           
+        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0) {
+
             @Override
             public boolean isCellEditable(int row, int column) {
-            return false; 
-        }
+                return false;
+            }
         };
- 
+
         List<Producto> productos = productoBO.filtrarPorNombreProductoDisponiblesBO("");
 
         for (Producto pro : productos) {
@@ -73,13 +69,13 @@ Este método es esencial para presentar de manera clara y organizada la informac
                 pro.getNombre(),
                 pro.getPrecio(),
                 pro.getTipo()
-                };
+            };
             modeloTabla.addRow(fila);
         }
 
-    tblProductos.setModel(modeloTabla);
-}
-    
+        tblProductos.setModel(modeloTabla);
+    }
+
     /*
 Este método se encarga de cargar la lista de productos disponibles en la tabla, actuando como un envoltorio para el método `cargarProductosEnTablaDisponibles`.
 
@@ -92,19 +88,15 @@ Este método se encarga de cargar la lista de productos disponibles en la tabla,
    - Llama al método `cargarProductosEnTablaDisponibles()`, que se encarga de obtener la lista de productos disponibles y llenar la tabla correspondiente con esta información.
 
 Este método es útil para proporcionar una interfaz más clara o para ser llamado desde otros contextos donde se necesite recargar la tabla de productos disponibles, asegurando que la tabla muestre siempre la información más actualizada.
-*/
-    public void cargarProductosEnTablaDisponiblesExterno() throws NegocioException{
+     */
+    public void cargarProductosEnTablaDisponiblesExterno() throws NegocioException {
         cargarProductosEnTablaDisponibles();
     }
 
     public JTable getTblProductos() {
         return tblProductos;
     }
-    
-    
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

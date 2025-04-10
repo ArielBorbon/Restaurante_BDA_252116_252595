@@ -10,7 +10,8 @@ import NegocioException.NegocioException;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class FabricaProductos {
     

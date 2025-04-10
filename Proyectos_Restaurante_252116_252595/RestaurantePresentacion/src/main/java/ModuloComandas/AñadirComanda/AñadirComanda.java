@@ -30,11 +30,14 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class AñadirComanda extends javax.swing.JFrame {
-    private FormTablaComandas formComandasAbiertas ;
+
+    private FormTablaComandas formComandasAbiertas;
     private String nombreCliente;
+
     /**
      * Creates new form AñadirComanda
      */
@@ -45,7 +48,7 @@ public class AñadirComanda extends javax.swing.JFrame {
         this.formComandasAbiertas = formTablaComandas;
     }
 
-/*
+    /*
 Este método se encarga de llenar un combo box con la lista de mesas disponibles en el sistema.
 
 1. **Método**: `llenarComboBoxMesasDisponibles()`
@@ -58,7 +61,7 @@ Este método se encarga de llenar un combo box con la lista de mesas disponibles
      - Se agrega el número de la mesa al combo box `cmbAgregarAMesa` utilizando `addItem`, convirtiendo el número de la mesa a `String`.
 
 Este método es esencial para proporcionar al usuario una lista actualizada de mesas disponibles, permitiendo seleccionar una mesa al agregar una nueva comanda.
-*/
+     */
     private void llenarComboBoxMesasDisponibles() {
         cmbAgregarAMesa.removeAllItems();
         MesaBO mesasBO = FabricaMesas.crearMesaBO();
@@ -338,22 +341,20 @@ Este método es esencial para proporcionar al usuario una lista actualizada de m
                 JOptionPane.showMessageDialog(this, "Selecciona una mesa para la comanda.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
-    String clienteNombre = txtClienteSeleccionadoNombre.getText().trim();
-        if (clienteNombre.isEmpty()) {
-            clienteNombre = null;
-        }
-        
-        ClienteBO clienteBO = FabricaClientes.crearClienteBO();
-        List<Cliente> clienteLoco = clienteBO.filtrarPorNombre(clienteNombre);
-        Cliente clienteLoco2 = new Cliente();
-   
-        if (!clienteLoco.isEmpty()) { 
-            clienteLoco2 = clienteLoco.get(0); 
-            clienteNombre = clienteLoco2.getCorreo();
-        }
 
-        
+            String clienteNombre = txtClienteSeleccionadoNombre.getText().trim();
+            if (clienteNombre.isEmpty()) {
+                clienteNombre = null;
+            }
+
+            ClienteBO clienteBO = FabricaClientes.crearClienteBO();
+            List<Cliente> clienteLoco = clienteBO.filtrarPorNombre(clienteNombre);
+            Cliente clienteLoco2 = new Cliente();
+
+            if (!clienteLoco.isEmpty()) {
+                clienteLoco2 = clienteLoco.get(0);
+                clienteNombre = clienteLoco2.getCorreo();
+            }
 
             ComandaBO comandasBO = FabricaComandas.crearComandaBO();
             String folio = comandasBO.generarFolioComandaBO();
@@ -399,7 +400,6 @@ Este método es esencial para proporcionar al usuario una lista actualizada de m
 
             JOptionPane.showMessageDialog(this, "¡Comanda creada exitosamente con folio: " + folio + "!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-            
             formComandasAbiertas.llenarTablaComandasAbiertas();
             dispose();
 
@@ -434,8 +434,8 @@ Este método es esencial para proporcionar al usuario una lista actualizada de m
         } catch (NegocioException ex) {
             Logger.getLogger(AñadirComanda.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
+
     }//GEN-LAST:event_btnBuscadorClientesActionPerformed
 
     public String getNombreCliente() {
@@ -453,10 +453,6 @@ Este método es esencial para proporcionar al usuario una lista actualizada de m
     public void setTxtClienteSeleccionadoNombre(JTextField txtClienteSeleccionadoNombre) {
         this.txtClienteSeleccionadoNombre = txtClienteSeleccionadoNombre;
     }
-    
-    
-    
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

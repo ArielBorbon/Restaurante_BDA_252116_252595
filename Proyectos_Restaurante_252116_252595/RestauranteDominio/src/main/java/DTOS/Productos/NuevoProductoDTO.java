@@ -10,7 +10,8 @@ import Entidades.Productos.Tipo_Producto;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class NuevoProductoDTO {
     private double precio;

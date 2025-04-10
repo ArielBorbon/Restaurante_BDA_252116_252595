@@ -17,7 +17,8 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class SeleccionarProductoNuevo extends javax.swing.JFrame {
     private final FormProductosTablaDisponibles formtablaProductos = new FormProductosTablaDisponibles();

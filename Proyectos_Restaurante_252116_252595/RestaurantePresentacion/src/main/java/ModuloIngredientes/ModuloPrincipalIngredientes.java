@@ -16,24 +16,25 @@ import javax.swing.JTable;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class ModuloPrincipalIngredientes extends javax.swing.JFrame {
-    private FormIngredientesTabla formTabla =  new FormIngredientesTabla();
+
+    private FormIngredientesTabla formTabla = new FormIngredientesTabla();
+
     /**
      * Creates new form Ingredientes
+     *
      * @throws NegocioException.NegocioException
      */
     public ModuloPrincipalIngredientes() throws NegocioException {
-        initComponents();  
+        initComponents();
         formTabla.setVisible(true);
         this.pnlFormIngredientes.add(formTabla);
         getContentPane().setBackground(new Color(0xb8893c));
     }
 
-    
-    
-    
     //
     /**
      * This method is called from within the constructor to initialize the form.
@@ -148,140 +149,139 @@ public class ModuloPrincipalIngredientes extends javax.swing.JFrame {
 
     private void btnActualizarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarIngredienteActionPerformed
         JTable tabla = formTabla.getTablaIngredientes();
-            int filaSeleccionada = tabla.getSelectedRow();
-        
-            if (filaSeleccionada == -1) {
-                JOptionPane.showMessageDialog(this, "Por favor selecciona un ingrediente de la tabla.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        int filaSeleccionada = tabla.getSelectedRow();
+
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Por favor selecciona un ingrediente de la tabla.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String nombre = tabla.getValueAt(filaSeleccionada, 0).toString();
+        String unidadMedida = tabla.getValueAt(filaSeleccionada, 1).toString();
+
+        String inputStock = JOptionPane.showInputDialog(this, "Ingresa el nuevo stock para " + nombre + " (" + unidadMedida + "):");
+
+        if (inputStock == null || inputStock.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Stock no ingresado.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            double nuevoStock = Double.parseDouble(inputStock);
+
+            if (nuevoStock < 0) {
+                JOptionPane.showMessageDialog(this, "El stock no puede ser negativo.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-        
-            String nombre = tabla.getValueAt(filaSeleccionada, 0).toString();
-            String unidadMedida = tabla.getValueAt(filaSeleccionada, 1).toString();
-        
-            String inputStock = JOptionPane.showInputDialog(this, "Ingresa el nuevo stock para " + nombre + " (" + unidadMedida + "):");
-        
-            if (inputStock == null || inputStock.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Stock no ingresado.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        
-            try {
-                double nuevoStock = Double.parseDouble(inputStock);
-            
-                if (nuevoStock < 0) {
-                    JOptionPane.showMessageDialog(this, "El stock no puede ser negativo.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            
-                NuevoIngredienteDTO dto = new NuevoIngredienteDTO();
-                dto.setNombre(nombre);
-                dto.setUnidad_medida(unidadMedida);
-            
-                IngredienteBO ingredienteBO = FabricaIngredientes.crearIngredienteBO();
-                ingredienteBO.actualizarIngredienteBO(dto, nuevoStock);
-            
-                formTabla.recargarTabla();
-            
-                JOptionPane.showMessageDialog(this, "Stock actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Por favor ingresa un número válido para el stock.", "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (NegocioException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de negocio", JOptionPane.ERROR_MESSAGE);
-            }   catch (Exception ex) {
-                    Logger.getLogger(ModuloPrincipalIngredientes.class.getName()).log(Level.SEVERE, null, ex);
-                }
+
+            NuevoIngredienteDTO dto = new NuevoIngredienteDTO();
+            dto.setNombre(nombre);
+            dto.setUnidad_medida(unidadMedida);
+
+            IngredienteBO ingredienteBO = FabricaIngredientes.crearIngredienteBO();
+            ingredienteBO.actualizarIngredienteBO(dto, nuevoStock);
+
+            formTabla.recargarTabla();
+
+            JOptionPane.showMessageDialog(this, "Stock actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor ingresa un número válido para el stock.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de negocio", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            Logger.getLogger(ModuloPrincipalIngredientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnActualizarIngredienteActionPerformed
 
     private void btnEliminarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarIngredienteActionPerformed
-          JTable tabla = formTabla.getTablaIngredientes();
-    int filaSeleccionada = tabla.getSelectedRow();
+        JTable tabla = formTabla.getTablaIngredientes();
+        int filaSeleccionada = tabla.getSelectedRow();
 
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, 
-            "Selecciona un ingrediente de la tabla.", 
-            "Advertencia", 
-            JOptionPane.WARNING_MESSAGE
-        );
-        return;
-    }
-
-    String nombre = tabla.getValueAt(filaSeleccionada, 0).toString();
-    String unidadMedida = tabla.getValueAt(filaSeleccionada, 1).toString();
-
-    int confirmacion = JOptionPane.showConfirmDialog(
-        this, 
-        "¿Eliminar definitivamente " + nombre + " (" + unidadMedida + ")?",
-        "Confirmar eliminación",
-        JOptionPane.YES_NO_OPTION
-    );
-
-    if (confirmacion != JOptionPane.YES_OPTION) {
-        return;
-    }
-
-    try {
-        NuevoIngredienteDTO dto = new NuevoIngredienteDTO();
-        dto.setNombre(nombre);
-        dto.setUnidad_medida(unidadMedida);
-        
-        IngredienteBO ingredienteBO = FabricaIngredientes.crearIngredienteBO();
-
-        if (ingredienteBO.tieneRelacionesActivasBO(nombre, unidadMedida)) {
-            JOptionPane.showMessageDialog(
-                this, 
-                "No se puede eliminar: El ingrediente está en uso por uno o más productos.", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona un ingrediente de la tabla.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE
             );
             return;
         }
 
-        ingredienteBO.eliminarIngredienteBO(dto);
-        
-        formTabla.recargarTabla();
-        JOptionPane.showMessageDialog(
-            this, 
-            "Ingrediente eliminado exitosamente.", 
-            "Éxito", 
-            JOptionPane.INFORMATION_MESSAGE
+        String nombre = tabla.getValueAt(filaSeleccionada, 0).toString();
+        String unidadMedida = tabla.getValueAt(filaSeleccionada, 1).toString();
+
+        int confirmacion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Eliminar definitivamente " + nombre + " (" + unidadMedida + ")?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION
         );
 
-    } catch (NegocioException ex) {
-        JOptionPane.showMessageDialog(
-            this, 
-            ex.getMessage(), 
-            "Error de negocio", 
-            JOptionPane.ERROR_MESSAGE
-        );
-    } catch (Exception ex) {
-        Logger.getLogger(ModuloPrincipalIngredientes.class.getName())
-              .log(Level.SEVERE, "Error al eliminar ingrediente", ex);
-        JOptionPane.showMessageDialog(
-            this, 
-            "Ocurrió un error inesperado.", 
-            "Error", 
-            JOptionPane.ERROR_MESSAGE
-        );
-    }
+        if (confirmacion != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        try {
+            NuevoIngredienteDTO dto = new NuevoIngredienteDTO();
+            dto.setNombre(nombre);
+            dto.setUnidad_medida(unidadMedida);
+
+            IngredienteBO ingredienteBO = FabricaIngredientes.crearIngredienteBO();
+
+            if (ingredienteBO.tieneRelacionesActivasBO(nombre, unidadMedida)) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "No se puede eliminar: El ingrediente está en uso por uno o más productos.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+
+            ingredienteBO.eliminarIngredienteBO(dto);
+
+            formTabla.recargarTabla();
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Ingrediente eliminado exitosamente.",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    ex.getMessage(),
+                    "Error de negocio",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } catch (Exception ex) {
+            Logger.getLogger(ModuloPrincipalIngredientes.class.getName())
+                    .log(Level.SEVERE, "Error al eliminar ingrediente", ex);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Ocurrió un error inesperado.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_btnEliminarIngredienteActionPerformed
 
     private void btnAgregarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarIngredienteActionPerformed
 
-AgregarIngrediente ventanaAgregar = new AgregarIngrediente(formTabla);
-ventanaAgregar.setVisible(true);
+        AgregarIngrediente ventanaAgregar = new AgregarIngrediente(formTabla);
+        ventanaAgregar.setVisible(true);
 
 
     }//GEN-LAST:event_btnAgregarIngredienteActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-      this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizarIngrediente;

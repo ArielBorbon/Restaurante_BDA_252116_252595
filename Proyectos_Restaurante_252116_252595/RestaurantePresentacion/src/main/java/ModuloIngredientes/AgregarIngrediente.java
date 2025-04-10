@@ -13,9 +13,11 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class AgregarIngrediente extends javax.swing.JFrame {
+
     private FormIngredientesTabla formIngredientesTabla;
 
     public AgregarIngrediente(FormIngredientesTabla formIngredientesTabla) {
@@ -146,66 +148,64 @@ public class AgregarIngrediente extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbUnidad_MedidaActionPerformed
 
     private void btnCrearIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearIngredienteActionPerformed
-       
-    String nombre = txtNombre.getText().trim();
-    String unidadMedida = (String) cmbUnidad_Medida.getSelectedItem();
-    String stockTexto = txtStock.getText().trim();
 
-    if (nombre.isEmpty() || unidadMedida == null || stockTexto.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+        String nombre = txtNombre.getText().trim();
+        String unidadMedida = (String) cmbUnidad_Medida.getSelectedItem();
+        String stockTexto = txtStock.getText().trim();
 
-    double stock;
-    try {
-        stock = Double.parseDouble(stockTexto);
-        if (stock < 0) {
-            throw new NumberFormatException();
+        if (nombre.isEmpty() || unidadMedida == null || stockTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Ingrese un stock válido (número no negativo).", "Valor inválido", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
 
-    int confirmacion = JOptionPane.showConfirmDialog(
-        this,
-        "¿Deseas agregar el ingrediente '" + nombre + "' con " + stock + " " + unidadMedida + "?",
-        "Confirmar creación",
-        JOptionPane.YES_NO_OPTION
-    );
-
-    if (confirmacion == JOptionPane.YES_OPTION) {
+        double stock;
         try {
-            NuevoIngredienteDTO nuevoIngredienteDTO = new NuevoIngredienteDTO();
-            nuevoIngredienteDTO.setNombre(nombre);
-            nuevoIngredienteDTO.setUnidad_medida(unidadMedida);
-            nuevoIngredienteDTO.setStock(stock);
-
-            IngredienteBO ingredienteBO = FabricaIngredientes.crearIngredienteBO();
-            ingredienteBO.registrarIngredienteBO(nuevoIngredienteDTO);
-
-            JOptionPane.showMessageDialog(this, "Ingrediente registrado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-         
-            formIngredientesTabla.recargarTabla();
-this.dispose(); 
-
-        } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de negocio", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado al registrar el ingrediente.", "Error", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
+            stock = Double.parseDouble(stockTexto);
+            if (stock < 0) {
+                throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un stock válido (número no negativo).", "Valor inválido", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-    } else {
 
-        JOptionPane.showMessageDialog(this, "Registro cancelado por el usuario.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
-    }
+        int confirmacion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Deseas agregar el ingrediente '" + nombre + "' con " + stock + " " + unidadMedida + "?",
+                "Confirmar creación",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                NuevoIngredienteDTO nuevoIngredienteDTO = new NuevoIngredienteDTO();
+                nuevoIngredienteDTO.setNombre(nombre);
+                nuevoIngredienteDTO.setUnidad_medida(unidadMedida);
+                nuevoIngredienteDTO.setStock(stock);
+
+                IngredienteBO ingredienteBO = FabricaIngredientes.crearIngredienteBO();
+                ingredienteBO.registrarIngredienteBO(nuevoIngredienteDTO);
+
+                JOptionPane.showMessageDialog(this, "Ingrediente registrado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+                formIngredientesTabla.recargarTabla();
+                this.dispose();
+
+            } catch (NegocioException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de negocio", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado al registrar el ingrediente.", "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Registro cancelado por el usuario.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnCrearIngredienteActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-      this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -18,7 +18,8 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class ProductosDAO implements IProductosDAO {
 

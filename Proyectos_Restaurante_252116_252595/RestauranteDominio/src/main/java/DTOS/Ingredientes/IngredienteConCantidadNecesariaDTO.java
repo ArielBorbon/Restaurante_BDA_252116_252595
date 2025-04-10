@@ -8,7 +8,8 @@ import Entidades.Ingredientes.Unidad_Medida;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class IngredienteConCantidadNecesariaDTO {
     private String nombreIngrediente;

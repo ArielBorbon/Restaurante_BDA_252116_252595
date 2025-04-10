@@ -13,25 +13,27 @@ import javax.swing.JTable;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class AñadirClienteComanda extends javax.swing.JFrame {
+
     private FormClientesTabla formClientesTabla = new FormClientesTabla();
     private AñadirComanda añadirComanda;
 
     /**
      * Creates new form AñadirClienteComanda
+     *
      * @param añadirComanda
      * @throws NegocioException.NegocioException
      */
-public AñadirClienteComanda(AñadirComanda añadirComanda) throws NegocioException {
-    initComponents();
-    this.añadirComanda = añadirComanda;
-    this.pnlTablaClientes.add(formClientesTabla);
-    formClientesTabla.setVisible(true);
-    clickearTabla();
-}
-
+    public AñadirClienteComanda(AñadirComanda añadirComanda) throws NegocioException {
+        initComponents();
+        this.añadirComanda = añadirComanda;
+        this.pnlTablaClientes.add(formClientesTabla);
+        formClientesTabla.setVisible(true);
+        clickearTabla();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -103,11 +105,7 @@ public AñadirClienteComanda(AñadirComanda añadirComanda) throws NegocioExcept
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
-    
-    
-    
-    
-    
+
     /*
 Este método se encarga de agregar un listener de mouse a la tabla de clientes, permitiendo la selección de un cliente mediante un doble clic.
 
@@ -125,28 +123,24 @@ Este método se encarga de agregar un listener de mouse a la tabla de clientes, 
      - Se cierra la ventana actual mediante `dispose()`.
 
 Este método es esencial para permitir la selección de un cliente de la tabla mediante un doble clic, facilitando la interacción del usuario con la interfaz.
-*/
-    
-private void clickearTabla() {
-    formClientesTabla.getTablabaClientes().addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            if (e.getClickCount() == 2) {
-                JTable tabla = formClientesTabla.getTablabaClientes();
-                int fila = tabla.getSelectedRow();
-                if (fila >= 0) {
-                    String nombreCliente = tabla.getValueAt(fila, 0).toString();
-                    añadirComanda.setNombreCliente(nombreCliente);
-                    añadirComanda.getTxtClienteSeleccionadoNombre().setText(nombreCliente);
-                    dispose();
+     */
+    private void clickearTabla() {
+        formClientesTabla.getTablabaClientes().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JTable tabla = formClientesTabla.getTablabaClientes();
+                    int fila = tabla.getSelectedRow();
+                    if (fila >= 0) {
+                        String nombreCliente = tabla.getValueAt(fila, 0).toString();
+                        añadirComanda.setNombreCliente(nombreCliente);
+                        añadirComanda.getTxtClienteSeleccionadoNombre().setText(nombreCliente);
+                        dispose();
+                    }
                 }
             }
-        }
-    });
-}
-
-
-    
+        });
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

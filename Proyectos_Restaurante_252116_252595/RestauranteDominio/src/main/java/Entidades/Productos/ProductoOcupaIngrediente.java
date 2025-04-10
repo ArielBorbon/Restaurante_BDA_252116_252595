@@ -19,7 +19,8 @@ import javax.persistence.UniqueConstraint;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 @Entity
 @Table (name = "productos_ingredientes" , uniqueConstraints = @UniqueConstraint( columnNames = {"id_producto", "id_ingrediente"} ))

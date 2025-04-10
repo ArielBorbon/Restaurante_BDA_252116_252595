@@ -8,7 +8,8 @@ import Entidades.Mesa.EstadoMesa;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class NuevaMesaDTO {
     private int num_mesa; //probablemente usemos esta con un DAO para identificar cual es la verdadera mesa, DAO. identificarMesaporNum

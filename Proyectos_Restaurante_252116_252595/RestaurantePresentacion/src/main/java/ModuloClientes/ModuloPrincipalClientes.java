@@ -18,7 +18,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Alberto Jimenez
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class ModuloPrincipalClientes extends javax.swing.JFrame {
 

@@ -22,10 +22,13 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class AñadirProducto extends javax.swing.JFrame {
-        private FormProductosTablaTodos formProductosTablaTodos;
+
+    private FormProductosTablaTodos formProductosTablaTodos;
+
     /**
      * Creates new form AñadirProducto
      */
@@ -232,97 +235,95 @@ public class AñadirProducto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-           
+
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnAgregarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarIngredienteActionPerformed
-            try {
-                AgregarIngredienteAListaProductoNuevo formAgregarIng = new AgregarIngredienteAListaProductoNuevo(tblTablaIngredientesHastaElMomento);
-                formAgregarIng.setVisible(true);
-            } catch (NegocioException ex) {
-                Logger.getLogger(AñadirProducto.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            AgregarIngredienteAListaProductoNuevo formAgregarIng = new AgregarIngredienteAListaProductoNuevo(tblTablaIngredientesHastaElMomento);
+            formAgregarIng.setVisible(true);
+        } catch (NegocioException ex) {
+            Logger.getLogger(AñadirProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAgregarIngredienteActionPerformed
 
     private void btnEliminarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarIngredienteActionPerformed
-            int filaSeleccionada = tblTablaIngredientesHastaElMomento.getSelectedRow();
-    
+        int filaSeleccionada = tblTablaIngredientesHastaElMomento.getSelectedRow();
+
         if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(this, "Por favor, selecciona un ingrediente para eliminar.");
             return;
         }
-    
+
         DefaultTableModel modelo = (DefaultTableModel) tblTablaIngredientesHastaElMomento.getModel();
-            int opcion = JOptionPane.showConfirmDialog(this, 
-            "¿Estás seguro de eliminar este ingrediente?", 
-            "Confirmar eliminación", 
-            JOptionPane.YES_NO_OPTION);
-    
+        int opcion = JOptionPane.showConfirmDialog(this,
+                "¿Estás seguro de eliminar este ingrediente?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION);
+
         if (opcion == JOptionPane.YES_OPTION) {
             modelo.removeRow(filaSeleccionada);
         }
     }//GEN-LAST:event_btnEliminarIngredienteActionPerformed
 
     private void btnCrearProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearProductoActionPerformed
-try {
-        String nombre = txtNombre.getText().trim();
-        String precioTexto = txtPrecio.getText().trim();
-        String tipo = cmbTipo.getSelectedItem().toString();
-
-        if (nombre.isBlank() || precioTexto.isBlank()) {
-            JOptionPane.showMessageDialog(this, "Nombre y precio no pueden estar vacíos.");
-            return;
-        }
-
-        double precio;
         try {
-            precio = Double.parseDouble(precioTexto);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El precio debe ser un número válido.");
-            return;
+            String nombre = txtNombre.getText().trim();
+            String precioTexto = txtPrecio.getText().trim();
+            String tipo = cmbTipo.getSelectedItem().toString();
+
+            if (nombre.isBlank() || precioTexto.isBlank()) {
+                JOptionPane.showMessageDialog(this, "Nombre y precio no pueden estar vacíos.");
+                return;
+            }
+
+            double precio;
+            try {
+                precio = Double.parseDouble(precioTexto);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "El precio debe ser un número válido.");
+                return;
+            }
+
+            NuevoProductoDTO productoDTO = new NuevoProductoDTO();
+            productoDTO.setNombre(nombre);
+            productoDTO.setPrecio(precio);
+            productoDTO.setTipo(Tipo_Producto.valueOf(tipo.toUpperCase()));
+            productoDTO.setEstado(Estado_Producto.HABILITADO);
+
+            List<NuevoProductoOcupaIngredienteDTO> ingredientesDTO = new ArrayList<>();
+            DefaultTableModel modelo = (DefaultTableModel) tblTablaIngredientesHastaElMomento.getModel();
+
+            if (modelo.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Debes agregar al menos un ingrediente.");
+                return;
+            }
+
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                String nombreIng = modelo.getValueAt(i, 0).toString();
+                String unidad = modelo.getValueAt(i, 1).toString();
+                double cantidad = Double.parseDouble(modelo.getValueAt(i, 2).toString());
+
+                NuevoProductoOcupaIngredienteDTO dto = new NuevoProductoOcupaIngredienteDTO();
+                dto.setNombreIngrediente(nombreIng);
+                dto.setUnidadMedida(unidad);
+                dto.setCantidadNecesariaProducto(cantidad);
+
+                ingredientesDTO.add(dto);
+            }
+
+            ProductoBO productoBO = FabricaProductos.crearProductoBO();
+            productoBO.registrarProductoConIngredientesBO(productoDTO, ingredientesDTO);
+
+            JOptionPane.showMessageDialog(this, "Producto agregado correctamente.");
+            formProductosTablaTodos.cargarProductosEnTablaTodosExterno();
+            this.dispose();
+
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, "Error al agregar producto: " + ex.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado: " + e.getMessage());
         }
-
-        NuevoProductoDTO productoDTO = new NuevoProductoDTO();
-        productoDTO.setNombre(nombre);
-        productoDTO.setPrecio(precio);
-        productoDTO.setTipo(Tipo_Producto.valueOf(tipo.toUpperCase())); 
-        productoDTO.setEstado(Estado_Producto.HABILITADO);
-
-
-        List<NuevoProductoOcupaIngredienteDTO> ingredientesDTO = new ArrayList<>();
-        DefaultTableModel modelo = (DefaultTableModel) tblTablaIngredientesHastaElMomento.getModel();
-
-        if (modelo.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Debes agregar al menos un ingrediente.");
-            return;
-        }
-
-        for (int i = 0; i < modelo.getRowCount(); i++) {
-            String nombreIng = modelo.getValueAt(i, 0).toString();
-            String unidad = modelo.getValueAt(i, 1).toString();
-            double cantidad = Double.parseDouble(modelo.getValueAt(i, 2).toString());
-
-            NuevoProductoOcupaIngredienteDTO dto = new NuevoProductoOcupaIngredienteDTO();
-            dto.setNombreIngrediente(nombreIng);
-            dto.setUnidadMedida(unidad);
-            dto.setCantidadNecesariaProducto(cantidad);
-
-            ingredientesDTO.add(dto);
-        }
-
-
-        ProductoBO productoBO = FabricaProductos.crearProductoBO();
-        productoBO.registrarProductoConIngredientesBO(productoDTO, ingredientesDTO);
-
-        JOptionPane.showMessageDialog(this, "Producto agregado correctamente.");
-        formProductosTablaTodos.cargarProductosEnTablaTodosExterno(); 
-        this.dispose(); 
-
-    } catch (NegocioException ex) {
-        JOptionPane.showMessageDialog(this, "Error al agregar producto: " + ex.getMessage());
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado: " + e.getMessage());
-    }       
     }//GEN-LAST:event_btnCrearProductoActionPerformed
 
     private void cmbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoActionPerformed
@@ -330,7 +331,7 @@ try {
     }//GEN-LAST:event_cmbTipoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-       dispose();
+        dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnModificarCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarCantidadActionPerformed
@@ -356,9 +357,9 @@ try {
                 JOptionPane.showMessageDialog(this, "La cantidad no puede ser negativa.", "Cantidad inválida", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             if (nuevaCantidad == 0) {
-                JOptionPane.showMessageDialog(this, "Agrega al menos 1 del ingrediente" , "Cantidad invalida" , JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Agrega al menos 1 del ingrediente", "Cantidad invalida", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 

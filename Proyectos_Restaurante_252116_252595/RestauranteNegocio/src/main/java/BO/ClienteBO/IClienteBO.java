@@ -11,7 +11,8 @@ import NegocioException.NegocioException;
 import java.util.List;
 /**
  *
- * @author Alberto Jimenez
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public interface IClienteBO {
     public Cliente registrarClienteBO(NuevoClienteDTO nuevoClienteDTO) throws NegocioException;

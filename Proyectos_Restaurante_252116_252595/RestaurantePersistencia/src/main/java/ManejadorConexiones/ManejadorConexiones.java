@@ -18,7 +18,8 @@ Este bloque de código define una clase que gestiona la creación de un `EntityM
 2. El método `getEntityManager` es un método estático que devuelve una nueva instancia de `EntityManager` a partir del `EntityManagerFactory`. Cada vez que se llama a este método, se crea un nuevo `EntityManager`, lo que permite realizar operaciones de base de datos de manera independiente y segura en diferentes hilos o contextos.
 Este enfoque centraliza la gestión de la conexión a la base de datos y facilita la creación de `EntityManager`, promoviendo una buena práctica en la arquitectura de la aplicación.
 
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 
 

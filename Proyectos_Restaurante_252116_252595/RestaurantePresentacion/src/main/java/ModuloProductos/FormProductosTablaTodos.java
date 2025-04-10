@@ -14,24 +14,22 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class FormProductosTablaTodos extends javax.swing.JPanel {
 
     /**
      * Creates new form FormProductosTablaTodos
+     *
      * @throws NegocioException.NegocioException
      */
     public FormProductosTablaTodos() throws NegocioException {
         initComponents();
         cargarProductosEnTablaTodos();
-        
+
     }
-    
-    
-    
-    
-    
+
     /*
 Este método se encarga de cargar la lista de todos los productos en una tabla, mostrando su nombre, precio, tipo y estado de disponibilidad.
 
@@ -51,20 +49,19 @@ Este método se encarga de cargar la lista de todos los productos en una tabla, 
    - Finalmente, se establece el modelo de la tabla (`tblProductos`) con el modelo creado, actualizando así la visualización de los productos.
 
 Este método es esencial para presentar de manera clara y organizada la información de todos los productos en la interfaz de usuario, facilitando la consulta de datos sobre los productos disponibles.
-*/
+     */
+    private void cargarProductosEnTablaTodos() throws NegocioException {
 
-        private void cargarProductosEnTablaTodos() throws NegocioException {
-        
         ProductoBO productoBO = FabricaProductos.crearProductoBO();
-        String[] columnas = {"Nombre", "Precio", "Tipo" , "Disponible"};
-        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0){
-           
+        String[] columnas = {"Nombre", "Precio", "Tipo", "Disponible"};
+        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0) {
+
             @Override
             public boolean isCellEditable(int row, int column) {
-            return false; 
-        }
+                return false;
+            }
         };
- 
+
         List<Producto> productos = productoBO.mostrarListaProductosTodosBO();
 
         for (Producto pro : productos) {
@@ -73,16 +70,14 @@ Este método es esencial para presentar de manera clara y organizada la informac
                 pro.getPrecio(),
                 pro.getTipo(),
                 pro.getEstado()
-                };
+            };
             modeloTabla.addRow(fila);
         }
 
-    tblProductos.setModel(modeloTabla);
-}
-        
-        
-        
-        /*
+        tblProductos.setModel(modeloTabla);
+    }
+
+    /*
 Este método se encarga de cargar todos los productos en la tabla, actuando como un envoltorio para el método `cargarProductosEnTablaTodos`.
 
 1. **Método**: `cargarProductosEnTablaTodosExterno()`
@@ -94,16 +89,12 @@ Este método se encarga de cargar todos los productos en la tabla, actuando como
    - Llama al método `cargarProductosEnTablaTodos()`, que se encarga de obtener la lista de todos los productos y llenar la tabla correspondiente con esta información.
 
 Este método es útil para proporcionar una interfaz más clara o para ser llamado desde otros contextos donde se necesite recargar la tabla de productos, asegurando que la tabla muestre siempre la información más actualizada.
-*/
-        
-        
-        
-        public void cargarProductosEnTablaTodosExterno() throws NegocioException{
-            cargarProductosEnTablaTodos();
-        }
-        
-        
-        /*
+     */
+    public void cargarProductosEnTablaTodosExterno() throws NegocioException {
+        cargarProductosEnTablaTodos();
+    }
+
+    /*
 Este método se encarga de llenar una tabla con una lista filtrada de productos, mostrando su nombre, precio, tipo y estado de disponibilidad.
 
 1. **Método**: `llenarTablaFiltrada(List<Producto> productos)`
@@ -120,7 +111,7 @@ Este método se encarga de llenar una tabla con una lista filtrada de productos,
    - Finalmente, se establece el modelo de la tabla (`tblProductos`) con el modelo creado, actualizando así la visualización de los productos filtrados.
 
 Este método es esencial para mostrar de manera clara y organizada una lista específica de productos en la interfaz de usuario, permitiendo a los usuarios ver solo aquellos productos que cumplen con ciertos criterios de filtrado.
-*/
+     */
     public void llenarTablaFiltrada(List<Producto> productos) {
         String[] columnas = {"Nombre", "Precio", "Tipo", "Disponible"};
         DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0) {
@@ -129,7 +120,7 @@ Este método es esencial para mostrar de manera clara y organizada una lista esp
                 return false;
             }
         };
-        
+
         for (Producto pro : productos) {
             Object[] fila = {
                 pro.getNombre(),
@@ -139,7 +130,7 @@ Este método es esencial para mostrar de manera clara y organizada una lista esp
             };
             modeloTabla.addRow(fila);
         }
-        
+
         tblProductos.setModel(modeloTabla);
     }
 
@@ -147,9 +138,6 @@ Este método es esencial para mostrar de manera clara y organizada una lista esp
         return tblProductos;
     }
 
-        
-        
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

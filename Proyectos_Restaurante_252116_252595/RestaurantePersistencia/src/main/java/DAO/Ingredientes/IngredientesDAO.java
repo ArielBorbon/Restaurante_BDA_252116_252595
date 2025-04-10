@@ -23,7 +23,8 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class IngredientesDAO implements IIngredientesDAO {
 
