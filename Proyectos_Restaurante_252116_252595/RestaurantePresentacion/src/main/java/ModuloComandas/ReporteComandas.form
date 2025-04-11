@@ -29,6 +29,8 @@
               <Component id="btnImprimirReporte" min="-2" pref="304" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel2" min="-2" pref="66" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="lblTotalComandas" min="-2" pref="119" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
@@ -93,7 +95,10 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnImprimirReporte" min="-2" pref="47" max="-2" attributes="0"/>
-                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblTotalComandas" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace pref="34" max="32767" attributes="0"/>
               <Component id="btnSalir" min="-2" max="-2" attributes="0"/>
@@ -175,6 +180,14 @@
     <Component class="com.toedter.calendar.JDateChooser" name="filtroFechaInicio">
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="filtroFechaFin">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTotalComandas">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="$0.0"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jLabel2.setFont(new Font(&quot;Arial&quot;, Font.PLAIN, 14));"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

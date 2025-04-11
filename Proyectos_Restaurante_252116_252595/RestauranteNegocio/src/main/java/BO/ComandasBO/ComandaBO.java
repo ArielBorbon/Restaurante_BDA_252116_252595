@@ -16,7 +16,10 @@ import Entidades.Productos.Producto;
 import Excepciones.PersistenciaException;
 import NegocioException.NegocioException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,8 +33,6 @@ public class ComandaBO implements IComandaBO {
     private ClientesDAO clientesDAO;
     private MesasDAO mesasDAO;
 
-    
-    
     /*
 Este es el constructor de la clase `ComandaBO`, que se encarga de inicializar una instancia de la clase y establecer las dependencias necesarias para su funcionamiento.
 
@@ -46,7 +47,7 @@ Este es el constructor de la clase `ComandaBO`, que se encarga de inicializar un
    - Este constructor asigna los objetos DAO proporcionados a las variables de instancia correspondientes (`this.comandasDAO`, `this.productosDAO`, `this.clientesDAO`, `this.mesasDAO`), permitiendo que la clase `ComandaBO` utilice estos DAOs para realizar operaciones relacionadas con las comandas, productos, clientes y mesas.
 
 Este constructor es fundamental para garantizar que la clase `ComandaBO` esté correctamente configurada antes de ser utilizada, promoviendo la integridad y la robustez del sistema al asegurar que todas las dependencias necesarias estén disponibles.
-*/
+     */
     public ComandaBO(ComandasDAO comandasDAO, ProductosDAO productosDAO, ClientesDAO clientesDAO, MesasDAO mesasDAO) {
         this.comandasDAO = comandasDAO;
         this.productosDAO = productosDAO;
@@ -114,9 +115,6 @@ Este constructor es fundamental para garantizar que la clase `ComandaBO` esté c
                 .sum();
     }
 
-    
-    
-    
     /*
 Este método se encarga de generar un nuevo folio para una comanda.
 
@@ -127,15 +125,12 @@ Este método se encarga de generar un nuevo folio para una comanda.
    - Este método no incluye validaciones ni manejo de excepciones, ya que se asume que el `comandasDAO` está correctamente configurado para realizar la operación.
 
 Este método es esencial para asegurar que cada comanda tenga un identificador único, facilitando su seguimiento y gestión dentro del sistema.
-*/
+     */
     @Override
     public String generarFolioComandaBO() {
         return comandasDAO.generarFolioComanda();
     }
 
-    
-    
-    
     /*
 Este método se encarga de modificar una comanda existente en el sistema, actualizando su información y detalles.
 
@@ -158,7 +153,7 @@ Este método se encarga de modificar una comanda existente en el sistema, actual
    - Finalmente, se llama al método `modificarComanda` del `comandasDAO` para actualizar la comanda y sus detalles en la base de datos.
 
 Este método es esencial para gestionar la modificación de una comanda existente, asegurando que se cumplan las condiciones necesarias antes de realizar la actualización en el sistema.
-*/
+     */
     @Override
     public void modificarComandaBO(NuevaComandaDTO comandaDTO, List<NuevoDetalleComandaDTO> detallesDTO) {
         if (comandaDTO == null || comandaDTO.getFolio() == null || comandaDTO.getFolio().isBlank()) {
@@ -187,7 +182,6 @@ Este método es esencial para gestionar la modificación de una comanda existent
         comandasDAO.modificarComanda(comandaDTO, detallesDTO);
     }
 
-    
     /*
 Este método se encarga de eliminar una comanda existente en el sistema.
 
@@ -203,10 +197,7 @@ Este método se encarga de eliminar una comanda existente en el sistema.
    - Se llama al método `eliminarComanda` del `comandasDAO` para eliminar la comanda de la base de datos.
 
 Este método es esencial para gestionar la eliminación de una comanda en el sistema, asegurando que se proporcione un identificador válido antes de proceder con la operación.
-*/
-    
-    
-    
+     */
     @Override
     public void eliminarComandaBO(NuevaComandaDTO comandaDTO) {
         if (comandaDTO == null || comandaDTO.getFolio() == null || comandaDTO.getFolio().isBlank()) {
@@ -217,8 +208,6 @@ Este método es esencial para gestionar la eliminación de una comanda en el sis
         comandasDAO.eliminarComanda(comandaDTO);
     }
 
-    
-    
     /*
 Este método se encarga de cancelar una comanda existente en el sistema, cambiando su estado a "cancelada".
 
@@ -234,9 +223,7 @@ Este método se encarga de cancelar una comanda existente en el sistema, cambian
    - Se llama al método `cambiarEstadoComandaACancelada` del `comandasDAO`, pasando el `folio` para cambiar el estado de la comanda a "cancelada".
 
 Este método es esencial para gestionar la cancelación de una comanda en el sistema, asegurando que se proporcione un identificador válido antes de proceder con la operación.
-*/
-    
-    
+     */
     @Override
     public void cancelarComandaBO(String folio) {
         if (folio == null || folio.isBlank()) {
@@ -246,11 +233,8 @@ Este método es esencial para gestionar la cancelación de una comanda en el sis
         ComandasDAO comandasDAO = new ComandasDAO();
         comandasDAO.cambiarEstadoComandaACancelada(folio);
     }
-    
-    
-    
-    
-        /*
+
+    /*
 Este método se encarga de marcar una comanda como entregada en el sistema, cambiando su estado a "entregada".
 
 1. **Método**: `entregarComanda(String folio)`
@@ -265,8 +249,7 @@ Este método se encarga de marcar una comanda como entregada en el sistema, camb
    - Se llama al método `cambiarEstadoComandaAEntregada` del `comandasDAO`, pasando el `folio` para cambiar el estado de la comanda a "entregada".
 
 Este método es esencial para gestionar la entrega de una comanda en el sistema, asegurando que se proporcione un identificador válido antes de proceder con la operación.
-*/
-
+     */
     @Override
     public void entregarComanda(String folio) {
         if (folio == null || folio.isBlank()) {
@@ -277,11 +260,6 @@ Este método es esencial para gestionar la entrega de una comanda en el sistema,
         comandasDAO.cambiarEstadoComandaAEntregada(folio);
     }
 
-    
-
-    
-    
-    
     /*
 Este método se encarga de verificar si hay suficiente stock disponible para los productos incluidos en los detalles de una comanda.
 
@@ -297,7 +275,7 @@ Este método se encarga de verificar si hay suficiente stock disponible para los
    - Se llama al método `verificarStockNecesarioProductos` del `comandasDAO`, pasando la lista de detalles para comprobar si hay suficiente stock disponible para todos los productos.
 
 Este método es esencial para garantizar que se pueda realizar una comanda sin problemas de disponibilidad de stock, ayudando a prevenir errores en el proceso de registro de comandas.
-*/
+     */
     @Override
     public boolean verificarStockNecesarioProductosBO(List<NuevoDetalleComandaDTO> detallesDTO) {
         if (detallesDTO == null || detallesDTO.isEmpty()) {
@@ -307,11 +285,7 @@ Este método es esencial para garantizar que se pueda realizar una comanda sin p
         ComandasDAO comandasDAO = new ComandasDAO();
         return comandasDAO.verificarStockNecesarioProductos(detallesDTO);
     }
-    
-    
-    
-    
-    
+
     /*
 Este método se encarga de restar el stock de los ingredientes necesarios para los productos incluidos en los detalles de una comanda.
 
@@ -327,8 +301,7 @@ Este método se encarga de restar el stock de los ingredientes necesarios para l
    - Se llama al método `restarStockIngredientesPorProductosComanda` del `comandasDAO`, pasando la lista de detalles para restar el stock de los ingredientes necesarios para los productos de la comanda.
 
 Este método es esencial para gestionar el inventario de ingredientes, asegurando que se actualice correctamente el stock después de que se haya procesado una comanda.
-*/
-
+     */
     @Override
     public void restarStockIngredientesPorProductosComandaBO(List<NuevoDetalleComandaDTO> detallesDTO) {
         if (detallesDTO == null || detallesDTO.isEmpty()) {
@@ -339,11 +312,6 @@ Este método es esencial para gestionar el inventario de ingredientes, asegurand
         comandasDAO.restarStockIngredientesPorProductosComanda(detallesDTO);
     }
 
-    
-    
-    
-    
-    
     /*
 Este método se encarga de modificar la nota asociada a un detalle de comanda específico.
 
@@ -362,7 +330,7 @@ Este método se encarga de modificar la nota asociada a un detalle de comanda es
    - Se llama al método `modificarNota` del `comandasDAO`, pasando el `detalleDTO` y la `nuevaNota` para actualizar la nota en la base de datos.
 
 Este método es esencial para permitir la actualización de notas en los detalles de las comandas, asegurando que se mantenga la información correcta y actualizada.
-*/
+     */
     @Override
     public void modificarNotaBO(NuevoDetalleComandaDTO detalleDTO, String nuevaNota) {
         if (detalleDTO == null || detalleDTO.getFolioComanda() == null || detalleDTO.getNombreProducto() == null) {
@@ -377,7 +345,6 @@ Este método es esencial para permitir la actualización de notas en los detalle
         comandasDAO.modificarNota(detalleDTO, nuevaNota);
     }
 
-    
     /*
 Este método se encarga de recuperar y mostrar todas las comandas existentes en el sistema.
 
@@ -388,14 +355,13 @@ Este método se encarga de recuperar y mostrar todas las comandas existentes en 
    - Se llama al método `mostrarComandasTodas` del `comandasDAO`, que devuelve una lista de todas las comandas registradas en el sistema.
 
 Este método es esencial para obtener un listado completo de todas las comandas, permitiendo a los usuarios ver toda la información disponible.
-*/
-    
+     */
     @Override
     public List<Comanda> mostrarComandasTodasBO() {
         ComandasDAO comandasDAO = new ComandasDAO();
         return comandasDAO.mostrarComandasTodas();
     }
-    
+
     /*
 Este método se encarga de recuperar y mostrar todas las comandas que están actualmente abiertas en el sistema.
 
@@ -406,19 +372,14 @@ Este método se encarga de recuperar y mostrar todas las comandas que están act
    - Se llama al método `mostrarComandasAbiertas` del `comandasDAO`, que devuelve una lista de todas las comandas que están en estado abierto.
 
 Este método es esencial para obtener un listado de las comandas que aún no han sido cerradas, permitiendo a los usuarios gestionar las comandas activas.
-*/
-    
-    
-
+     */
     @Override
     public List<Comanda> mostrarComandasAbiertasBO() {
         ComandasDAO comandasDAO = new ComandasDAO();
         return comandasDAO.mostrarComandasAbiertas();
     }
-    
-    
-    
-/*
+
+    /*
 Este método se encarga de filtrar y recuperar las comandas que se encuentran dentro de un rango de fechas especificado.
 
 1. **Método**: `filtrarPorFecha(Calendar fechaInicio, Calendar fechaFin)`
@@ -438,7 +399,7 @@ Este método se encarga de filtrar y recuperar las comandas que se encuentran de
    - Si la lista de comandas resultante está vacía, se lanza una excepción indicando que no se encontraron comandas en el rango de fechas.
 
 Este método es esencial para permitir la búsqueda de comandas en un rango de fechas específico, facilitando la gestión y consulta de datos en el sistema.
-*/
+     */
     @Override
     public List<Comanda> filtrarPorFecha(Calendar fechaInicio, Calendar fechaFin) {
         if (fechaInicio == null || fechaFin == null) {
@@ -458,8 +419,6 @@ Este método es esencial para permitir la búsqueda de comandas en un rango de f
         return comandas;
     }
 
-    
-    
     /*
 Este método se encarga de obtener una comanda específica a partir de su folio.
 
@@ -475,9 +434,7 @@ Este método se encarga de obtener una comanda específica a partir de su folio.
    - Si se produce una `PersistenciaException` durante la búsqueda, se captura la excepción y se lanza una `NegocioException` con un mensaje descriptivo y la excepción original como causa.
 
 Este método es esencial para permitir la recuperación de una comanda específica en el sistema, manejando adecuadamente las excepciones que puedan surgir durante el proceso de búsqueda.
-*/
-    
-    
+     */
     @Override
     public Comanda obtenerComandaPorFolioBO(String folio) throws NegocioException {
         try {
@@ -487,8 +444,6 @@ Este método es esencial para permitir la recuperación de una comanda específi
         }
     }
 
-    
-    
     /*
 Este método se encarga de obtener la lista de detalles de una comanda específica.
 
@@ -504,9 +459,7 @@ Este método se encarga de obtener la lista de detalles de una comanda específi
    - Si se produce una `PersistenciaException` durante la recuperación, se captura la excepción y se lanza una `NegocioException` con un mensaje descriptivo y la excepción original como causa.
 
 Este método es esencial para permitir la obtención de los detalles de una comanda en el sistema, manejando adecuadamente las excepciones que puedan surgir durante el proceso de recuperación.
-*/
-    
-    
+     */
     @Override
     public List<DetalleComanda> obtenerListaDetallesComandaBO(Comanda comanda) throws NegocioException {
         try {
@@ -515,11 +468,7 @@ Este método es esencial para permitir la obtención de los detalles de una coma
             throw new NegocioException("Error al recuperar detalles de la comanda", e);
         }
     }
-    
-    
-    
-    
-    
+
     /*
 Este método se encarga de actualizar la información de un cliente frecuente en el sistema, basándose en el total gastado por el cliente.
 
@@ -535,8 +484,7 @@ Este método se encarga de actualizar la información de un cliente frecuente en
    - Se llama al método `actualizarClienteFrecuente` del `clientesDAO`, pasando el `idCliente`, los `puntos`, el número de `visitas` y el `totalGastado` para actualizar la información del cliente en la base de datos.
 
 Este método es esencial para mantener actualizada la información de los clientes frecuentes, permitiendo gestionar sus puntos y visitas de manera efectiva.
-*/
-    
+     */
     @Override
     public void actualizarClienteFrecuente(Long idCliente, double totalGastado) {
         int puntos = (int) (totalGastado / 20);
@@ -544,5 +492,23 @@ Este método es esencial para mantener actualizada la información de los client
 
         ClientesDAO clientesDAO = new ClientesDAO();
         clientesDAO.actualizarClienteFrecuente(idCliente, puntos, visitas, totalGastado);
+    }
+
+    @Override
+    public double calcularTotalDeTodasLasComandas() throws NegocioException {
+        try {
+            return comandasDAO.calcularTotalDeTodasLasComandas();
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al calcular el total de todas las comandas", e);
+        }
+    }
+    
+    @Override
+    public double calcularTotalDeComandasPorFechas(Date fechaInicio, Date fechaFin) throws NegocioException {
+        try{
+            return comandasDAO.calcularTotalDeComandasPorFechas(fechaInicio, fechaFin);
+        } catch (PersistenciaException e){
+            throw new NegocioException("Error al calcular el total de todas las comandas",e);
+        }
     }
 }

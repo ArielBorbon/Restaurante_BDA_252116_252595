@@ -30,6 +30,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -45,13 +46,7 @@ public class ComandasDAO implements IComandasDAO {
 
     public ComandasDAO() {
     }
-    
-    
-    
-    
-    
-    
-    
+
     /*
 Este método permite registrar una nueva comanda en el sistema, incluyendo los detalles de la comanda y la mesa asociada.
 
@@ -69,8 +64,7 @@ Este método permite registrar una nueva comanda en el sistema, incluyendo los d
 9. Finalmente, se cierra el `EntityManager` en el bloque `finally` para liberar recursos.
 
 Este método es útil para registrar una nueva comanda en el sistema, asegurando que todos los detalles y relaciones se manejen correctamente, lo que permite un seguimiento adecuado de las órdenes de los clientes.
-*/
-
+     */
     @Override
     public Comanda registrarComanda(NuevaComandaDTO comandaDTO, List<NuevoDetalleComandaDTO> detallesDTO) {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -121,10 +115,6 @@ Este método es útil para registrar una nueva comanda en el sistema, asegurando
         }
     }
 
-    
-    
-    
-    
     /*
 Este método genera un nuevo folio para una comanda, asegurando que sea único y esté basado en la fecha actual.
 
@@ -138,7 +128,7 @@ Este método genera un nuevo folio para una comanda, asegurando que sea único y
 6. Se construye el folio de la comanda en el formato "OB-yyyyMMdd-consecutivo" y se devuelve como resultado.
 
 Este método es útil para asegurar que cada comanda tenga un folio único y fácilmente identificable, lo que facilita el seguimiento y la gestión de las órdenes en el sistema.
-*/
+     */
     @Override
     public String generarFolioComanda() {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -163,9 +153,7 @@ Este método es útil para asegurar que cada comanda tenga un folio único y fá
         }
 
     }
-    
-    
-    
+
     /*
 Este método calcula el total de un detalle de comanda basado en la cantidad de productos y el precio unitario del producto.
 
@@ -176,10 +164,7 @@ Este método calcula el total de un detalle de comanda basado en la cantidad de 
 5. Se devuelve el total calculado.
 
 Este método es útil para determinar el importe total de un detalle de comanda, asegurando que se utilicen los precios actualizados de los productos y que se manejen adecuadamente los casos en los que un producto no se encuentra en el sistema.
-*/
-    
-    
-
+     */
     @Override
     public double calcularTotalDetalleComanda(NuevoDetalleComandaDTO detalleDTO) {
         ProductosDAO productosDAO = new ProductosDAO();
@@ -191,10 +176,7 @@ Este método es útil para determinar el importe total de un detalle de comanda,
 
         return detalleDTO.getCantidad() * producto.getPrecio();
     }
-    
-    
-    
-    
+
     /*
 Este método calcula el total de una comanda sumando los totales de cada uno de los detalles de la comanda.
 
@@ -205,9 +187,7 @@ Este método calcula el total de una comanda sumando los totales de cada uno de 
 3. Al finalizar la iteración, se devuelve el total acumulado.
 
 Este método es útil para obtener el importe total de una comanda, asegurando que se consideren todos los detalles y sus respectivos totales, lo que permite una gestión precisa de los costos en el sistema.
-*/
-    
-
+     */
     @Override
     public double calcularTotalComanda(List<NuevoDetalleComandaDTO> detallesDTO) {
         double total = 0;
@@ -218,11 +198,7 @@ Este método es útil para obtener el importe total de una comanda, asegurando q
 
         return total;
     }
-    
-    
-    
-    
-    
+
     /*
 Este método permite modificar una comanda existente en el sistema, actualizando sus detalles y propiedades.
 
@@ -242,8 +218,7 @@ Este método permite modificar una comanda existente en el sistema, actualizando
 11. Finalmente, se cierra el `EntityManager` en el bloque `finally` para liberar recursos.
 
 Este método es útil para actualizar una comanda existente, permitiendo modificar tanto sus detalles como sus propiedades generales, lo que facilita la gestión de las órdenes en el sistema.
-*/
-
+     */
     @Override
     public Comanda modificarComanda(NuevaComandaDTO comandaDTO, List<NuevoDetalleComandaDTO> nuevosDetallesDTO) {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -296,10 +271,6 @@ Este método es útil para actualizar una comanda existente, permitiendo modific
         }
     }
 
-    
-    
-    
-    
     /*
 Este método permite eliminar una comanda existente en el sistema, junto con sus detalles asociados.
 
@@ -313,9 +284,7 @@ Este método permite eliminar una comanda existente en el sistema, junto con sus
 8. Finalmente, se cierra el `EntityManager` en el bloque `finally` para liberar recursos.
 
 Este método es útil para eliminar una comanda y todos sus detalles del sistema, lo que permite una gestión adecuada de las órdenes y la capacidad de corregir errores o cancelar pedidos según sea necesario.
-*/
-    
-    
+     */
     @Override
     public void eliminarComanda(NuevaComandaDTO comandaDTO) {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -348,11 +317,6 @@ Este método es útil para eliminar una comanda y todos sus detalles del sistema
         }
     }
 
-    
-    
-    
-    
-    
     /*
 Este método cambia el estado de una comanda a "CANCELADA" en el sistema.
 
@@ -365,8 +329,7 @@ Este método cambia el estado de una comanda a "CANCELADA" en el sistema.
 7. Finalmente, se cierra el `EntityManager` en el bloque `finally` para liberar recursos.
 
 Este método es útil para gestionar el estado de las comandas, permitiendo marcar una comanda como cancelada, lo que es esencial para el control de pedidos y la atención al cliente en el sistema.
-*/
-    
+     */
     @Override
     public void cambiarEstadoComandaACancelada(String folio) {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -389,9 +352,6 @@ Este método es útil para gestionar el estado de las comandas, permitiendo marc
         }
     }
 
-    
-    
-    
     /*
 Este método cambia el estado de una comanda a "ENTREGADA" en el sistema.
 
@@ -404,9 +364,7 @@ Este método cambia el estado de una comanda a "ENTREGADA" en el sistema.
 7. Finalmente, se cierra el `EntityManager` en el bloque `finally` para liberar recursos.
 
 Este método es útil para gestionar el estado de las comandas, permitiendo marcar una comanda como entregada, lo que es esencial para el control de pedidos y la atención al cliente en el sistema.
-*/
-    
-    
+     */
     @Override
     public void cambiarEstadoComandaAEntregada(String folio) {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -428,9 +386,7 @@ Este método es útil para gestionar el estado de las comandas, permitiendo marc
             em.close();
         }
     }
-    
-    
-    
+
     /*
 Este método verifica si hay suficiente stock de los ingredientes necesarios para preparar los productos especificados en una lista de detalles de comanda.
 
@@ -452,9 +408,7 @@ Este método verifica si hay suficiente stock de los ingredientes necesarios par
 8. Finalmente, se cierra el `EntityManager` en el bloque `finally` para liberar recursos.
 
 Este método es útil para garantizar que se cuente con los ingredientes necesarios antes de procesar una comanda, lo que ayuda a evitar problemas de falta de stock durante la preparación de los platillos.
-*/
-    
-
+     */
     @Override
     public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> detallesDTO) {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -506,14 +460,7 @@ Este método es útil para garantizar que se cuente con los ingredientes necesar
             em.close();
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
     /*
 Este método se encarga de restar el stock de los ingredientes necesarios para los productos de una comanda, basándose en los detalles de la comanda proporcionados.
 
@@ -538,12 +485,7 @@ Este método se encarga de restar el stock de los ingredientes necesarios para l
 8. Finalmente, se cierra el `EntityManager` en el bloque `finally` para liberar recursos.
 
 Este método es esencial para mantener la integridad del stock de ingredientes en el sistema, asegurando que se actualice correctamente cada vez que se procesa una comanda.
-*/
-    
-    
-    
-    
-
+     */
     @Override
     public void restarStockIngredientesPorProductosComanda(List<NuevoDetalleComandaDTO> detallesDTO) {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -602,12 +544,8 @@ Este método es esencial para mantener la integridad del stock de ingredientes e
             em.close();
         }
     }
-    
-    
-    
-    
-    
-/*
+
+    /*
 Este método se encarga de recuperar y mostrar todas las comandas almacenadas en la base de datos.
 
 1. Se obtiene un `EntityManager` a través de `ManejadorConexiones`, que gestiona la conexión a la base de datos.
@@ -617,7 +555,7 @@ Este método se encarga de recuperar y mostrar todas las comandas almacenadas en
 5. Finalmente, se cierra el `EntityManager` en el bloque `finally` para liberar recursos.
 
 Este método es útil para obtener un listado completo de todas las comandas, lo que puede ser utilizado para mostrar información en una interfaz de usuario o para realizar análisis sobre las órdenes procesadas en el sistema.
-*/
+     */
     @Override
     public List<Comanda> mostrarComandasTodas() {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -630,9 +568,7 @@ Este método es útil para obtener un listado completo de todas las comandas, lo
             em.close();
         }
     }
-    
-    
-    
+
     /*
 Este método se encarga de modificar la nota especial de un detalle de comanda específico en el sistema.
 
@@ -649,9 +585,7 @@ Este método se encarga de modificar la nota especial de un detalle de comanda e
 11. Finalmente, se cierra el `EntityManager` en el bloque `finally` para liberar recursos.
 
 Este método es útil para actualizar las notas especiales de un detalle de comanda, permitiendo a los usuarios realizar cambios en las instrucciones o comentarios asociados a un producto específico en una comanda.
-*/
-    
-
+     */
     @Override
     public void modificarNota(NuevoDetalleComandaDTO detalleDTO, String nuevaNota) {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -692,9 +626,7 @@ Este método es útil para actualizar las notas especiales de un detalle de coma
             em.close();
         }
     }
-    
-    
-    
+
     /*
 Este método se encarga de recuperar y mostrar todas las comandas que están en estado "ABIERTO" en la base de datos.
 
@@ -706,8 +638,7 @@ Este método se encarga de recuperar y mostrar todas las comandas que están en 
 6. Finalmente, se cierra el `EntityManager` en el bloque `finally` para liberar recursos.
 
 Este método es útil para obtener un listado de todas las comandas que están actualmente abiertas, lo que puede ser utilizado para la gestión de pedidos en curso y para facilitar el seguimiento de las órdenes en el sistema.
-*/
-
+     */
     @Override
     public List<Comanda> mostrarComandasAbiertas() {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -721,9 +652,7 @@ Este método es útil para obtener un listado de todas las comandas que están a
             em.close();
         }
     }
-    
-    
-    
+
     /*
 Este método se encarga de filtrar y recuperar las comandas que se encuentran dentro de un rango de fechas específico.
 
@@ -734,9 +663,7 @@ Este método se encarga de filtrar y recuperar las comandas que se encuentran de
 5. Se ejecuta la consulta con `query.getResultList()`, que devuelve una lista de todas las comandas que cumplen con el criterio de fecha especificado.
 
 Este método es útil para obtener un listado de comandas que fueron creadas dentro de un rango de fechas determinado, lo que puede ser útil para informes, análisis de ventas o auditorías en el sistema.
-*/
-    
-
+     */
     @Override
     public List<Comanda> filtrarPorFecha(Calendar fechaInicio, Calendar fechaFin) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
@@ -748,12 +675,8 @@ Este método es útil para obtener un listado de comandas que fueron creadas den
 
         return query.getResultList();
     }
-    
-    
-    
-    
-    
-/*
+
+    /*
 Este método se encarga de recuperar una comanda específica a partir de su folio.
 
 1. Se obtiene un `EntityManager` a través de `ManejadorConexiones`, que gestiona la conexión a la base de datos.
@@ -765,7 +688,7 @@ Este método se encarga de recuperar una comanda específica a partir de su foli
 7. Si ocurre cualquier otra excepción durante el proceso, se lanza una `PersistenciaException` con un mensaje que indica que hubo un error al obtener la comanda por folio, junto con la excepción original.
 
 Este método es útil para buscar y recuperar una comanda específica en el sistema utilizando su folio, lo que permite acceder a la información de la comanda de manera eficiente.
-*/
+     */
     @Override
     public Comanda obtenerComandaPorFolio(String folio) throws PersistenciaException {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -781,10 +704,6 @@ Este método es útil para buscar y recuperar una comanda específica en el sist
         }
     }
 
-    
-    
-    
-    
     /*
 Este método se encarga de recuperar la lista de detalles de una comanda específica.
 
@@ -796,9 +715,7 @@ Este método se encarga de recuperar la lista de detalles de una comanda especí
 6. Si ocurre cualquier excepción durante el proceso, se lanza una `PersistenciaException` con un mensaje que indica que hubo un error al obtener los detalles de la comanda, junto con la excepción original.
 
 Este método es útil para acceder a la información detallada de los productos y servicios incluidos en una comanda específica, lo que permite gestionar y visualizar los elementos de la comanda de manera efectiva.
-*/
-    
-    
+     */
     @Override
     public List<DetalleComanda> obtenerListaDetallesComanda(Comanda comanda) throws PersistenciaException {
         EntityManager em = ManejadorConexiones.getEntityManager();
@@ -811,6 +728,33 @@ Este método es útil para acceder a la información detallada de los productos 
             throw new PersistenciaException("Error al obtener los detalles de la comanda", e);
         }
     }
-    
-    
+
+    @Override
+    public double calcularTotalDeTodasLasComandas() throws PersistenciaException {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        try {
+            String jpql = "SELECT SUM(c.total) FROM Comanda c";
+            TypedQuery<Double> query = em.createQuery(jpql, Double.class);
+            Double total = query.getSingleResult();
+            return total != null ? total : 0.0;
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public double calcularTotalDeComandasPorFechas(Date fechaInicio, Date fechaFin) throws PersistenciaException {
+        EntityManager em = ManejadorConexiones.getEntityManager();
+        try {
+            String jpql = "SELECT SUM(c.total) FROM Comanda c WHERE c.fechaHora BETWEEN :fechaInicio AND :fechaFin";
+            TypedQuery<Double> query = em.createQuery(jpql, Double.class);
+            query.setParameter("fechaInicio", fechaInicio, TemporalType.TIMESTAMP);
+            query.setParameter("fechaFin", fechaFin, TemporalType.TIMESTAMP);
+
+            Double total = query.getSingleResult();
+            return total != null ? total : 0.0;
+        } finally {
+            em.close();
+        }
+    }
 }

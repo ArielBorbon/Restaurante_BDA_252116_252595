@@ -7,6 +7,7 @@ package ModuloComandas;
 import BO.ComandasBO.ComandaBO;
 import Entidades.Comandas.Comanda;
 import Fabricas.FabricaComandas;
+import NegocioException.NegocioException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +26,7 @@ public class FormTablaComandas extends javax.swing.JPanel {
      */
     public FormTablaComandas() {
         initComponents();
-        llenarTablaComandasAbiertas();
+        llenarTablaComandas();
     }
 
     /*
@@ -47,7 +48,7 @@ Este método se encarga de llenar una tabla con la información de todas las com
 
 Este método es esencial para presentar de manera visual y organizada la información de las comandas abiertas en la interfaz de usuario, facilitando la consulta y gestión de datos.
      */
-    public void llenarTablaComandasAbiertas() {
+    public void llenarTablaComandas() {
         ComandaBO comandasBO = FabricaComandas.crearComandaBO();
         List<Comanda> comandasAbiertas = comandasBO.mostrarComandasAbiertasBO();
 
@@ -73,11 +74,11 @@ Este método es esencial para presentar de manera visual y organizada la informa
             modelo.addRow(fila);
         }
 
-        tblComandasAbiertas.setModel(modelo);
+        tblComandas.setModel(modelo);
     }
 
     public JTable getTblComandasAbiertas() {
-        return tblComandasAbiertas;
+        return tblComandas;
     }
 
     /**
@@ -90,9 +91,9 @@ Este método es esencial para presentar de manera visual y organizada la informa
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblComandasAbiertas = new javax.swing.JTable();
+        tblComandas = new javax.swing.JTable();
 
-        tblComandasAbiertas.setModel(new javax.swing.table.DefaultTableModel(
+        tblComandas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -103,7 +104,7 @@ Este método es esencial para presentar de manera visual y organizada la informa
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblComandasAbiertas);
+        jScrollPane1.setViewportView(tblComandas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -142,7 +143,7 @@ Este método se encarga de llenar una tabla con la información de las comandas 
 
 Este método es esencial para presentar de manera visual y organizada la información de las comandas abiertas que cumplen con el criterio de fecha en la interfaz de usuario, facilitando la consulta y gestión de datos.
      */
-    public void llenarTablaComandasAbiertasConFiltro(Date fechaInicio, Date fechaFin) {
+    public void llenarTablaComandasConFiltro(Date fechaInicio, Date fechaFin) {
         ComandaBO comandasBO = FabricaComandas.crearComandaBO();
         List<Comanda> comandasAbiertas = comandasBO.mostrarComandasAbiertasBO();
 
@@ -171,11 +172,11 @@ Este método es esencial para presentar de manera visual y organizada la informa
             }
         }
 
-        tblComandasAbiertas.setModel(modelo);
+        tblComandas.setModel(modelo);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblComandasAbiertas;
+    private javax.swing.JTable tblComandas;
     // End of variables declaration//GEN-END:variables
 }

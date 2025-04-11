@@ -10,6 +10,7 @@ import Entidades.Comandas.Comanda;
 import Entidades.Comandas.DetalleComanda;
 import Excepciones.PersistenciaException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,4 +52,7 @@ public interface IComandasDAO {
     
     List<DetalleComanda> obtenerListaDetallesComanda(Comanda comanda) throws PersistenciaException;
     
+    double calcularTotalDeTodasLasComandas() throws PersistenciaException;
+    
+    double calcularTotalDeComandasPorFechas(Date fechaInicio, Date fechaFin) throws PersistenciaException;
 }

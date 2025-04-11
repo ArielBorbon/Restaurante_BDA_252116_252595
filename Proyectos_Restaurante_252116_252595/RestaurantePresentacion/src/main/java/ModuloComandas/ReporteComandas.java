@@ -6,6 +6,7 @@ package ModuloComandas;
 
 import BO.ComandasBO.ComandaBO;
 import Entidades.Comandas.Comanda;
+import Excepciones.PersistenciaException;
 import Fabricas.FabricaComandas;
 import NegocioException.NegocioException;
 import com.lowagie.text.Document;
@@ -39,11 +40,12 @@ public class ReporteComandas extends javax.swing.JFrame {
     /**
      * Creates new form ReporteComandas
      */
-    public ReporteComandas() {
+    public ReporteComandas() throws NegocioException {
         initComponents();
         pnlTabla.add(formTablaComandaCompleta);
         formTablaComandaCompleta.setVisible(true);
         getContentPane().setBackground(new Color(0xe71d1d));
+        mostrarTotalComandas();
     }
 
     /**
@@ -65,6 +67,7 @@ public class ReporteComandas extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         filtroFechaInicio = new com.toedter.calendar.JDateChooser();
         filtroFechaFin = new com.toedter.calendar.JDateChooser();
+        lblTotalComandas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Reporte Comandas");
@@ -113,6 +116,9 @@ public class ReporteComandas extends javax.swing.JFrame {
         jLabel2.setText("Total:");
         jLabel2.setFont(new Font("Arial", Font.PLAIN, 14));
 
+        lblTotalComandas.setText("$0.0");
+        jLabel2.setFont(new Font("Arial", Font.PLAIN, 14));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -122,9 +128,14 @@ public class ReporteComandas extends javax.swing.JFrame {
                 .addComponent(btnImprimirReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblTotalComandas, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pnlTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -132,10 +143,7 @@ public class ReporteComandas extends javax.swing.JFrame {
                                 .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(293, 293, 293)
                                 .addComponent(btnFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -148,10 +156,7 @@ public class ReporteComandas extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                                     .addComponent(filtroFechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -174,7 +179,9 @@ public class ReporteComandas extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnImprimirReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(lblTotalComandas)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(btnSalir)
                 .addContainerGap())
@@ -184,33 +191,39 @@ public class ReporteComandas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
-        Date fechaInicio = filtroFechaInicio.getDate();
-        Date fechaFin = filtroFechaFin.getDate();
+        try {
+            Date fechaInicio = filtroFechaInicio.getDate();
+            Date fechaFin = filtroFechaFin.getDate();
 
-        // Verifica si alguna de las fechas es nula
-        if (fechaInicio == null || fechaFin == null) {
-            JOptionPane.showMessageDialog(this, "Por favor, selecciona ambas fechas.");
-            return;
+            // Verifica si alguna de las fechas es nula
+            if (fechaInicio == null || fechaFin == null) {
+                JOptionPane.showMessageDialog(this, "Por favor, selecciona ambas fechas.");
+                return;
+            }
+
+            // Ajustar las fechas para que solo se compare la parte de la fecha, ignorando la hora
+            Calendar calInicio = Calendar.getInstance();
+            Calendar calFin = Calendar.getInstance();
+
+            calInicio.setTime(fechaInicio);
+            calInicio.set(Calendar.HOUR_OF_DAY, 0);
+            calInicio.set(Calendar.MINUTE, 0);
+            calInicio.set(Calendar.SECOND, 0);
+            calInicio.set(Calendar.MILLISECOND, 0);
+
+            calFin.setTime(fechaFin);
+            calFin.set(Calendar.HOUR_OF_DAY, 23);
+            calFin.set(Calendar.MINUTE, 59);
+            calFin.set(Calendar.SECOND, 59);
+            calFin.set(Calendar.MILLISECOND, 999);
+
+            // Pasa las fechas ajustadas al método de llenar la tabla con filtro
+            formTablaComandaCompleta.llenarTablaComandasConFiltro(calInicio.getTime(), calFin.getTime());
+
+            mostrarTotalComandasConFiltro(calInicio.getTime(), calFin.getTime());
+        } catch (NegocioException ex) {
+            Logger.getLogger(ReporteComandas.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        // Ajustar las fechas para que solo se compare la parte de la fecha, ignorando la hora
-        Calendar calInicio = Calendar.getInstance();
-        Calendar calFin = Calendar.getInstance();
-
-        calInicio.setTime(fechaInicio);
-        calInicio.set(Calendar.HOUR_OF_DAY, 0);
-        calInicio.set(Calendar.MINUTE, 0);
-        calInicio.set(Calendar.SECOND, 0);
-        calInicio.set(Calendar.MILLISECOND, 0);
-
-        calFin.setTime(fechaFin);
-        calFin.set(Calendar.HOUR_OF_DAY, 23);
-        calFin.set(Calendar.MINUTE, 59);
-        calFin.set(Calendar.SECOND, 59);
-        calFin.set(Calendar.MILLISECOND, 999);
-
-        // Pasa las fechas ajustadas al método de llenar la tabla con filtro
-        formTablaComandaCompleta.llenarTablaComandasConFiltro(calInicio.getTime(), calFin.getTime());
     }//GEN-LAST:event_btnFiltroActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -325,6 +338,15 @@ public class ReporteComandas extends javax.swing.JFrame {
             }
 
             document.add(tabla);
+            double totalComandas = comandasBO.calcularTotalDeComandasPorFechas(
+                    calInicio != null ? calInicio.getTime() : null,
+                    calFin != null ? calFin.getTime() : null
+            );
+
+            // Agregar un salto de línea y el total general
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph("TOTAL GENERAL: $" + String.format("%.2f", totalComandas)));
+
             document.close();
 
             JOptionPane.showMessageDialog(this, "Reporte generado con éxito:\n" + archivoDestino.getAbsolutePath());
@@ -332,6 +354,18 @@ public class ReporteComandas extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al generar el PDF");
         }
+    }
+
+    public void mostrarTotalComandas() throws NegocioException {
+        ComandaBO comandaBO = FabricaComandas.crearComandaBO();
+        double total = comandaBO.calcularTotalDeTodasLasComandas();
+        lblTotalComandas.setText("$" + String.format("%.2f", total));
+    }
+
+    public void mostrarTotalComandasConFiltro(Date fechaInicio, Date fechaFin) throws NegocioException {
+        ComandaBO comandaBO = FabricaComandas.crearComandaBO();
+        double total = comandaBO.calcularTotalDeComandasPorFechas(fechaInicio, fechaFin);
+        lblTotalComandas.setText("$" + String.format("%.2f", total));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -344,6 +378,7 @@ public class ReporteComandas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lblTotalComandas;
     private javax.swing.JPanel pnlTabla;
     // End of variables declaration//GEN-END:variables
 }

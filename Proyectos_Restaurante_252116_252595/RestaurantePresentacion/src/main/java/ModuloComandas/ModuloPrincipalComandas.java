@@ -18,9 +18,12 @@ import Fabricas.FabricaMesas;
 import Menu.MenuModulos;
 import ModuloComandas.AñadirComanda.AñadirComanda;
 import ModuloComandas.ModificarComanda.ModificarComanda;
+import NegocioException.NegocioException;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -232,7 +235,7 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(this, "¡Comanda cancelada exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-        formTablaComanda.llenarTablaComandasAbiertas();
+        formTablaComanda.llenarTablaComandas();
 
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Error al cancelar la comanda: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -241,8 +244,12 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarComandaActionPerformed
 
     private void btnReporteComandasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteComandasActionPerformed
-        ReporteComandas reporteComandas = new ReporteComandas();
-        reporteComandas.setVisible(true);
+        try {
+            ReporteComandas reporteComandas = new ReporteComandas();
+            reporteComandas.setVisible(true);
+        } catch (NegocioException ex) {
+            Logger.getLogger(ModuloPrincipalComandas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnReporteComandasActionPerformed
 
     private void btnAñadirComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirComandaActionPerformed
@@ -334,7 +341,7 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Comanda marcada como entregada y stock actualizado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-            formTablaComanda.llenarTablaComandasAbiertas();
+            formTablaComanda.llenarTablaComandas();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al completar la comanda: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

@@ -10,6 +10,7 @@ import Entidades.Comandas.Comanda;
 import Entidades.Comandas.DetalleComanda;
 import NegocioException.NegocioException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,4 +41,8 @@ public interface IComandaBO {
     List<DetalleComanda> obtenerListaDetallesComandaBO(Comanda comanda) throws NegocioException;
     
     void actualizarClienteFrecuente(Long idCliente, double totalGastado);
+    
+    double calcularTotalDeTodasLasComandas() throws NegocioException;
+    
+    double calcularTotalDeComandasPorFechas(Date fechaInicio, Date fechaFin) throws NegocioException;
 }

@@ -401,7 +401,7 @@ Este método es esencial para presentar de manera clara y organizada la informac
 
             JOptionPane.showMessageDialog(this, "Comanda modificada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-            formTablaComanda.llenarTablaComandasAbiertas();
+            formTablaComanda.llenarTablaComandas();
             dispose();
 
         } catch (Exception e) {

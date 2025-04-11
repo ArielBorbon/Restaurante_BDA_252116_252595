@@ -400,7 +400,7 @@ Este método es esencial para proporcionar al usuario una lista actualizada de m
 
             JOptionPane.showMessageDialog(this, "¡Comanda creada exitosamente con folio: " + folio + "!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-            formComandasAbiertas.llenarTablaComandasAbiertas();
+            formComandasAbiertas.llenarTablaComandas();
             dispose();
 
         } catch (NumberFormatException e) {
