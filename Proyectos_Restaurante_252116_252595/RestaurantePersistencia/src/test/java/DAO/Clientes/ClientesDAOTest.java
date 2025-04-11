@@ -10,7 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
- * @author Laboratorios
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class ClientesDAOTest {
 //    

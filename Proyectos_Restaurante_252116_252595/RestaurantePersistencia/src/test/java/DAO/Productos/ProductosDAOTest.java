@@ -22,7 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
- * @author rayoa
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class ProductosDAOTest {
 //    

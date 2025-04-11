@@ -11,7 +11,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  *
- * @author PC Gamer
+ * @author Ariel Eduardo Borbon Izaguirre 252116
+ * @author Alberto Jimenez Garcia 252595
  */
 public class IngredientesDAOTest {
 //    
