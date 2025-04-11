@@ -346,6 +346,11 @@ public class ModificarProducto extends javax.swing.JFrame {
             }
 
             DefaultTableModel modelo = (DefaultTableModel) tblTablaIngredientesHastaElMomento.getModel();
+            
+            if (modelo.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Por favor, selecciona al menos un Ingrediente.");
+                return;
+            }
             List<NuevoProductoOcupaIngredienteDTO> listaIngredientes = new ArrayList<>();
             String nombreProductoNuevo = txtNombre.getText();
             for (int i = 0; i < modelo.getRowCount(); i++) {
