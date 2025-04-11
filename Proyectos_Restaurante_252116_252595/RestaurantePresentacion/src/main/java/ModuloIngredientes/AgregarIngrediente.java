@@ -20,7 +20,11 @@ import javax.swing.JOptionPane;
 public class AgregarIngrediente extends javax.swing.JFrame {
 
     private FormIngredientesTabla formIngredientesTabla;
-
+    
+    /**
+     * 
+     * @param formIngredientesTabla 
+     */
     public AgregarIngrediente(FormIngredientesTabla formIngredientesTabla) {
         initComponents();
         this.formIngredientesTabla = formIngredientesTabla;
@@ -143,11 +147,19 @@ public class AgregarIngrediente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void cmbUnidad_MedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbUnidad_MedidaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbUnidad_MedidaActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnCrearIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearIngredienteActionPerformed
 
         String nombre = txtNombre.getText().trim();
@@ -203,7 +215,11 @@ public class AgregarIngrediente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Registro cancelado por el usuario.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnCrearIngredienteActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed

@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  * Tabla de comandas abiertas
- * 
+ *
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
@@ -30,24 +30,32 @@ public class FormTablaComandas extends javax.swing.JPanel {
         llenarTablaComandas();
     }
 
-    /*
-Este método se encarga de llenar una tabla con la información de todas las comandas que están actualmente abiertas en el sistema.
-
-1. **Método**: `llenarTablaComandasAbiertas()`
-2. **Tipo de retorno**: `void`
-3. **Funcionalidad**:
-   - Se crea una instancia de `ComandaBO` utilizando la fábrica `FabricaComandas`.
-   - Se obtiene una lista de todas las comandas abiertas llamando al método `mostrarComandasAbiertasBO` del objeto `comandasBO`.
-   - Se define un arreglo de `String` llamado `columnas`, que contiene los nombres de las columnas que se mostrarán en la tabla: "Folio", "Mesa", "Estado", "Total", "Fecha" y "Cliente".
-   - Se crea un modelo de tabla (`DefaultTableModel`) utilizando las columnas definidas, inicializándolo con 0 filas.
-   - Se itera sobre cada comanda en la lista de comandas abiertas:
-     - Se extraen los datos relevantes de cada comanda, como el folio, número de mesa, estado, total, fecha y nombre del cliente.
-     - Se maneja la posibilidad de que algunos valores sean `null`, proporcionando valores predeterminados como "N/A" o "Sin Fecha" cuando sea necesario.
-     - Se crea un arreglo de objetos (`Object[]`) que representa una fila de la tabla con los datos extraídos.
-     - Se agrega la fila al modelo de la tabla.
-   - Finalmente, se establece el modelo de la tabla (`tblComandasAbiertas`) con el modelo creado, actualizando así la visualización de la tabla con la información de las comandas abiertas.
-
-Este método es esencial para presentar de manera visual y organizada la información de las comandas abiertas en la interfaz de usuario, facilitando la consulta y gestión de datos.
+    /**
+     * Este método se encarga de llenar una tabla con la información de todas
+     * las comandas que están actualmente abiertas en el sistema.
+     *
+     * 1. **Método**: `llenarTablaComandasAbiertas()` 2. **Tipo de retorno**:
+     * `void` 3. **Funcionalidad**: - Se crea una instancia de `ComandaBO`
+     * utilizando la fábrica `FabricaComandas`. - Se obtiene una lista de todas
+     * las comandas abiertas llamando al método `mostrarComandasAbiertasBO` del
+     * objeto `comandasBO`. - Se define un arreglo de `String` llamado
+     * `columnas`, que contiene los nombres de las columnas que se mostrarán en
+     * la tabla: "Folio", "Mesa", "Estado", "Total", "Fecha" y "Cliente". - Se
+     * crea un modelo de tabla (`DefaultTableModel`) utilizando las columnas
+     * definidas, inicializándolo con 0 filas. - Se itera sobre cada comanda en
+     * la lista de comandas abiertas: - Se extraen los datos relevantes de cada
+     * comanda, como el folio, número de mesa, estado, total, fecha y nombre del
+     * cliente. - Se maneja la posibilidad de que algunos valores sean `null`,
+     * proporcionando valores predeterminados como "N/A" o "Sin Fecha" cuando
+     * sea necesario. - Se crea un arreglo de objetos (`Object[]`) que
+     * representa una fila de la tabla con los datos extraídos. - Se agrega la
+     * fila al modelo de la tabla. - Finalmente, se establece el modelo de la
+     * tabla (`tblComandasAbiertas`) con el modelo creado, actualizando así la
+     * visualización de la tabla con la información de las comandas abiertas.
+     *
+     * Este método es esencial para presentar de manera visual y organizada la
+     * información de las comandas abiertas en la interfaz de usuario,
+     * facilitando la consulta y gestión de datos.
      */
     public void llenarTablaComandas() {
         ComandaBO comandasBO = FabricaComandas.crearComandaBO();
@@ -78,6 +86,10 @@ Este método es esencial para presentar de manera visual y organizada la informa
         tblComandas.setModel(modelo);
     }
 
+    /**
+     *
+     * @return
+     */
     public JTable getTblComandasAbiertas() {
         return tblComandas;
     }
@@ -120,29 +132,43 @@ Este método es esencial para presentar de manera visual y organizada la informa
     }// </editor-fold>//GEN-END:initComponents
     // Metodo para utilizar el filtro de reporte comandas :)
 
-    /*
-Este método se encarga de llenar una tabla con la información de las comandas abiertas que se encuentran dentro de un rango de fechas específico.
-
-1. **Método**: `llenarTablaComandasAbiertasConFiltro(Date fechaInicio, Date fechaFin)`
-2. **Parámetros**: 
-   - `fechaInicio`: Un objeto de tipo `Date` que representa la fecha de inicio del rango para filtrar las comandas abiertas.
-   - `fechaFin`: Un objeto de tipo `Date` que representa la fecha de fin del rango para filtrar las comandas abiertas.
-3. **Tipo de retorno**: `void`
-4. **Funcionalidad**:
-   - Se crea una instancia de `ComandaBO` utilizando la fábrica `FabricaComandas`.
-   - Se obtiene una lista de todas las comandas abiertas llamando al método `mostrarComandasAbiertasBO` del objeto `comandasBO`.
-   - Se define un arreglo de `String` llamado `columnas`, que contiene los nombres de las columnas que se mostrarán en la tabla: "Folio", "Mesa", "Estado", "Total", "Fecha" y "Cliente".
-   - Se crea un modelo de tabla (`DefaultTableModel`) utilizando las columnas definidas, inicializándolo con 0 filas.
-   - Se utiliza un objeto `SimpleDateFormat` para formatear las fechas en el formato "yyyy-MM-dd".
-   - Se itera sobre cada comanda en la lista de comandas abiertas:
-     - Se extrae la fecha de la comanda, manejando el caso en que pueda ser `null`.
-     - Se verifica si la fecha de la comanda está dentro del rango especificado (entre `fechaInicio` y `fechaFin`).
-     - Si la fecha está dentro del rango, se extraen los datos relevantes de la comanda, como el folio, número de mesa, estado, total y nombre del cliente.
-     - Se crea un arreglo de objetos (`Object[]`) que representa una fila de la tabla con los datos extraídos.
-     - Se agrega la fila al modelo de la tabla.
-   - Finalmente, se establece el modelo de la tabla (`tblComandasAbiertas`) con el modelo creado, actualizando así la visualización de la tabla con la información filtrada de las comandas abiertas.
-
-Este método es esencial para presentar de manera visual y organizada la información de las comandas abiertas que cumplen con el criterio de fecha en la interfaz de usuario, facilitando la consulta y gestión de datos.
+    /**
+     * Este método se encarga de llenar una tabla con la información de las
+     * comandas abiertas que se encuentran dentro de un rango de fechas
+     * específico.1.**Método**: `llenarTablaComandasAbiertasConFiltro(Date
+     * fechaInicio, Date fechaFin)` 2.
+     *
+     * **Parámetros**: - `fechaInicio`: Un objeto de tipo `Date` que representa
+     * la fecha de inicio del rango para filtrar las comandas abiertas. -
+     * `fechaFin`: Un objeto de tipo `Date` que representa la fecha de fin del
+     * rango para filtrar las comandas abiertas. 3. **Tipo de retorno**: `void`
+     * 4. **Funcionalidad**: - Se crea una instancia de `ComandaBO` utilizando
+     * la fábrica `FabricaComandas`. - Se obtiene una lista de todas las
+     * comandas abiertas llamando al método `mostrarComandasAbiertasBO` del
+     * objeto `comandasBO`. - Se define un arreglo de `String` llamado
+     * `columnas`, que contiene los nombres de las columnas que se mostrarán en
+     * la tabla: "Folio", "Mesa", "Estado", "Total", "Fecha" y "Cliente". - Se
+     * crea un modelo de tabla (`DefaultTableModel`) utilizando las columnas
+     * definidas, inicializándolo con 0 filas. - Se utiliza un objeto
+     * `SimpleDateFormat` para formatear las fechas en el formato "yyyy-MM-dd".
+     * - Se itera sobre cada comanda en la lista de comandas abiertas: - Se
+     * extrae la fecha de la comanda, manejando el caso en que pueda ser `null`.
+     * - Se verifica si la fecha de la comanda está dentro del rango
+     * especificado (entre `fechaInicio` y `fechaFin`). - Si la fecha está
+     * dentro del rango, se extraen los datos relevantes de la comanda, como el
+     * folio, número de mesa, estado, total y nombre del cliente. - Se crea un
+     * arreglo de objetos (`Object[]`) que representa una fila de la tabla con
+     * los datos extraídos. - Se agrega la fila al modelo de la tabla. -
+     * Finalmente, se establece el modelo de la tabla (`tblComandasAbiertas`)
+     * con el modelo creado, actualizando así la visualización de la tabla con
+     * la información filtrada de las comandas abiertas.
+     *
+     * Este método es esencial para presentar de manera visual y organizada la
+     * información de las comandas abiertas que cumplen con el criterio de fecha
+     * en la interfaz de usuario, facilitando la consulta y gestión de datos.
+     *
+     * @param fechaInicio
+     * @param fechaFin
      */
     public void llenarTablaComandasConFiltro(Date fechaInicio, Date fechaFin) {
         ComandaBO comandasBO = FabricaComandas.crearComandaBO();

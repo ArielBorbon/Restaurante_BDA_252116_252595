@@ -41,6 +41,10 @@ public class ModuloPrincipalIngredientes extends javax.swing.JFrame {
         this.rol = rol;
     }
     
+    /**
+     * 
+     * @throws NegocioException 
+     */
     public ModuloPrincipalIngredientes() throws NegocioException {
         initComponents();
         formTabla.setVisible(true);
@@ -159,7 +163,11 @@ public class ModuloPrincipalIngredientes extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnActualizarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarIngredienteActionPerformed
         JTable tabla = formTabla.getTablaIngredientes();
         int filaSeleccionada = tabla.getSelectedRow();
@@ -206,7 +214,11 @@ public class ModuloPrincipalIngredientes extends javax.swing.JFrame {
             Logger.getLogger(ModuloPrincipalIngredientes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnActualizarIngredienteActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnEliminarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarIngredienteActionPerformed
         JTable tabla = formTabla.getTablaIngredientes();
         int filaSeleccionada = tabla.getSelectedRow();
@@ -279,7 +291,11 @@ public class ModuloPrincipalIngredientes extends javax.swing.JFrame {
             );
         }
     }//GEN-LAST:event_btnEliminarIngredienteActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnAgregarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarIngredienteActionPerformed
 
         AgregarIngrediente ventanaAgregar = new AgregarIngrediente(formTabla);
@@ -287,7 +303,11 @@ public class ModuloPrincipalIngredientes extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnAgregarIngredienteActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         MenuModulos menu = new MenuModulos(rol);
         menu.setVisible(true);

@@ -28,7 +28,12 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
     private final FormClientesTabla formClientesTabla = new FormClientesTabla();
 
     private String rol;
-
+    
+    /**
+     * 
+     * @param rol
+     * @throws NegocioException 
+     */
     public ModuloPrincipalClientes(String rol) throws NegocioException {
         initComponents();
         formClientesTabla.setVisible(true);
@@ -37,7 +42,11 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
         this.rol = rol;
 
     }
-
+    
+    /**
+     * 
+     * @throws NegocioException 
+     */
     public ModuloPrincipalClientes() throws NegocioException {
         initComponents();
         formClientesTabla.setVisible(true);
@@ -191,18 +200,30 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnAgregarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarClienteActionPerformed
         ClienteAgregar clienteAgregar = new ClienteAgregar(formClientesTabla);
         clienteAgregar.setVisible(true);
     }//GEN-LAST:event_btnAgregarClienteActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         MenuModulos menu = new MenuModulos(rol);
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
         try {
             ClienteBO clienteBO = FabricaClientes.crearClienteBO();
@@ -242,7 +263,11 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
             Logger.getLogger(ModuloPrincipalClientes.class.getName()).log(Level.SEVERE, "Error al desencriptar teléfono", ex);
         }
     }//GEN-LAST:event_btnFiltroActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
         ReporteClientes reporteClientes;
         try {

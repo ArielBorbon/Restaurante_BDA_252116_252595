@@ -23,12 +23,20 @@ import java.text.SimpleDateFormat;
  * @author Alberto Jimenez Garcia 252595
  */
 public class FormClientesTabla extends javax.swing.JPanel {
-
+    
+    /**
+     * 
+     * @throws NegocioException 
+     */
     public FormClientesTabla() throws NegocioException {
         initComponents();
         cargarClientesEnTabla();
     }
-
+    
+    /**
+     * 
+     * @throws NegocioException 
+     */
     public void cargarClientesEnTabla() throws NegocioException {
         ClienteBO clienteBO = FabricaClientes.crearClienteBO();
         String[] columnas = {
@@ -114,15 +122,27 @@ public class FormClientesTabla extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
 
     }//GEN-LAST:event_jTable1MouseClicked
-
+    
+    /**
+     * 
+     * @return 
+     */
     public JTable getTablabaClientes() {
         return this.jTable1;
     }
-
+    
+    /**
+     * 
+     * @param clientesFiltrados 
+     */
     public void recargarTabla(List<Cliente> clientesFiltrados) {
         String[] columnas = {
             "Nombre", "Correo", "Teléfono", "Fecha Registro", "Puntos", "Visitas", "Total Acumulado"
@@ -164,7 +184,11 @@ public class FormClientesTabla extends javax.swing.JPanel {
 
         jTable1.setModel(modeloTabla);
     }
-
+    
+    /**
+     * 
+     * @throws NegocioException 
+     */
     public void recargarTabla() throws NegocioException {
         cargarClientesEnTabla();
     }

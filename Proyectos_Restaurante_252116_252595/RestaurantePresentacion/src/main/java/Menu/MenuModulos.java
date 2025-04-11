@@ -34,7 +34,7 @@ public class MenuModulos extends javax.swing.JFrame {
         this.rol = rol;
         ConfigurarBotonesMesero();
     }
-
+    
     public void ConfigurarBotonesMesero() {
         if (this.rol == "Mesero") {
             remove(btnClientes);
@@ -45,8 +45,7 @@ public class MenuModulos extends javax.swing.JFrame {
         }
 
     }
-
-    //
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -172,7 +171,11 @@ public class MenuModulos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnIngredientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientesActionPerformed
         try {
             ModuloPrincipalIngredientes moduloIngredientes = new ModuloPrincipalIngredientes(this.rol);
@@ -182,7 +185,11 @@ public class MenuModulos extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnIngredientesActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
         try {
             ModuloPrincipalProductos moduloProductos = new ModuloPrincipalProductos(this.rol);
@@ -193,7 +200,11 @@ public class MenuModulos extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnProductosActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         try {
             ModuloPrincipalClientes moduloClientes = new ModuloPrincipalClientes(this.rol);
@@ -202,20 +213,27 @@ public class MenuModulos extends javax.swing.JFrame {
         } catch (NegocioException ex) {
         }
     }//GEN-LAST:event_btnClientesActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnComandasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComandasActionPerformed
 
         ModuloPrincipalComandas moduloComanda = new ModuloPrincipalComandas(this.rol);
         moduloComanda.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnComandasActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         SeleccionDeRol seleccionDeRol = new SeleccionDeRol();
         seleccionDeRol.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;

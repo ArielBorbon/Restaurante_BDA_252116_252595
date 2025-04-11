@@ -13,7 +13,7 @@ import javax.swing.JTable;
 
 /**
  * Añadir Comandas a Clientes
- * 
+ *
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
@@ -99,31 +99,42 @@ public class AñadirClienteComanda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     *
+     * @param evt
+     */
     private void btnSeleccionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSeleccionarClienteActionPerformed
 
+    /**
+     *
+     * @param evt
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    /*
-Este método se encarga de agregar un listener de mouse a la tabla de clientes, permitiendo la selección de un cliente mediante un doble clic.
-
-1. **Método**: `clickearTabla()`
-2. **Tipo de retorno**: `void`
-3. **Funcionalidad**:
-   - Se añade un `MouseListener` a la tabla de clientes obtenida a través de `formClientesTabla.getTablabaClientes()`.
-   - Se sobrescribe el método `mouseClicked` para manejar el evento de clic del mouse.
-   - Se verifica si el número de clics es igual a 2 (doble clic).
-   - Si se detecta un doble clic, se obtiene la tabla y se determina la fila seleccionada.
-   - Si la fila seleccionada es válida (mayor o igual a 0):
-     - Se extrae el nombre del cliente de la primera columna de la fila seleccionada.
-     - Se establece el nombre del cliente en el objeto `añadirComanda` mediante el método `setNombreCliente`.
-     - Se actualiza el campo de texto correspondiente en `añadirComanda` con el nombre del cliente seleccionado.
-     - Se cierra la ventana actual mediante `dispose()`.
-
-Este método es esencial para permitir la selección de un cliente de la tabla mediante un doble clic, facilitando la interacción del usuario con la interfaz.
+    /**
+     * Este método se encarga de agregar un listener de mouse a la tabla de
+     * clientes, permitiendo la selección de un cliente mediante un doble clic.
+     *
+     * 1. **Método**: `clickearTabla()` 2. **Tipo de retorno**: `void` 3.
+     * **Funcionalidad**: - Se añade un `MouseListener` a la tabla de clientes
+     * obtenida a través de `formClientesTabla.getTablabaClientes()`. - Se
+     * sobrescribe el método `mouseClicked` para manejar el evento de clic del
+     * mouse. - Se verifica si el número de clics es igual a 2 (doble clic). -
+     * Si se detecta un doble clic, se obtiene la tabla y se determina la fila
+     * seleccionada. - Si la fila seleccionada es válida (mayor o igual a 0): -
+     * Se extrae el nombre del cliente de la primera columna de la fila
+     * seleccionada. - Se establece el nombre del cliente en el objeto
+     * `añadirComanda` mediante el método `setNombreCliente`. - Se actualiza el
+     * campo de texto correspondiente en `añadirComanda` con el nombre del
+     * cliente seleccionado. - Se cierra la ventana actual mediante `dispose()`.
+     *
+     * Este método es esencial para permitir la selección de un cliente de la
+     * tabla mediante un doble clic, facilitando la interacción del usuario con
+     * la interfaz.
      */
     private void clickearTabla() {
         formClientesTabla.getTablabaClientes().addMouseListener(new MouseAdapter() {

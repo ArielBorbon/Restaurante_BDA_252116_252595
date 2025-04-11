@@ -12,22 +12,22 @@ import DAO.Productos.ProductosDAO;
 
 /**
  * Fabrica de Comandas
- * 
+ *
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
 public class FabricaComandas {
-    
-    public static ComandaBO crearComandaBO(){
-        
+    /**
+     * 
+     * @return 
+     */
+    public static ComandaBO crearComandaBO() {
         ComandasDAO comandasDAO = new ComandasDAO();
         MesasDAO mesasDAO = new MesasDAO();
         ProductosDAO productosDAO = new ProductosDAO();
         ClientesDAO clientesDAO = new ClientesDAO();
-        ComandaBO comandaBO = new ComandaBO(comandasDAO,productosDAO , clientesDAO, mesasDAO);
-        
+        ComandaBO comandaBO = new ComandaBO(comandasDAO, productosDAO, clientesDAO, mesasDAO);
         return comandaBO;
     }
-    
-    
+
 }

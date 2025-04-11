@@ -28,15 +28,18 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  * Menu modificador de productos
- * 
+ *
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
 public class ModificarProducto extends javax.swing.JFrame {
-        private FormProductosTablaTodos formProductosTablaTodos;
-        private Producto productoOriginal;
+
+    private FormProductosTablaTodos formProductosTablaTodos;
+    private Producto productoOriginal;
+
     /**
      * Creates new form AñadirProducto
+     *
      * @param formTabla
      * @param producto
      * @throws NegocioException.NegocioException
@@ -47,44 +50,38 @@ public class ModificarProducto extends javax.swing.JFrame {
         this.productoOriginal = producto;
         cargarDatosProducto();
         getContentPane().setBackground(new Color(0x78f332));
-    } 
-    
-    
-    
-    
+    }
+
+    /**
+     * 
+     * @throws NegocioException 
+     */
     private void cargarDatosProducto() throws NegocioException {
-    txtNombre.setText(productoOriginal.getNombre());
-    txtPrecio.setText(String.valueOf(productoOriginal.getPrecio()));
-    cmbTipo.setSelectedItem(productoOriginal.getTipo().toString());
+        txtNombre.setText(productoOriginal.getNombre());
+        txtPrecio.setText(String.valueOf(productoOriginal.getPrecio()));
+        cmbTipo.setSelectedItem(productoOriginal.getTipo().toString());
 
-    IngredienteBO ingBO = FabricaIngredientes.crearIngredienteBO();
-    
-    //esta lista tiene la cantidad que ocupa, la cual necesitamos colocar en la tercera columna
-// en lugar de traer la lista de Ingrediente...
-// List<Ingrediente> ingredientes = ingBO.obtenerIngredientesPorNombreProductoBO(...);
+        IngredienteBO ingBO = FabricaIngredientes.crearIngredienteBO();
 
-List<IngredienteConCantidadNecesariaDTO> listaProductoOcupa =
-    ingBO.obtenerIngredientesConCantidadPorProductoBO(productoOriginal.getNombre());
+        //esta lista tiene la cantidad que ocupa, la cual necesitamos colocar en la tercera columna
+        // en lugar de traer la lista de Ingrediente...
+        // List<Ingrediente> ingredientes = ingBO.obtenerIngredientesPorNombreProductoBO(...);
+        List<IngredienteConCantidadNecesariaDTO> listaProductoOcupa
+                = ingBO.obtenerIngredientesConCantidadPorProductoBO(productoOriginal.getNombre());
 
-DefaultTableModel modelo = (DefaultTableModel) tblTablaIngredientesHastaElMomento.getModel();
-modelo.setRowCount(0);
+        DefaultTableModel modelo = (DefaultTableModel) tblTablaIngredientesHastaElMomento.getModel();
+        modelo.setRowCount(0);
 
-for (IngredienteConCantidadNecesariaDTO dto : listaProductoOcupa) {
-    Object[] fila = {
-        dto.getNombreIngrediente(),
-        dto.getUnidadMedida(),  
-        dto.getCantidadIngredienteNecesaria()
-    };
-    modelo.addRow(fila);
-}
+        for (IngredienteConCantidadNecesariaDTO dto : listaProductoOcupa) {
+            Object[] fila = {
+                dto.getNombreIngrediente(),
+                dto.getUnidadMedida(),
+                dto.getCantidadIngredienteNecesaria()
+            };
+            modelo.addRow(fila);
+        }
 
-}
-
-    
-    
-    
-    
-    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -283,49 +280,63 @@ for (IngredienteConCantidadNecesariaDTO dto : listaProductoOcupa) {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * 
+     * @param evt 
+     */
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-           
+
     }//GEN-LAST:event_txtNombreActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnAgregarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarIngredienteActionPerformed
-            try {
-                AgregarIngredienteAListaProductoNuevo formAgregarIng = new AgregarIngredienteAListaProductoNuevo(tblTablaIngredientesHastaElMomento);
-                formAgregarIng.setVisible(true);
-            } catch (NegocioException ex) {
-                Logger.getLogger(ModificarProducto.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            AgregarIngredienteAListaProductoNuevo formAgregarIng = new AgregarIngredienteAListaProductoNuevo(tblTablaIngredientesHastaElMomento);
+            formAgregarIng.setVisible(true);
+        } catch (NegocioException ex) {
+            Logger.getLogger(ModificarProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAgregarIngredienteActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnEliminarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarIngredienteActionPerformed
-            int filaSeleccionada = tblTablaIngredientesHastaElMomento.getSelectedRow();
-    
+        int filaSeleccionada = tblTablaIngredientesHastaElMomento.getSelectedRow();
+
         if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(this, "Por favor, selecciona un ingrediente para eliminar.");
             return;
         }
-    
+
         DefaultTableModel modelo = (DefaultTableModel) tblTablaIngredientesHastaElMomento.getModel();
-            int opcion = JOptionPane.showConfirmDialog(this, 
-            "¿Estás seguro de eliminar este ingrediente?", 
-            "Confirmar eliminación", 
-            JOptionPane.YES_NO_OPTION);
-    
+        int opcion = JOptionPane.showConfirmDialog(this,
+                "¿Estás seguro de eliminar este ingrediente?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION);
+
         if (opcion == JOptionPane.YES_OPTION) {
             modelo.removeRow(filaSeleccionada);
         }
     }//GEN-LAST:event_btnEliminarIngredienteActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarProductoActionPerformed
-    try {
-        String nombreNuevo = txtNombre.getText();
-        double precio = Double.parseDouble(txtPrecio.getText());
-        Tipo_Producto tipo = Tipo_Producto.valueOf((String) cmbTipo.getSelectedItem());
+        try {
+            String nombreNuevo = txtNombre.getText();
+            double precio = Double.parseDouble(txtPrecio.getText());
+            Tipo_Producto tipo = Tipo_Producto.valueOf((String) cmbTipo.getSelectedItem());
 
-        ProductoBO productoBO = FabricaProductos.crearProductoBO();
+            ProductoBO productoBO = FabricaProductos.crearProductoBO();
 
-
-
-        String nuevoNombre = txtNombre.getText().trim();
+            String nuevoNombre = txtNombre.getText().trim();
             if (!nuevoNombre.equals(productoOriginal.getNombre())) {
                 Producto productoExistente = productoBO.buscarProductoPorNombreBO(nuevoNombre);
                 if (productoExistente != null) {
@@ -333,91 +344,97 @@ for (IngredienteConCantidadNecesariaDTO dto : listaProductoOcupa) {
                     return;
                 }
             }
-    
-        
 
+            DefaultTableModel modelo = (DefaultTableModel) tblTablaIngredientesHastaElMomento.getModel();
+            List<NuevoProductoOcupaIngredienteDTO> listaIngredientes = new ArrayList<>();
+            String nombreProductoNuevo = txtNombre.getText();
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                String nombreIng = modelo.getValueAt(i, 0).toString();
+                String unidad = modelo.getValueAt(i, 1).toString();
+                double cantidad = Double.parseDouble(modelo.getValueAt(i, 2).toString());
 
-        DefaultTableModel modelo = (DefaultTableModel) tblTablaIngredientesHastaElMomento.getModel();
-        List<NuevoProductoOcupaIngredienteDTO> listaIngredientes = new ArrayList<>();
-        String nombreProductoNuevo = txtNombre.getText();
-        for (int i = 0; i < modelo.getRowCount(); i++) {
-            String nombreIng = modelo.getValueAt(i, 0).toString();
-            String unidad = modelo.getValueAt(i, 1).toString();
-            double cantidad = Double.parseDouble(modelo.getValueAt(i, 2).toString());
-            
-            NuevoProductoOcupaIngredienteDTO chilo = new NuevoProductoOcupaIngredienteDTO();
-            chilo.setNombreIngrediente(nombreIng);
-            chilo.setCantidadNecesariaProducto(cantidad);
-            chilo.setUnidadMedida(unidad);
-            chilo.setNombreProducto(nombreProductoNuevo);
+                NuevoProductoOcupaIngredienteDTO chilo = new NuevoProductoOcupaIngredienteDTO();
+                chilo.setNombreIngrediente(nombreIng);
+                chilo.setCantidadNecesariaProducto(cantidad);
+                chilo.setUnidadMedida(unidad);
+                chilo.setNombreProducto(nombreProductoNuevo);
 
-            listaIngredientes.add(chilo);
-        }
+                listaIngredientes.add(chilo);
+            }
 
-        NuevoProductoDTO nuevoProductoDTO = new NuevoProductoDTO();
-        nuevoProductoDTO.setNombre(nombreNuevo);
-        nuevoProductoDTO.setPrecio(precio);
-        nuevoProductoDTO.setTipo(tipo);
-        nuevoProductoDTO.setEstado(Estado_Producto.HABILITADO);
+            NuevoProductoDTO nuevoProductoDTO = new NuevoProductoDTO();
+            nuevoProductoDTO.setNombre(nombreNuevo);
+            nuevoProductoDTO.setPrecio(precio);
+            nuevoProductoDTO.setTipo(tipo);
+            nuevoProductoDTO.setEstado(Estado_Producto.HABILITADO);
 
             productoBO.modificarProductoBO(nuevoProductoDTO, listaIngredientes);
             JOptionPane.showMessageDialog(this, "Producto modificado correctamente.");
 
-        formProductosTablaTodos.cargarProductosEnTablaTodosExterno(); 
-        this.dispose();
+            formProductosTablaTodos.cargarProductosEnTablaTodosExterno();
+            this.dispose();
 
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-    }
-
-      
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnModificarProductoActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void cmbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbTipoActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnModificarCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarCantidadActionPerformed
-       int filaSeleccionada = tblTablaIngredientesHastaElMomento.getSelectedRow();
+        int filaSeleccionada = tblTablaIngredientesHastaElMomento.getSelectedRow();
 
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Selecciona una fila primero.", "Sin selección", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    String nombreIngrediente = (String) tblTablaIngredientesHastaElMomento.getValueAt(filaSeleccionada, 0);
-    String unidad = (String) tblTablaIngredientesHastaElMomento.getValueAt(filaSeleccionada, 1);
-
-    String nuevaCantidadStr = JOptionPane.showInputDialog(this, "Ingresa la nueva cantidad para " + nombreIngrediente + " (" + unidad + "):");
-
-    if (nuevaCantidadStr == null) {
-        // Cancelado
-        return;
-    }
-
-    try {
-        double nuevaCantidad = Double.parseDouble(nuevaCantidadStr);
-        if (nuevaCantidad < 0) {
-            JOptionPane.showMessageDialog(this, "La cantidad no puede ser negativa.", "Cantidad inválida", JOptionPane.ERROR_MESSAGE);
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona una fila primero.", "Sin selección", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
-        if (nuevaCantidad == 0) {
-            JOptionPane.showMessageDialog(this, "Agrega al menos 1 del ingrediente" , "Cantidad invalida" , JOptionPane.ERROR_MESSAGE);
-            return;
-            }
-        
 
-        tblTablaIngredientesHastaElMomento.setValueAt(nuevaCantidad, filaSeleccionada, 2);
-        JOptionPane.showMessageDialog(this, "Cantidad necesaria cambiada exitosamente.", "Modificación exitosa", JOptionPane.INFORMATION_MESSAGE);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Ingresa un número válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
-    }
+        String nombreIngrediente = (String) tblTablaIngredientesHastaElMomento.getValueAt(filaSeleccionada, 0);
+        String unidad = (String) tblTablaIngredientesHastaElMomento.getValueAt(filaSeleccionada, 1);
+
+        String nuevaCantidadStr = JOptionPane.showInputDialog(this, "Ingresa la nueva cantidad para " + nombreIngrediente + " (" + unidad + "):");
+
+        if (nuevaCantidadStr == null) {
+            // Cancelado
+            return;
+        }
+
+        try {
+            double nuevaCantidad = Double.parseDouble(nuevaCantidadStr);
+            if (nuevaCantidad < 0) {
+                JOptionPane.showMessageDialog(this, "La cantidad no puede ser negativa.", "Cantidad inválida", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (nuevaCantidad == 0) {
+                JOptionPane.showMessageDialog(this, "Agrega al menos 1 del ingrediente", "Cantidad invalida", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            tblTablaIngredientesHastaElMomento.setValueAt(nuevaCantidad, filaSeleccionada, 2);
+            JOptionPane.showMessageDialog(this, "Cantidad necesaria cambiada exitosamente.", "Modificación exitosa", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingresa un número válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnModificarCantidadActionPerformed
 
 

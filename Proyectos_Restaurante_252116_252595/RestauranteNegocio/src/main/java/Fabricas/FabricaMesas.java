@@ -15,7 +15,10 @@ import DAO.Mesas.MesasDAO;
  */
 public class FabricaMesas {
     
-    
+    /**
+     * 
+     * @return 
+     */
     public static MesaBO crearMesaBO (){
         MesasDAO mesasDAO = new MesasDAO();
         MesaBO mesaBO = new MesaBO(mesasDAO);

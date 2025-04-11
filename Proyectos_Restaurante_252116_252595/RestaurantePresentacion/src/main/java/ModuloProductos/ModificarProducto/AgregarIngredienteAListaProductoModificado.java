@@ -14,26 +14,28 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  * Agregar Ingredientes a productos modificandolo
- * 
+ *
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
 public class AgregarIngredienteAListaProductoModificado extends javax.swing.JFrame {
+
     FormIngredientesTabla formIngredientesTabla = new FormIngredientesTabla();
     JTable TblTablaIngredientesHastaElMomento;
-    
+
     /**
      * Creates new form AgregarIngredienteAProducto
+     *
      * @param tblTablaIngredientesHastaElMomento
      * @throws NegocioException.NegocioException
      */
     public AgregarIngredienteAListaProductoModificado(JTable tblTablaIngredientesHastaElMomento) throws NegocioException {
         initComponents();
-        
+
         this.TblTablaIngredientesHastaElMomento = tblTablaIngredientesHastaElMomento;
         pnlIngredientesChilos.add(formIngredientesTabla);
         pnlIngredientesChilos.setVisible(true);
-        
+
     }
 
     /**
@@ -98,37 +100,40 @@ public class AgregarIngredienteAListaProductoModificado extends javax.swing.JFra
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnConfirmarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarIngredienteActionPerformed
-       
-            JTable tablaIngredientes = formIngredientesTabla.getTablaIngredientes();
 
-    int filaSeleccionada = tablaIngredientes.getSelectedRow();
-    
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Por favor selecciona un ingrediente.");
-        return;
-    }
+        JTable tablaIngredientes = formIngredientesTabla.getTablaIngredientes();
 
-    String nombre = tablaIngredientes.getValueAt(filaSeleccionada, 0).toString();
-    String unidad = tablaIngredientes.getValueAt(filaSeleccionada, 1).toString();
+        int filaSeleccionada = tablaIngredientes.getSelectedRow();
 
-    String inputCantidad = JOptionPane.showInputDialog(this, "Ingresa la cantidad necesaria:");
-    
-    if (inputCantidad == null || inputCantidad.isBlank()) {
-        JOptionPane.showMessageDialog(this, "Cantidad inválida.");
-        return;
-    }
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Por favor selecciona un ingrediente.");
+            return;
+        }
 
-    double cantidad;
-    try {
-        cantidad = Double.parseDouble(inputCantidad);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Cantidad debe ser un número.");
-        return;
-    }
+        String nombre = tablaIngredientes.getValueAt(filaSeleccionada, 0).toString();
+        String unidad = tablaIngredientes.getValueAt(filaSeleccionada, 1).toString();
 
-   
-    DefaultTableModel modeloHastaAhora = (DefaultTableModel) TblTablaIngredientesHastaElMomento.getModel();
+        String inputCantidad = JOptionPane.showInputDialog(this, "Ingresa la cantidad necesaria:");
+
+        if (inputCantidad == null || inputCantidad.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Cantidad inválida.");
+            return;
+        }
+
+        double cantidad;
+        try {
+            cantidad = Double.parseDouble(inputCantidad);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Cantidad debe ser un número.");
+            return;
+        }
+
+        DefaultTableModel modeloHastaAhora = (DefaultTableModel) TblTablaIngredientesHastaElMomento.getModel();
 
         for (int i = 0; i < modeloHastaAhora.getRowCount(); i++) {
             String nombreExistente = modeloHastaAhora.getValueAt(i, 0).toString();
@@ -138,22 +143,22 @@ public class AgregarIngredienteAListaProductoModificado extends javax.swing.JFra
             }
         }
 
-    
-    
-    Object[] filaNueva = { nombre, unidad, cantidad };
-    modeloHastaAhora.addRow(filaNueva);
+        Object[] filaNueva = {nombre, unidad, cantidad};
+        modeloHastaAhora.addRow(filaNueva);
 
-    JOptionPane.showMessageDialog(this, "Ingrediente agregado correctamente.");
-    this.dispose(); 
-        
-        
-        
+        JOptionPane.showMessageDialog(this, "Ingrediente agregado correctamente.");
+        this.dispose();
+
+
     }//GEN-LAST:event_btnConfirmarIngredienteActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

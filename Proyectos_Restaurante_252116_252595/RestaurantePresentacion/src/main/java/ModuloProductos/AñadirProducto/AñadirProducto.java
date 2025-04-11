@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  * Añadir productos
- * 
+ *
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
@@ -32,6 +32,7 @@ public class AñadirProducto extends javax.swing.JFrame {
 
     /**
      * Creates new form AñadirProducto
+     *
      * @param formProductosTablaTodos
      */
     public AñadirProducto(FormProductosTablaTodos formProductosTablaTodos) {
@@ -236,10 +237,18 @@ public class AñadirProducto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * 
+     * @param evt 
+     */
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
 
     }//GEN-LAST:event_txtNombreActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnAgregarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarIngredienteActionPerformed
         try {
             AgregarIngredienteAListaProductoNuevo formAgregarIng = new AgregarIngredienteAListaProductoNuevo(tblTablaIngredientesHastaElMomento);
@@ -249,6 +258,10 @@ public class AñadirProducto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAgregarIngredienteActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnEliminarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarIngredienteActionPerformed
         int filaSeleccionada = tblTablaIngredientesHastaElMomento.getSelectedRow();
 
@@ -268,6 +281,10 @@ public class AñadirProducto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarIngredienteActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnCrearProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearProductoActionPerformed
         try {
             String nombre = txtNombre.getText().trim();
@@ -332,14 +349,26 @@ public class AñadirProducto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCrearProductoActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void cmbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbTipoActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnModificarCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarCantidadActionPerformed
         int filaSeleccionada = tblTablaIngredientesHastaElMomento.getSelectedRow();
 

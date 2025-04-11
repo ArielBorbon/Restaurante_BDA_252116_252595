@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
 
 /**
  * Reporte comandas
- * 
+ *
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
@@ -40,6 +40,7 @@ public class ReporteComandas extends javax.swing.JFrame {
 
     /**
      * Creates new form ReporteComandas
+     *
      * @throws NegocioException.NegocioException
      */
     public ReporteComandas() throws NegocioException {
@@ -192,6 +193,10 @@ public class ReporteComandas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     *
+     * @param evt
+     */
     private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
         try {
             Date fechaInicio = filtroFechaInicio.getDate();
@@ -228,10 +233,18 @@ public class ReporteComandas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFiltroActionPerformed
 
+    /**
+     *
+     * @param evt
+     */
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    /**
+     *
+     * @param evt
+     */
     private void btnImprimirReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirReporteActionPerformed
         try {
             generarReporteComandas();
@@ -240,6 +253,10 @@ public class ReporteComandas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnImprimirReporteActionPerformed
 
+    /**
+     *
+     * @throws NegocioException
+     */
     private void generarReporteComandas() throws NegocioException {
         Date fechaInicio = filtroFechaInicio.getDate();
         Date fechaFin = filtroFechaFin.getDate();
@@ -358,12 +375,22 @@ public class ReporteComandas extends javax.swing.JFrame {
         }
     }
 
+    /**
+     *
+     * @throws NegocioException
+     */
     public void mostrarTotalComandas() throws NegocioException {
         ComandaBO comandaBO = FabricaComandas.crearComandaBO();
         double total = comandaBO.calcularTotalDeTodasLasComandas();
         lblTotalComandas.setText("$" + String.format("%.2f", total));
     }
 
+    /**
+     *
+     * @param fechaInicio
+     * @param fechaFin
+     * @throws NegocioException
+     */
     public void mostrarTotalComandasConFiltro(Date fechaInicio, Date fechaFin) throws NegocioException {
         ComandaBO comandaBO = FabricaComandas.crearComandaBO();
         double total = comandaBO.calcularTotalDeComandasPorFechas(fechaInicio, fechaFin);

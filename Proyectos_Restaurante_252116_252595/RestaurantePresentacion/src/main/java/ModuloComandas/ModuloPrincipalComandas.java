@@ -28,18 +28,19 @@ import javax.swing.JOptionPane;
 
 /**
  * Menu principal del modulo comandas
- * 
+ *
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
 public class ModuloPrincipalComandas extends javax.swing.JFrame {
 
     private FormTablaComandas formTablaComanda = new FormTablaComandas();
-    
+
     private String rol;
-    
+
     /**
      * Creates new form ModuloPrincipalComandas
+     *
      * @param rol
      */
     public ModuloPrincipalComandas(String rol) {
@@ -49,7 +50,7 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
         getContentPane().setBackground(new Color(0xe71d1d));
         this.rol = rol;
     }
-    
+
     public ModuloPrincipalComandas() {
         initComponents();
         pnlTabla.add(formTablaComanda);
@@ -194,56 +195,64 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     *
+     * @param evt
+     */
     private void btnCancelarComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarComandaActionPerformed
-         int filaSeleccionada = formTablaComanda.getTblComandasAbiertas().getSelectedRow();
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Selecciona una comanda para cancelar.", "Aviso", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    String folio = (String) formTablaComanda.getTblComandasAbiertas().getValueAt(filaSeleccionada, 0); // Asumiendo que el folio está en la columna 0
-
-    int opcion = JOptionPane.showConfirmDialog(this, 
-        "¿Estás seguro de que deseas cancelar la comanda con folio: " + folio + "?", 
-        "Confirmar cancelación", 
-        JOptionPane.YES_NO_OPTION);
-
-    if (opcion != JOptionPane.YES_OPTION) {
-        return;
-    }
-
-    try {
-        ComandaBO comandaBO = FabricaComandas.crearComandaBO();
-        Comanda comanda = comandaBO.obtenerComandaPorFolioBO(folio);
-
-        if (comanda.getEstado() == EstadoComanda.CANCELADA) {
-            JOptionPane.showMessageDialog(this, "La comanda ya está cancelada.", "Info", JOptionPane.INFORMATION_MESSAGE);
+        int filaSeleccionada = formTablaComanda.getTblComandasAbiertas().getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona una comanda para cancelar.", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        if (comanda.getEstado() == EstadoComanda.ENTREGADA) {
-            JOptionPane.showMessageDialog(this, "No puedes cancelar una comanda ya entregada.", "Error", JOptionPane.ERROR_MESSAGE);
+        String folio = (String) formTablaComanda.getTblComandasAbiertas().getValueAt(filaSeleccionada, 0); // Asumiendo que el folio está en la columna 0
+
+        int opcion = JOptionPane.showConfirmDialog(this,
+                "¿Estás seguro de que deseas cancelar la comanda con folio: " + folio + "?",
+                "Confirmar cancelación",
+                JOptionPane.YES_NO_OPTION);
+
+        if (opcion != JOptionPane.YES_OPTION) {
             return;
         }
 
-        comandaBO.cancelarComandaBO(folio);
+        try {
+            ComandaBO comandaBO = FabricaComandas.crearComandaBO();
+            Comanda comanda = comandaBO.obtenerComandaPorFolioBO(folio);
 
-        MesaBO mesaBO = FabricaMesas.crearMesaBO();
-        NuevaMesaDTO nuevaMesaDTO = new NuevaMesaDTO();
-        nuevaMesaDTO.setEstado(comanda.getMesa().getEstado());
-        nuevaMesaDTO.setNum_mesa(comanda.getMesa().getNum_mesa());
-        mesaBO.disponibilizarMesaBO(nuevaMesaDTO);
+            if (comanda.getEstado() == EstadoComanda.CANCELADA) {
+                JOptionPane.showMessageDialog(this, "La comanda ya está cancelada.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
 
-        JOptionPane.showMessageDialog(this, "¡Comanda cancelada exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            if (comanda.getEstado() == EstadoComanda.ENTREGADA) {
+                JOptionPane.showMessageDialog(this, "No puedes cancelar una comanda ya entregada.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-        formTablaComanda.llenarTablaComandas();
+            comandaBO.cancelarComandaBO(folio);
 
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al cancelar la comanda: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        e.printStackTrace();
-    }
+            MesaBO mesaBO = FabricaMesas.crearMesaBO();
+            NuevaMesaDTO nuevaMesaDTO = new NuevaMesaDTO();
+            nuevaMesaDTO.setEstado(comanda.getMesa().getEstado());
+            nuevaMesaDTO.setNum_mesa(comanda.getMesa().getNum_mesa());
+            mesaBO.disponibilizarMesaBO(nuevaMesaDTO);
+
+            JOptionPane.showMessageDialog(this, "¡Comanda cancelada exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            formTablaComanda.llenarTablaComandas();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cancelar la comanda: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnCancelarComandaActionPerformed
 
+    /**
+     *
+     * @param evt
+     */
     private void btnReporteComandasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteComandasActionPerformed
         try {
             ReporteComandas reporteComandas = new ReporteComandas();
@@ -253,11 +262,19 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnReporteComandasActionPerformed
 
+    /**
+     *
+     * @param evt
+     */
     private void btnAñadirComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirComandaActionPerformed
         AñadirComanda añadirComanda = new AñadirComanda(formTablaComanda);
         añadirComanda.setVisible(true);
     }//GEN-LAST:event_btnAñadirComandaActionPerformed
 
+    /**
+     *
+     * @param evt
+     */
     private void btnDetallesComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesComandaActionPerformed
 
         int filaSeleccionada = formTablaComanda.getTblComandasAbiertas().getSelectedRow();
@@ -275,6 +292,10 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnDetallesComandaActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnMarcarComoCompletadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarcarComoCompletadaActionPerformed
         try {
             int filaSeleccionada = formTablaComanda.getTblComandasAbiertas().getSelectedRow();
@@ -309,7 +330,7 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
 
             List<NuevoDetalleComandaDTO> detallesDTO = new ArrayList<NuevoDetalleComandaDTO>();
             double totalComanda = 0.0;
-            
+
             for (DetalleComanda detalle : detalles) {
                 NuevoDetalleComandaDTO detalleDTO = new NuevoDetalleComandaDTO();
                 detalleDTO.setCantidad(detalle.getCantidad());
@@ -326,14 +347,14 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
 
             // Restar stock
             comandasBO.restarStockIngredientesPorProductosComandaBO(detallesDTO);
-            
+
             //quitarle lo ocupado a la mesa
             MesaBO mesaBO = FabricaMesas.crearMesaBO();
             NuevaMesaDTO nuevaMesaDTO = new NuevaMesaDTO();
             nuevaMesaDTO.setEstado(comanda.getMesa().getEstado());
             nuevaMesaDTO.setNum_mesa(comanda.getMesa().getNum_mesa());
             mesaBO.disponibilizarMesaBO(nuevaMesaDTO);
-            
+
             // Actualiza las visitas, total y puntos de los clientes
             if (comanda.getClienteFrecuente() != null) {
                 ClientesFrecuentes clienteFrecuente = comanda.getClienteFrecuente();
@@ -349,14 +370,16 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnMarcarComoCompletadaActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         MenuModulos menu = new MenuModulos(rol);
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
-
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAñadirComanda;

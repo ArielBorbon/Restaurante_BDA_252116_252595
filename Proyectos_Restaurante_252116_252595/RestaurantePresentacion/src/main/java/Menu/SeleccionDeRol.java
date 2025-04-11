@@ -147,21 +147,33 @@ public class SeleccionDeRol extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministradorActionPerformed
         String rol = "Admin";
         MenuModulos menu = new MenuModulos(rol);
         menu.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnAdministradorActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMeseroActionPerformed
        String rol = "Mesero";
        MenuModulos menu = new MenuModulos(rol);
        menu.setVisible(true);
        dispose();
     }//GEN-LAST:event_btnMeseroActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnInsertarMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarMesasActionPerformed
         for (int i = 0; i < 20; i++) {
             MesaBO mesaBO = FabricaMesas.crearMesaBO();
@@ -172,7 +184,11 @@ public class SeleccionDeRol extends javax.swing.JFrame {
         
          JOptionPane.showMessageDialog(null, "20 Mesas Añadidas Exitosamente","Éxito", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnInsertarMesasActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

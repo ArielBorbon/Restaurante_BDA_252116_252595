@@ -15,9 +15,12 @@ import NegocioException.NegocioException;
  * @author Alberto Jimenez Garcia 252595
  */
 public class FabricaIngredientes {
-    
+    /**
+     * 
+     * @return
+     * @throws NegocioException 
+     */
     public static IngredienteBO crearIngredienteBO() throws NegocioException{
-        
         IngredientesDAO ingredienteDAO = new IngredientesDAO();
         IngredienteBO ingredienteBO = new IngredienteBO(ingredienteDAO);
         return ingredienteBO;

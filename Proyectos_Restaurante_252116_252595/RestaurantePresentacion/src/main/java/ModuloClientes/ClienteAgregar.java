@@ -168,11 +168,19 @@ public class ClienteAgregar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnRegistrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarClienteActionPerformed
         String nombre = agregarNombre.getText().trim();
         String apellidoP = agregarApellidoPaterno.getText().trim();

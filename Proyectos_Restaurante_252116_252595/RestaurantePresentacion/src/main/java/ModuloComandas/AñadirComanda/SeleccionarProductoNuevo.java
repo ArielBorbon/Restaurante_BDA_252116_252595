@@ -17,15 +17,18 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  * Seleccionador de productos nuevos
- * 
+ *
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
 public class SeleccionarProductoNuevo extends javax.swing.JFrame {
+
     private final FormProductosTablaDisponibles formtablaProductos = new FormProductosTablaDisponibles();
     JTable tablaProductosClienteHastaElMomento;
+
     /**
      * Creates new form SeleccionarProductoNuevo
+     *
      * @param tablaProductosClienteHastaElMomento
      * @throws NegocioException.NegocioException
      */
@@ -35,7 +38,7 @@ public class SeleccionarProductoNuevo extends javax.swing.JFrame {
         formtablaProductos.cargarProductosEnTablaDisponiblesExterno();
         formtablaProductos.setVisible(true);
         this.tablaProductosClienteHastaElMomento = tablaProductosClienteHastaElMomento;
-        
+
     }
 
     /**
@@ -97,66 +100,71 @@ public class SeleccionarProductoNuevo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-    try {                                           
-        int filaSeleccionada = formtablaProductos.getTblProductos().getSelectedRow();
-        
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "Por favor selecciona un producto de la tabla.");
-            return;
-        }
-        
-        String nombreProducto = formtablaProductos.getTblProductos().getValueAt(filaSeleccionada, 0).toString();
-        
- 
-        String inputCantidad = JOptionPane.showInputDialog(this,
-                "Selecciona la cantidad de \"" + nombreProducto + "\" que deseas agregar a la comanda:");
-        
-        if (inputCantidad == null || inputCantidad.trim().isEmpty()) {
-            return; 
-        }
-        
-        int cantidad;
         try {
-            cantidad = Integer.parseInt(inputCantidad.trim());
-            if (cantidad <= 0) {
-                JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a 0.");
+            int filaSeleccionada = formtablaProductos.getTblProductos().getSelectedRow();
+
+            if (filaSeleccionada == -1) {
+                JOptionPane.showMessageDialog(this, "Por favor selecciona un producto de la tabla.");
                 return;
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Cantidad inválida. Debe ser un número entero.");
-            return;
+
+            String nombreProducto = formtablaProductos.getTblProductos().getValueAt(filaSeleccionada, 0).toString();
+
+            String inputCantidad = JOptionPane.showInputDialog(this,
+                    "Selecciona la cantidad de \"" + nombreProducto + "\" que deseas agregar a la comanda:");
+
+            if (inputCantidad == null || inputCantidad.trim().isEmpty()) {
+                return;
+            }
+
+            int cantidad;
+            try {
+                cantidad = Integer.parseInt(inputCantidad.trim());
+                if (cantidad <= 0) {
+                    JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a 0.");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Cantidad inválida. Debe ser un número entero.");
+                return;
+            }
+
+            ProductoBO productoBO = FabricaProductos.crearProductoBO();
+            Producto producto = productoBO.buscarProductoPorNombreBO(nombreProducto);
+
+            double precioUnitario = producto.getPrecio();
+            double total = cantidad * precioUnitario;
+
+            DefaultTableModel modelo = (DefaultTableModel) tablaProductosClienteHastaElMomento.getModel();
+
+            Object[] nuevaFila = {
+                nombreProducto,
+                cantidad,
+                precioUnitario,
+                "",
+                total
+            };
+
+            modelo.addRow(nuevaFila);
+
+            this.dispose();
+        } catch (NegocioException ex) {
+            Logger.getLogger(SeleccionarProductoNuevo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-
-        ProductoBO productoBO = FabricaProductos.crearProductoBO();
-        Producto producto = productoBO.buscarProductoPorNombreBO(nombreProducto);
-        
-        double precioUnitario = producto.getPrecio();
-        double total = cantidad * precioUnitario;
-        
-
-        DefaultTableModel modelo = (DefaultTableModel) tablaProductosClienteHastaElMomento.getModel();
-        
-        Object[] nuevaFila = {
-            nombreProducto,
-            cantidad,
-            precioUnitario,
-            "",          
-            total
-        };
-        
-        modelo.addRow(nuevaFila);
-        
-        this.dispose(); 
-    } catch (NegocioException ex) {
-            Logger.getLogger(SeleccionarProductoNuevo.class.getName()).log(Level.SEVERE, null,ex);
-    }
     }//GEN-LAST:event_btnAgregarActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-       this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -16,6 +16,11 @@ import NegocioException.NegocioException;
  */
 public class FabricaProductos {
     
+    /**
+     * 
+     * @return
+     * @throws NegocioException 
+     */
     public static ProductoBO crearProductoBO() throws NegocioException{
          ProductosDAO productosDAO = new ProductosDAO();
         ProductoBO productoBO = new ProductoBO(productosDAO);

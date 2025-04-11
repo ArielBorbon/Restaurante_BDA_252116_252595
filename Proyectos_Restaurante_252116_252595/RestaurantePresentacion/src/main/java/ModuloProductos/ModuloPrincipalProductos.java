@@ -45,6 +45,10 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
         this.rol = rol;
     }
     
+    /**
+     * 
+     * @throws NegocioException 
+     */
     public ModuloPrincipalProductos() throws NegocioException {
         initComponents();
         formTabla.setVisible(true);
@@ -226,7 +230,11 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
         try {
             ProductoBO productoBO = FabricaProductos.crearProductoBO();
@@ -260,12 +268,20 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al filtrar productos: " + ex.getMessage());
         }
     }//GEN-LAST:event_btnFiltrarActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         AñadirProducto añadirProducto = new AñadirProducto(formTabla);
         añadirProducto.setVisible(true);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
             int filaSeleccionada = formTabla.tblProductos.getSelectedRow();
@@ -288,6 +304,10 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnHabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHabilitarActionPerformed
         int filaSeleccionada = formTabla.getTblProductos().getSelectedRow();
 
@@ -325,6 +345,10 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnHabilitarActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnDeshabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshabilitarActionPerformed
         int filaSeleccionada = formTabla.tblProductos.getSelectedRow();
 
@@ -362,6 +386,10 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDeshabilitarActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         MenuModulos menu = new MenuModulos(rol);
         menu.setVisible(true);

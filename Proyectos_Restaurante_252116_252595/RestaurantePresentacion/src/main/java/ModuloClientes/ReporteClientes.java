@@ -172,7 +172,11 @@ public class ReporteClientes extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
         try {
             ClienteBO clienteBO = FabricaClientes.crearClienteBO();
@@ -210,11 +214,19 @@ public class ReporteClientes extends javax.swing.JFrame {
             Logger.getLogger(ModuloPrincipalClientes.class.getName()).log(Level.SEVERE, "Error al desencriptar teléfono", ex);
         }
     }//GEN-LAST:event_btnFiltroActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnImprimirReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirReporteActionPerformed
         try {
             generarReporteClientesFrecuentes();
@@ -222,7 +234,11 @@ public class ReporteClientes extends javax.swing.JFrame {
             Logger.getLogger(ModuloPrincipalClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnImprimirReporteActionPerformed
-
+    
+    /**
+     * 
+     * @throws NegocioException 
+     */
     private void generarReporteClientesFrecuentes() throws NegocioException {
         ClienteBO clienteBO = FabricaClientes.crearClienteBO();
 

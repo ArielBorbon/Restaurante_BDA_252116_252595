@@ -24,14 +24,19 @@ import javax.persistence.criteria.Root;
 
 /**
  * Clase dao de Clientes
- * 
+ *
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
 public class ClientesDAO implements IClientesDAO {
 
+    /**
+     * Metodo para registrar cliente en la base de datos
+     *
+     * @param nuevoClienteDTO
+     * @return
+     */
     @Override
-    // Metodo para registrar cliente en la base de datos
     public Cliente registrarCliente(NuevoClienteDTO nuevoClienteDTO) {
         // Se obtiene el EntityManager para manejar la conexión con la base de datos
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
@@ -77,8 +82,13 @@ public class ClientesDAO implements IClientesDAO {
         return cliente;
     }
 
+    /**
+     * Metodo para filtrar por nombre
+     *
+     * @param filtroNombre
+     * @return
+     */
     @Override
-    // Metodo para filtrar por nombre
     public List<Cliente> filtrarPorNombre(String filtroNombre) {
         // Se obtiene el EntityManager para acceder a la base de datos
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
@@ -93,8 +103,13 @@ public class ClientesDAO implements IClientesDAO {
         return query.getResultList();
     }
 
+    /**
+     * Filtra clientes cuyo número de teléfono contenga el texto especificado
+     *
+     * @param filtroNumero
+     * @return
+     */
     @Override
-    // Filtra clientes cuyo número de teléfono contenga el texto especificado
     public List<Cliente> filtrarPorTelefono(String filtroNumero) {
         // Se obtiene el EntityManager para ejecutar la consulta JPQL
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
@@ -102,15 +117,20 @@ public class ClientesDAO implements IClientesDAO {
         String jpqlQuery = """
             SELECT c FROM Cliente c WHERE c.numTelefono LIKE :filtroNumero
                            """;
-        
+
         // Se crea y configura la consulta, agregando el comodín '%' para búsqueda parcial
         TypedQuery<Cliente> query = entityManager.createQuery(jpqlQuery, Cliente.class);
         query.setParameter("filtroNumero", "%" + filtroNumero + "%");
         return query.getResultList();
     }
 
+    /**
+     * Filtra clientes cuyo correo contenga el texto especificado
+     *
+     * @param filtroCorreo
+     * @return
+     */
     @Override
-    // Filtra clientes cuyo correo contenga el texto especificado
     public List<Cliente> filtrarPorCorreo(String filtroCorreo) {
         // Se obtiene el EntityManager para ejecutar la consulta JPQL
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
@@ -124,8 +144,12 @@ public class ClientesDAO implements IClientesDAO {
         return query.getResultList();
     }
 
+    /**
+     * Metodo para dar una lista de clientes
+     *
+     * @return
+     */
     @Override
-    // Metodo para dar una lista de clientes 
     public List<Cliente> mostrarListaClientes() {
         // Se obtiene el EntityManager para interactuar con la base de datos
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
@@ -136,8 +160,14 @@ public class ClientesDAO implements IClientesDAO {
         return query.getResultList();
     }
 
+    /**
+     * Busca un cliente por su número de teléfono exacto utilizando la API de
+     * Criteria
+     *
+     * @param filtroNumero
+     * @return
+     */
     @Override
-    // Busca un cliente por su número de teléfono exacto utilizando la API de Criteria.
     public Cliente buscarPorTelefono(String filtroNumero) {
         // Se obtiene un EntityManager para gestionar la conexión a la base de datos
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
@@ -148,7 +178,7 @@ public class ClientesDAO implements IClientesDAO {
             CriteriaQuery<Cliente> query = cb.createQuery(Cliente.class);
             // Se define la raíz (FROM Cliente c)
             Root<Cliente> root = query.from(Cliente.class);
-            
+
             // Se construye la condición WHERE c.numTelefono = :filtroNumero
             Predicate nombrePredicate = cb.equal(root.get("numTelefono"), filtroNumero);
             // Se completa la consulta con el WHERE
@@ -163,32 +193,38 @@ public class ClientesDAO implements IClientesDAO {
         }
     }
 
+    /**
+     * Metodo para filtrar clientes por nombre y correo
+     *
+     * @param nombre
+     * @param correo
+     * @return
+     */
     @Override
-    // Metodo para filtrar clientes por nombre y correo
     public List<Cliente> filtrarClientes(String nombre, String correo) {
         EntityManager em = ManejadorConexiones.getEntityManager();
-        
+
         // Se utiliza un StringBuilder para construir dinámicamente la consulta JPQL
         StringBuilder jpql = new StringBuilder("SELECT c FROM Cliente c WHERE 1=1");
-        
-         // Si se proporciona un nombre, se agrega una condición para filtrar por nombre
+
+        // Si se proporciona un nombre, se agrega una condición para filtrar por nombre
         if (nombre != null && !nombre.trim().isEmpty()) {
             jpql.append(" AND LOWER(c.nombre) LIKE LOWER(:nombre)");
         }
-        
+
         // Si se proporciona un correo, se agrega una condición para filtrar por correo
         if (correo != null && !correo.trim().isEmpty()) {
             jpql.append(" AND LOWER(c.correo) LIKE LOWER(:correo)");
         }
-        
+
         // Se crea la consulta usando el JPQL generado
         TypedQuery<Cliente> query = em.createQuery(jpql.toString(), Cliente.class);
-        
+
         // Se asignan los parámetros a la consulta solo si fueron proporcionados
         if (nombre != null && !nombre.trim().isEmpty()) {
             query.setParameter("nombre", "%" + nombre.trim() + "%");
         }
-        
+
         if (correo != null && !correo.trim().isEmpty()) {
             query.setParameter("correo", "%" + correo.trim() + "%");
         }
@@ -196,15 +232,23 @@ public class ClientesDAO implements IClientesDAO {
         return query.getResultList();
     }
 
+    /**
+     * Actualiza los datos acumulativos (puntos, visitas y total gastado) de un
+     * cliente frecuente
+     *
+     * @param idCliente
+     * @param puntos
+     * @param visitas
+     * @param totalGastado
+     */
     @Override
-    // Actualiza los datos acumulativos (puntos, visitas y total gastado) de un cliente frecuente
     public void actualizarClienteFrecuente(Long idCliente, int puntos, int visitas, double totalGastado) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         entityManager.getTransaction().begin();
-        
+
         // Busca el cliente frecuente por ID
         ClientesFrecuentes clienteFrecuente = entityManager.find(ClientesFrecuentes.class, idCliente);
-        
+
         // Si se encuentra, actualiza sus datos acumulativos
         if (clienteFrecuente != null) {
             clienteFrecuente.setPuntos(clienteFrecuente.getPuntos() + puntos);
@@ -216,15 +260,19 @@ public class ClientesDAO implements IClientesDAO {
         entityManager.getTransaction().commit();
     }
 
+    /**
+     * Obtiene todos los clientes frecuentes y los convierte en DTOs para su presentación
+     * 
+     * @return
+     */
     @Override
-    // Obtiene todos los clientes frecuentes y los convierte en DTOs para su presentación
     public List<NuevoClienteFrecuenteDTO> obtenerClientesFrecuentes() {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         String jpqlQuery = "SELECT c FROM ClienteFrecuente c";
 
         TypedQuery<ClientesFrecuentes> query = entityManager.createQuery(jpqlQuery, ClientesFrecuentes.class);
         List<ClientesFrecuentes> clientesFrecuentes = query.getResultList();
-        
+
         // Convierte cada cliente frecuente en un DTO
         List<NuevoClienteFrecuenteDTO> clientesDTO = new ArrayList<>();
         for (ClientesFrecuentes c : clientesFrecuentes) {
@@ -242,9 +290,14 @@ public class ClientesDAO implements IClientesDAO {
 
         return clientesDTO;
     }
-
+    
+    /**
+     * Obtiene un cliente frecuente por su correo exacto
+     * 
+     * @param Correo
+     * @return 
+     */
     @Override
-    // Obtiene un cliente frecuente por su correo exacto
     public ClientesFrecuentes obtenerPorCorreo(String Correo) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         try {
@@ -259,20 +312,25 @@ public class ClientesDAO implements IClientesDAO {
         }
     }
     
+    /**
+     * filtra los clientes por correo para el reporte
+     * 
+     * @param correo
+     * @return 
+     */
     @Override
-    // filtra los clientes por correo para el reporte
     public List<Cliente> filtrarClientesReporte(String correo) {
         EntityManager em = ManejadorConexiones.getEntityManager();
 
         StringBuilder jpql = new StringBuilder("SELECT c FROM Cliente c WHERE 1=1");
-        
+
         // Añade condición si se proporciona correo
         if (correo != null && !correo.trim().isEmpty()) {
             jpql.append(" AND LOWER(c.correo) LIKE LOWER(:correo)");
         }
 
         TypedQuery<Cliente> query = em.createQuery(jpql.toString(), Cliente.class);
-        
+
         // Establece parámetro si se aplica filtro
         if (correo != null && !correo.trim().isEmpty()) {
             query.setParameter("correo", "%" + correo.trim() + "%");
@@ -281,8 +339,13 @@ public class ClientesDAO implements IClientesDAO {
         return query.getResultList();
     }
     
+    /**
+     * Obtiene el ID del primer cliente cuyo nombre contiene el valor proporcionado
+     * 
+     * @param nombre
+     * @return 
+     */
     @Override
-    // Obtiene el ID del primer cliente cuyo nombre contiene el valor proporcionado
     public Long obtenerIdPorNombre(String nombre) {
         EntityManager entityManager = ManejadorConexiones.getEntityManager();
         String jpqlQuery = "SELECT c.id FROM Cliente c WHERE c.nombre LIKE :nombre";
@@ -294,15 +357,21 @@ public class ClientesDAO implements IClientesDAO {
         }
         return results.get(0); // Devuelve el primer ID encontrado
     }
-
+    
+    /**
+     * Obtiene el ID de un cliente frecuente por nombre (coincidencia parcial)
+     * 
+     * @param nombreCliente
+     * @return
+     * @throws PersistenciaException 
+     */
     @Override
-    // Obtiene el ID de un cliente frecuente por nombre (coincidencia parcial)
     public Long obtenerIdClienteFrecuentePorNombreCliente(String nombreCliente) throws PersistenciaException {
         try {
             EntityManager entityManager = ManejadorConexiones.getEntityManager();
             String jpql = "SELECT c.id FROM ClientesFrecuentes c WHERE c.nombre LIKE :nombreCliente";
             TypedQuery<Long> query = entityManager.createQuery(jpql, Long.class);
-            query.setParameter("nombreCliente", "%" + nombreCliente + "%");  
+            query.setParameter("nombreCliente", "%" + nombreCliente + "%");
             return query.getSingleResult();
         } catch (Exception e) {
             throw new PersistenciaException("Error al obtener idClienteFrecuente por nombre", e);

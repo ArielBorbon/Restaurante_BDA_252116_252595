@@ -15,6 +15,11 @@ import NegocioException.NegocioException;
  * @author Alberto Jimenez Garcia 252595
  */
 public class FabricaClientes {
+    /**
+     * 
+     * @return
+     * @throws NegocioException 
+     */
     public static ClienteBO crearClienteBO() throws NegocioException{
         ClientesDAO clientesDAO = new ClientesDAO();
         ClienteBO clienteBO = new ClienteBO(clientesDAO);

@@ -30,7 +30,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  * Añadir Comandas
- * 
+ *
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
@@ -41,6 +41,7 @@ public class AñadirComanda extends javax.swing.JFrame {
 
     /**
      * Creates new form AñadirComanda
+     *
      * @param formTablaComandas
      */
     public AñadirComanda(FormTablaComandas formTablaComandas) {
@@ -50,19 +51,23 @@ public class AñadirComanda extends javax.swing.JFrame {
         this.formComandasAbiertas = formTablaComandas;
     }
 
-    /*
-Este método se encarga de llenar un combo box con la lista de mesas disponibles en el sistema.
-
-1. **Método**: `llenarComboBoxMesasDisponibles()`
-2. **Tipo de retorno**: `void`
-3. **Funcionalidad**:
-   - Se elimina cualquier elemento existente en el combo box `cmbAgregarAMesa` utilizando `removeAllItems()`.
-   - Se crea una instancia de `MesaBO` utilizando la fábrica `FabricaMesas`.
-   - Se obtiene una lista de mesas disponibles llamando al método `obtenerListaMesasDisponiblesBO` del objeto `mesasBO`.
-   - Se itera sobre cada mesa en la lista de mesas disponibles:
-     - Se agrega el número de la mesa al combo box `cmbAgregarAMesa` utilizando `addItem`, convirtiendo el número de la mesa a `String`.
-
-Este método es esencial para proporcionar al usuario una lista actualizada de mesas disponibles, permitiendo seleccionar una mesa al agregar una nueva comanda.
+    /**
+     * Este método se encarga de llenar un combo box con la lista de mesas
+     * disponibles en el sistema.
+     *
+     * 1. **Método**: `llenarComboBoxMesasDisponibles()` 2. **Tipo de retorno**:
+     * `void` 3. **Funcionalidad**: - Se elimina cualquier elemento existente en
+     * el combo box `cmbAgregarAMesa` utilizando `removeAllItems()`. - Se crea
+     * una instancia de `MesaBO` utilizando la fábrica `FabricaMesas`. - Se
+     * obtiene una lista de mesas disponibles llamando al método
+     * `obtenerListaMesasDisponiblesBO` del objeto `mesasBO`. - Se itera sobre
+     * cada mesa en la lista de mesas disponibles: - Se agrega el número de la
+     * mesa al combo box `cmbAgregarAMesa` utilizando `addItem`, convirtiendo el
+     * número de la mesa a `String`.
+     *
+     * Este método es esencial para proporcionar al usuario una lista
+     * actualizada de mesas disponibles, permitiendo seleccionar una mesa al
+     * agregar una nueva comanda.
      */
     private void llenarComboBoxMesasDisponibles() {
         cmbAgregarAMesa.removeAllItems();
@@ -286,6 +291,10 @@ Este método es esencial para proporcionar al usuario una lista actualizada de m
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     *
+     * @param evt
+     */
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
         try {
             SeleccionarProductoNuevo seleccionarProducto = new SeleccionarProductoNuevo(tblProductosHastaElMomento);
@@ -295,6 +304,10 @@ Este método es esencial para proporcionar al usuario una lista actualizada de m
         }
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
+    /**
+     *
+     * @param evt
+     */
     private void btnEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProductoActionPerformed
         int filaSeleccionada = tblProductosHastaElMomento.getSelectedRow();
 
@@ -314,6 +327,10 @@ Este método es esencial para proporcionar al usuario una lista actualizada de m
         }
     }//GEN-LAST:event_btnEliminarProductoActionPerformed
 
+    /**
+     *
+     * @param evt
+     */
     private void btnEditarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarNotaActionPerformed
         int filaSeleccionada = tblProductosHastaElMomento.getSelectedRow();
 
@@ -330,6 +347,10 @@ Este método es esencial para proporcionar al usuario una lista actualizada de m
         }
     }//GEN-LAST:event_btnEditarNotaActionPerformed
 
+    /**
+     *
+     * @param evt
+     */
     private void btnCrearComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearComandaActionPerformed
         try {
             int filas = tblProductosHastaElMomento.getRowCount();
@@ -412,22 +433,37 @@ Este método es esencial para proporcionar al usuario una lista actualizada de m
             Logger.getLogger(AñadirComanda.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnCrearComandaActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void txtClienteSeleccionadoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClienteSeleccionadoNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtClienteSeleccionadoNombreActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void cmbAgregarAMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAgregarAMesaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbAgregarAMesaActionPerformed
-
+    
+    /**
+     * 
+     * @param evt 
+     */
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
 
     private Long clienteIdSeleccionado = null;
 
-
+    /**
+     * 
+     * @param evt 
+     */
     private void btnBuscadorClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscadorClientesActionPerformed
 
         try {
@@ -439,19 +475,35 @@ Este método es esencial para proporcionar al usuario una lista actualizada de m
 
 
     }//GEN-LAST:event_btnBuscadorClientesActionPerformed
-
+    
+    /**
+     * 
+     * @return 
+     */
     public String getNombreCliente() {
         return nombreCliente;
     }
-
+    
+    /**
+     * 
+     * @param nombreCliente 
+     */
     public void setNombreCliente(String nombreCliente) {
         this.nombreCliente = nombreCliente;
     }
-
+    
+    /**
+     * 
+     * @return 
+     */
     public JTextField getTxtClienteSeleccionadoNombre() {
         return txtClienteSeleccionadoNombre;
     }
-
+    
+    /**
+     * 
+     * @param txtClienteSeleccionadoNombre 
+     */
     public void setTxtClienteSeleccionadoNombre(JTextField txtClienteSeleccionadoNombre) {
         this.txtClienteSeleccionadoNombre = txtClienteSeleccionadoNombre;
     }

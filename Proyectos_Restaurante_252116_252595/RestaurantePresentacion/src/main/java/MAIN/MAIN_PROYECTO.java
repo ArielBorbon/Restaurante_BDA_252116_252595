@@ -14,6 +14,10 @@ import Menu.SeleccionDeRol;
  */
 public class MAIN_PROYECTO {
     
+    /**
+     * 
+     * @param args 
+     */
     public static void main (String[] args){
         SeleccionDeRol seleccionrol = new SeleccionDeRol();
         seleccionrol.setVisible(true);
