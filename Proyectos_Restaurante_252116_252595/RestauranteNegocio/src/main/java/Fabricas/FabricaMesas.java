@@ -8,7 +8,8 @@ import BO.MesaBO.MesaBO;
 import DAO.Mesas.MesasDAO;
 
 /**
- *
+ * Fabrica de Mesas
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

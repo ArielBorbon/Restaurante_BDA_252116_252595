@@ -21,7 +21,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Añadir productos
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
@@ -31,6 +32,7 @@ public class AñadirProducto extends javax.swing.JFrame {
 
     /**
      * Creates new form AñadirProducto
+     * @param formProductosTablaTodos
      */
     public AñadirProducto(FormProductosTablaTodos formProductosTablaTodos) {
         initComponents();

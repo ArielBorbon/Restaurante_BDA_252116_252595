@@ -17,7 +17,8 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.TypedQuery;
 
 /**
- *
+ * Clase DAO de productos
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

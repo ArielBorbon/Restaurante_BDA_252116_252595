@@ -5,7 +5,9 @@
 package Excepciones;
 
 /**
- *
+ * Clase PersistenciaException
+ * Maneja los errores de la dao
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

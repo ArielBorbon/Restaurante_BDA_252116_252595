@@ -29,7 +29,8 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Añadir Comandas
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
@@ -40,6 +41,7 @@ public class AñadirComanda extends javax.swing.JFrame {
 
     /**
      * Creates new form AñadirComanda
+     * @param formTablaComandas
      */
     public AñadirComanda(FormTablaComandas formTablaComandas) {
         initComponents();

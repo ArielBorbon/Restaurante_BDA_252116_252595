@@ -9,7 +9,8 @@ import DAO.Ingredientes.IngredientesDAO;
 import NegocioException.NegocioException;
 
 /**
- *
+ * Fabrica de Ingredientes
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

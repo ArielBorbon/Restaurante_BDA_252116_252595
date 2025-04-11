@@ -5,7 +5,8 @@
 package Entidades.Comandas;
 
 /**
- *
+ * ENUM para los estados de una comanda
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

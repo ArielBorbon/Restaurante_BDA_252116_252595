@@ -24,7 +24,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Modificador de comandas
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
@@ -35,6 +36,8 @@ public class ModificarComanda extends javax.swing.JFrame {
 
     /**
      * Creates new form AñadirComanda
+     * @param folioComanda
+     * @param formTablaComanda
      */
     public ModificarComanda(String folioComanda, FormTablaComandas formTablaComanda) {
         initComponents();

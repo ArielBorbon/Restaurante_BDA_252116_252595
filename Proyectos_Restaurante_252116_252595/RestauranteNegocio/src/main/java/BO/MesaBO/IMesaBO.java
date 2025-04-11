@@ -9,7 +9,8 @@ import Entidades.Mesa.Mesa;
 import java.util.List;
 
 /**
- *
+ * Interfaz de Mesa BO
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

@@ -27,16 +27,19 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Menu modificador de productos
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
 public class ModificarProducto extends javax.swing.JFrame {
         private FormProductosTablaTodos formProductosTablaTodos;
-         private Producto productoOriginal;
+        private Producto productoOriginal;
     /**
      * Creates new form AñadirProducto
-     * @param formProductosTablaTodos
+     * @param formTabla
+     * @param producto
+     * @throws NegocioException.NegocioException
      */
     public ModificarProducto(FormProductosTablaTodos formTabla, Producto producto) throws NegocioException {
         initComponents();

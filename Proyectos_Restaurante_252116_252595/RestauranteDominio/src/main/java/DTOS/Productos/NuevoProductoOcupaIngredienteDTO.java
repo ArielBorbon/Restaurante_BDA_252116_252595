@@ -7,7 +7,8 @@ package DTOS.Productos;
 import DTOS.Ingredientes.NuevoIngredienteDTO;
 
 /**
- *
+ * Clase DTO para Productos con Ingredientes
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

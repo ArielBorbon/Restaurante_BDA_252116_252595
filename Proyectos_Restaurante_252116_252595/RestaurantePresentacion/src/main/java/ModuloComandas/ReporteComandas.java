@@ -29,7 +29,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Reporte comandas
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
@@ -39,6 +40,7 @@ public class ReporteComandas extends javax.swing.JFrame {
 
     /**
      * Creates new form ReporteComandas
+     * @throws NegocioException.NegocioException
      */
     public ReporteComandas() throws NegocioException {
         initComponents();

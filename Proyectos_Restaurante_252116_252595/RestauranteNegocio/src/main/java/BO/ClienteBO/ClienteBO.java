@@ -12,7 +12,8 @@ import Excepciones.PersistenciaException;
 import java.util.List;
 
 /**
- *
+ * Clase BO de Clientes
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

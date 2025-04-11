@@ -9,7 +9,8 @@ import DAO.Clientes.ClientesDAO;
 import NegocioException.NegocioException;
 
 /**
- *
+ * Fabrica de Clientes
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

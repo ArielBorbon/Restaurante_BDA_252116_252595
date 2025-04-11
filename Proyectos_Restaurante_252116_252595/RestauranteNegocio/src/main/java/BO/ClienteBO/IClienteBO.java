@@ -10,7 +10,8 @@ import Excepciones.PersistenciaException;
 import NegocioException.NegocioException;
 import java.util.List;
 /**
- *
+ * Interfaz de ClienteBO
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

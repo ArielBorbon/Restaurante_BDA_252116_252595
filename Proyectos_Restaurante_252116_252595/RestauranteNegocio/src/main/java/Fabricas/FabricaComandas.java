@@ -11,7 +11,8 @@ import DAO.Mesas.MesasDAO;
 import DAO.Productos.ProductosDAO;
 
 /**
- *
+ * Fabrica de Comandas
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

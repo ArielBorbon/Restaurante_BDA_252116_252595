@@ -12,7 +12,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTable;
 
 /**
- *
+ * Añadir Comandas a Clientes
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

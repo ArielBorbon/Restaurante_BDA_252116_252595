@@ -14,7 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Menu de modulos
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
@@ -25,6 +26,7 @@ public class MenuModulos extends javax.swing.JFrame {
     
     /**
      * Creates new form MenuModulos
+     * @param rol
      */
     public MenuModulos(String rol) {
         initComponents();
@@ -214,9 +216,6 @@ public class MenuModulos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;

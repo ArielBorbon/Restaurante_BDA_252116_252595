@@ -7,7 +7,8 @@ package DTOS.Ingredientes;
 import Entidades.Ingredientes.Unidad_Medida;
 
 /**
- *
+ * Clase DTO para cantidad necesaria de Ingredientes
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

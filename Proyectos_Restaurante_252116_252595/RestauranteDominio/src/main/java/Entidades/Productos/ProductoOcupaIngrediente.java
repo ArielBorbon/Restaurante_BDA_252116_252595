@@ -18,7 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- *
+ * Entidad Productos con Ingredientes
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

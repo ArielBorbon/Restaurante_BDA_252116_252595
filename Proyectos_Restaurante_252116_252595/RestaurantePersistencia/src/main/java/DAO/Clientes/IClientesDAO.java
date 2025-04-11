@@ -11,7 +11,8 @@ import Excepciones.PersistenciaException;
 import java.util.List;
 
 /**
- *
+ * Interfaz de clientes DAO
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

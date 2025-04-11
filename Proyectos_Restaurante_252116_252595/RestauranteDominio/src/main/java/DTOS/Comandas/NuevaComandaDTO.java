@@ -8,7 +8,8 @@ import Entidades.Comandas.EstadoComanda;
 import java.util.Calendar;
 
 /**
- *
+ * Clase DTO para comandas
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

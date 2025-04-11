@@ -16,7 +16,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Tabla de productos
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
@@ -24,6 +25,7 @@ public class FormProductosTablaDisponibles extends javax.swing.JPanel {
 
     /**
      * Creates new form FormProductosTabla
+     * @throws NegocioException.NegocioException
      */
     public FormProductosTablaDisponibles() throws NegocioException {
         initComponents();

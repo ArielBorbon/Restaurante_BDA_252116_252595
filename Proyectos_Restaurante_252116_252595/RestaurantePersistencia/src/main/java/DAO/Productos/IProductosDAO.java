@@ -11,7 +11,8 @@ import Entidades.Productos.Tipo_Producto;
 import java.util.List;
 
 /**
- *
+ * Interfaz de productos DAO
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

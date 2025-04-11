@@ -17,7 +17,8 @@ import javax.swing.table.DefaultTableModel;
 import java.text.SimpleDateFormat;
 
 /**
- *
+ * Tabla Clientes
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

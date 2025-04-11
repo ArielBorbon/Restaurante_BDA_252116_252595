@@ -9,7 +9,8 @@ import static Entidades.Productos.Estado_Producto.HABILITADO;
 import Entidades.Productos.Tipo_Producto;
 
 /**
- *
+ * Clase DTO para productos
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

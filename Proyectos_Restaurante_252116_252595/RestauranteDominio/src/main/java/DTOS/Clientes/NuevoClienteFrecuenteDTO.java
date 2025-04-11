@@ -8,7 +8,8 @@ import Entidades.Clientes.Cliente;
 import java.util.Calendar;
 
 /**
- *
+ * Clase DTO para Clientes Frecuentes
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

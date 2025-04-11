@@ -17,7 +17,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 /**
- *
+ * Entidad Clientes Frecuentes
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

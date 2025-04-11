@@ -5,7 +5,8 @@
 package DTOS.Comandas;
 
 /**
- *
+ * Clase DTO para detalles de comandas
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

@@ -13,7 +13,8 @@ import NegocioException.NegocioException;
 import java.util.List;
 
 /**
- *
+ * Interfaz de productoBO
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

@@ -10,7 +10,8 @@ import Entidades.Ingredientes.Ingrediente;
 import java.util.List;
 
 /**
- *
+ * Interfaz de Ingredientes DAO
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

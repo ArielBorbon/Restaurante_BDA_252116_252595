@@ -13,7 +13,8 @@ import java.util.Calendar;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Agregar Clientes
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

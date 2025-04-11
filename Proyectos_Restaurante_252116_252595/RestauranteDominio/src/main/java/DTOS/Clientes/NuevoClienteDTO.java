@@ -7,7 +7,8 @@ package DTOS.Clientes;
 import java.util.Calendar;
 
 /**
- *
+ * Clase DTO para clientes
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

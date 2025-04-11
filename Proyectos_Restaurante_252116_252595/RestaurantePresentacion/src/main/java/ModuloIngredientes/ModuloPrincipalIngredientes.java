@@ -16,7 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
- *
+ * Menu principal del Modulo Ingredientes
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
@@ -292,10 +293,6 @@ public class ModuloPrincipalIngredientes extends javax.swing.JFrame {
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizarIngrediente;

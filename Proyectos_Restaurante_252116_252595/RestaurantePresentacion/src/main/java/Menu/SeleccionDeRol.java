@@ -10,7 +10,8 @@ import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Seleccionador de Roles
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */

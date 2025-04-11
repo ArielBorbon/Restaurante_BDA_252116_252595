@@ -12,7 +12,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Agregar Ingredientes a productos
+ * 
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
  */
@@ -22,6 +23,7 @@ public class AgregarIngredienteAListaProductoNuevo extends javax.swing.JFrame {
     
     /**
      * Creates new form AgregarIngredienteAProducto
+     * @param tblTablaIngredientesHastaElMomento
      * @throws NegocioException.NegocioException
      */
     public AgregarIngredienteAListaProductoNuevo(JTable tblTablaIngredientesHastaElMomento) throws NegocioException {
