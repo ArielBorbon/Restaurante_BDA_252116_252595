@@ -12,7 +12,9 @@ import Excepciones.PersistenciaException;
 import java.util.List;
 
 /**
- * Clase BO de Clientes
+ * Clase BO (Business Object) que implementa la lógica de negocio para la
+ * gestión de clientes. Se encarga de realizar validaciones antes de delegar las
+ * operaciones a la capa DAO.
  *
  * @author Ariel Eduardo Borbon Izaguirre 252116
  * @author Alberto Jimenez Garcia 252595
@@ -22,9 +24,11 @@ public class ClienteBO implements IClienteBO {
     private ClientesDAO clientesDAO;
 
     /**
+     * Constructor que inicializa la clase con un DAO de clientes.
      *
-     * @param clientesDAO
-     * @throws NegocioException
+     * @param clientesDAO Objeto DAO para acceder a la capa de persistencia de
+     * clientes.
+     * @throws NegocioException Si el DAO es nulo.
      */
     public ClienteBO(ClientesDAO clientesDAO) throws NegocioException {
         if (clientesDAO == null) {
@@ -34,15 +38,15 @@ public class ClienteBO implements IClienteBO {
     }
 
     /**
-     * Registra un nuevo cliente validando previamente los datos necesarios
+     * Registra un nuevo cliente validando previamente los datos requeridos.
      *
-     * @param nuevoClienteDTO
-     * @return
-     * @throws NegocioException.NegocioException
+     * @param nuevoClienteDTO Objeto con la información del nuevo cliente.
+     * @return El cliente registrado.
+     * @throws NegocioException Si los datos son inválidos o el número ya
+     * existe.
      */
     @Override
     public Cliente registrarClienteBO(NuevoClienteDTO nuevoClienteDTO) throws NegocioException {
-        // Validaciones del DTO y sus campos obligatorios
         if (nuevoClienteDTO == null) {
             throw new NegocioException("El DTO no puede ser nulo");
         }
@@ -52,35 +56,33 @@ public class ClienteBO implements IClienteBO {
         }
 
         if (nuevoClienteDTO.getNumTelefono() == null) {
-            throw new NegocioException("El numero de telefono no puede ser nulo");
+            throw new NegocioException("El número de teléfono no puede ser nulo");
         }
 
         if (nuevoClienteDTO.getFechaRegistro() == null) {
-            throw new NegocioException("La fecha de registro no puede ser nulo");
+            throw new NegocioException("La fecha de registro no puede ser nula");
         }
 
-        // Verifica que el número de teléfono contenga solo dígitos
         if (!String.valueOf(nuevoClienteDTO.getNumTelefono()).matches("\\d+")) {
-            throw new NegocioException("El numero de telefono solo debe contener dígitos");
+            throw new NegocioException("El número de teléfono solo debe contener dígitos");
         }
 
-        // Se valida que el número de teléfono no esté ya registrado
         Cliente telefonoExistente = clientesDAO.buscarPorTelefono(nuevoClienteDTO.getNumTelefono());
 
         if (telefonoExistente != null) {
-            throw new NegocioException("El numero de telefono ya esta asignado a un cliene");
+            throw new NegocioException("El número de teléfono ya está asignado a un cliente");
         }
 
         return clientesDAO.registrarCliente(nuevoClienteDTO);
     }
 
     /**
-     * Busca un cliente por su número de teléfono, validando que sea un número
-     * válido
+     * Busca un cliente por su número de teléfono, validando que el número sea
+     * correcto.
      *
-     * @param filtroNumero
-     * @return
-     * @throws NegocioException.NegocioException
+     * @param filtroNumero Número de teléfono a buscar.
+     * @return Cliente encontrado.
+     * @throws NegocioException Si el número es inválido o el cliente no existe.
      */
     @Override
     public Cliente buscarPorTelefono(String filtroNumero) throws NegocioException {
@@ -102,9 +104,9 @@ public class ClienteBO implements IClienteBO {
     }
 
     /**
-     * Obtiene la lista completa de clientes registrados
+     * Obtiene la lista completa de clientes registrados.
      *
-     * @return
+     * @return Lista de clientes.
      */
     @Override
     public List<Cliente> obtenerListaClientesBO() {
@@ -112,12 +114,12 @@ public class ClienteBO implements IClienteBO {
     }
 
     /**
-     * Filtra clientes por nombre y/o correo.Delegado al DAO
+     * Filtra clientes por nombre y/o correo.
      *
-     * @param nombre
-     * @param correo
-     * @return
-     * @throws NegocioException.NegocioException
+     * @param nombre Nombre del cliente.
+     * @param correo Correo electrónico del cliente.
+     * @return Lista de clientes que coinciden con los filtros.
+     * @throws NegocioException Si ocurre un error durante el filtrado.
      */
     @Override
     public List<Cliente> filtrarClientes(String nombre, String correo) throws NegocioException {
@@ -125,11 +127,11 @@ public class ClienteBO implements IClienteBO {
     }
 
     /**
-     * Filtra clientes por correo, pensado para reportes
+     * Filtra clientes por correo electrónico, utilizado para reportes.
      *
-     * @param correo
-     * @return
-     * @throws NegocioException.NegocioException
+     * @param correo Correo electrónico a filtrar.
+     * @return Lista de clientes que coinciden.
+     * @throws NegocioException Si ocurre un error durante el filtrado.
      */
     @Override
     public List<Cliente> filtrarClientesReporte(String correo) throws NegocioException {
@@ -137,10 +139,10 @@ public class ClienteBO implements IClienteBO {
     }
 
     /**
-     * Filtra clientes cuyo nombre contenga el texto dado
+     * Filtra clientes cuyo nombre contenga el texto dado.
      *
-     * @param nombre
-     * @return
+     * @param nombre Nombre del cliente a buscar.
+     * @return Lista de clientes que coinciden parcialmente con el nombre.
      */
     @Override
     public List<Cliente> filtrarPorNombre(String nombre) {
@@ -149,11 +151,11 @@ public class ClienteBO implements IClienteBO {
     }
 
     /**
-     * Obtiene el ID de un cliente a partir de su nombre
+     * Obtiene el ID de un cliente a partir de su nombre.
      *
-     * @param nombre
-     * @return
-     * @throws NegocioException.NegocioException
+     * @param nombre Nombre del cliente.
+     * @return ID del cliente.
+     * @throws NegocioException Si el cliente no se encuentra.
      */
     @Override
     public Long obtenerIdPorNombreCliente(String nombre) throws NegocioException {
@@ -161,18 +163,18 @@ public class ClienteBO implements IClienteBO {
     }
 
     /**
-     * Obtiene el ID de un cliente frecuente a partir del nombre del cliente
+     * Obtiene el ID de un cliente frecuente a partir del nombre del cliente.
      *
-     * @param nombreCliente
-     * @return
-     * @throws Excepciones.PersistenciaException
+     * @param nombreCliente Nombre del cliente frecuente.
+     * @return ID del cliente frecuente.
+     * @throws PersistenciaException Si ocurre un error en la capa de
+     * persistencia.
      */
     @Override
     public Long obtenerIdClienteFrecuentePorNombreCliente(String nombreCliente) throws PersistenciaException {
         try {
             return clientesDAO.obtenerIdClienteFrecuentePorNombreCliente(nombreCliente);
         } catch (PersistenciaException e) {
-            // Se vuelve a lanzar la excepción con un mensaje personalizado
             throw new PersistenciaException("Error al obtener idClienteFrecuente por nombre", e);
         }
     }

@@ -44,8 +44,8 @@ public class IngredienteBO implements IIngredienteBO {
      * diseño robusto y evitando errores en tiempo de ejecución relacionados con
      * la falta de un objeto DAO necesario para la lógica de negocio.
      *
-     * @param ingredienteDAO
-     * @throws NegocioException
+     * @param ingredienteDAO manda la DAO de ingredientes
+     * @throws NegocioException Errores de negocio
      */
     public IngredienteBO(IngredientesDAO ingredienteDAO) throws NegocioException {
         if (ingredienteDAO == null) {
@@ -86,9 +86,9 @@ public class IngredienteBO implements IIngredienteBO {
      * válidos y únicos en el sistema, promoviendo la integridad de los datos y
      * evitando duplicados en la base de datos.
      *
-     * @param nuevoIngrediente
-     * @return
-     * @throws Exception
+     * @param nuevoIngrediente manda un nuevo ingrediente
+     * @return regresa el registro de ingredientes
+     * @throws Exception Errores de negocio
      */
     @Override
     public Ingrediente registrarIngredienteBO(NuevoIngredienteDTO nuevoIngrediente) throws Exception {
@@ -150,8 +150,8 @@ public class IngredienteBO implements IIngredienteBO {
      * no están en uso y que se proporciona un manejo adecuado de errores,
      * promoviendo la integridad de los datos en el sistema.
      *
-     * @param nuevoIngrediente
-     * @throws java.lang.Exception
+     * @param nuevoIngrediente manda un ingrediente
+     * @throws java.lang.Exception manda una exception
      */
     @Override
     public void eliminarIngredienteBO(NuevoIngredienteDTO nuevoIngrediente) throws Exception {
@@ -204,7 +204,7 @@ public class IngredienteBO implements IIngredienteBO {
      * capa de presentación o para realizar operaciones adicionales sobre la
      * lista de ingredientes recuperada.
      *
-     * @return
+     * @return regresa una lista de clientes
      */
     @Override
     public List<Ingrediente> obtenerListaIngredientesBO() {
@@ -249,9 +249,9 @@ public class IngredienteBO implements IIngredienteBO {
      * integridad de los datos en el sistema y permitiendo la modificación de la
      * información de los ingredientes de manera controlada.
      *
-     * @param nuevoIngredienteDTO
-     * @param nuevoStock
-     * @throws java.lang.Exception
+     * @param nuevoIngredienteDTO manda los ingredientes
+     * @param nuevoStock manda el stock
+     * @throws java.lang.Exception manda una exception
      */
     @Override
     public void actualizarIngredienteBO(NuevoIngredienteDTO nuevoIngredienteDTO, double nuevoStock) throws Exception {
@@ -311,10 +311,10 @@ public class IngredienteBO implements IIngredienteBO {
      * integridad de los datos al garantizar que se notifique al usuario si el
      * ingrediente no existe en el sistema.
      *
-     * @param nombre
-     * @param unidadMedida
-     * @return
-     * @throws java.lang.Exception
+     * @param nombre manda el nombre
+     * @param unidadMedida manda la cantidad
+     * @return regresa los ingredientes que consigan
+     * @throws java.lang.Exception errores de exception
      */
     @Override
     public Ingrediente buscarIngredientePorNombreYUnidadBO(String nombre, String unidadMedida) throws Exception {
@@ -361,10 +361,10 @@ public class IngredienteBO implements IIngredienteBO {
      * integridad de los datos y se evita la eliminación accidental de
      * ingredientes que son necesarios para otras operaciones.
      *
-     * @param nombre
-     * @param unidadMedida
-     * @return
-     * @throws NegocioException.NegocioException
+     * @param nombre manda el nombre de un ingrediente
+     * @param unidadMedida manda las unidades de medida
+     * @return regresa la relación entre un ingrediente
+     * @throws NegocioException.NegocioException Errores de Negocios
      */
     @Override
     public boolean tieneRelacionesActivasBO(String nombre, String unidadMedida) throws NegocioException {
@@ -410,8 +410,9 @@ public class IngredienteBO implements IIngredienteBO {
      * listas de ingredientes en aplicaciones de cocina, restaurantes o gestión
      * de inventarios.
      *
-     * @param nombreProducto
-     * @return
+     * @param nombreProducto manda el nombre de producto
+     * @return regresa una lista de ingredientes que esten relacionados con ese
+     * producto
      */
     @Override
     public List<Ingrediente> obtenerIngredientesPorNombreProductoBO(String nombreProducto) {
@@ -444,8 +445,8 @@ public class IngredienteBO implements IIngredienteBO {
      * producto. Facilita la planificación y gestión de recursos en la cocina o
      * en el manejo de inventarios.
      *
-     * @param nombreProducto
-     * @return
+     * @param nombreProducto manda el nombre de producto
+     * @return regresa una lista de ingredientes con productos
      */
     @Override
     public List<IngredienteConCantidadNecesariaDTO> obtenerIngredientesConCantidadPorProductoBO(String nombreProducto) {

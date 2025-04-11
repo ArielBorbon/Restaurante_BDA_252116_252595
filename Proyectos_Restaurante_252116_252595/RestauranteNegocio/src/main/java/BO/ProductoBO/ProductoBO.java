@@ -26,8 +26,8 @@ public class ProductoBO implements IProductoBO {
 
     /**
      *
-     * @param productoDAO
-     * @throws NegocioException
+     * @param productoDAO Manda un producto DAO
+     * @throws NegocioException manda un error de Negocio
      */
     public ProductoBO(ProductosDAO productoDAO) throws NegocioException {
         if (productoDAO == null) {
@@ -53,7 +53,7 @@ public class ProductoBO implements IProductoBO {
      * de inventarios, restaurantes o cualquier sistema que requiera la
      * administración de productos.
      *
-     * @return
+     * @return regresa una lista de productos disponibles
      */
     @Override
     public List<Producto> mostrarListaProductosDisponiblesBO() {
@@ -76,8 +76,8 @@ public class ProductoBO implements IProductoBO {
      * facilitando la localización de artículos por su nombre en aplicaciones de
      * gestión de productos.
      *
-     * @param nombreFiltro
-     * @return
+     * @param nombreFiltro manda un nombre de producto
+     * @return regresa una lista de productos disponibles por nombre
      */
     @Override
     public List<Producto> filtrarPorNombreProductoDisponiblesBO(String nombreFiltro) {
@@ -100,8 +100,8 @@ public class ProductoBO implements IProductoBO {
      * Este método es útil para agrupar productos por su tipo, facilitando la
      * búsqueda y gestión de productos en aplicaciones de inventario.
      *
-     * @param tipoFiltro
-     * @return
+     * @param tipoFiltro manda un tipo de filtro
+     * @return regresa una lista por tipo de productos disponibles
      */
     @Override
     public List<Producto> filtrarPorTipoProductoDisponiblesBO(Tipo_Producto tipoFiltro) {
@@ -127,9 +127,9 @@ public class ProductoBO implements IProductoBO {
      * inventario, permitiendo a los usuarios encontrar productos que cumplan
      * con múltiples criterios.
      *
-     * @param nombreFiltro
-     * @param tipoFiltro
-     * @return
+     * @param nombreFiltro manda el nombre de un producto
+     * @param tipoFiltro manda un filtro
+     * @return regresa una lista de productos teniendo en cuenta filtros
      */
     @Override
     public List<Producto> filtrarPorNombreYTipoProductoDisponiblesBO(String nombreFiltro, Tipo_Producto tipoFiltro) {
@@ -150,7 +150,7 @@ public class ProductoBO implements IProductoBO {
      * productos disponibles en el sistema, lo que puede ser esencial para la
      * gestión y planificación en aplicaciones de inventario o ventas.
      *
-     * @return
+     * @return regresa una lista de todos los productos
      */
     @Override
     public List<Producto> mostrarListaProductosTodosBO() {
@@ -185,9 +185,9 @@ public class ProductoBO implements IProductoBO {
      * válidos en el sistema, promoviendo la integridad de los datos y evitando
      * duplicados.
      *
-     * @param nuevoProducto
-     * @return
-     * @throws NegocioException.NegocioException
+     * @param nuevoProducto manda un nuevo producto
+     * @return regresa un producto nuevo
+     * @throws NegocioException.NegocioException Error de Negocios
      */
     @Override
     public Producto registrarProductoBO(NuevoProductoDTO nuevoProducto) throws NegocioException {
@@ -245,8 +245,8 @@ public class ProductoBO implements IProductoBO {
      * sistema, permitiendo deshabilitar productos que ya no están disponibles
      * para la venta o que deben ser retirados del inventario.
      *
-     * @param productoAEliminar
-     * @throws NegocioException.NegocioException
+     * @param productoAEliminar manda un producto 
+     * @throws NegocioException.NegocioException Error de negocios
      */
     @Override
     public void deshabilitarProductoBO(NuevoProductoDTO productoAEliminar) throws NegocioException {
@@ -307,10 +307,10 @@ public class ProductoBO implements IProductoBO {
      * requieren ingredientes, como en el caso de platos en un menú, asegurando
      * que se registren correctamente en el sistema.
      *
-     * @param nuevoProducto
-     * @param listaProductoIngrediente
-     * @return
-     * @throws NegocioException.NegocioException
+     * @param nuevoProducto manda un nuevo producto
+     * @param listaProductoIngrediente manda una lista de productos
+     * @return regresa un producto de ingredientes
+     * @throws NegocioException.NegocioException Error de negocios
      */
     @Override
     public Producto registrarProductoConIngredientesBO(NuevoProductoDTO nuevoProducto,
@@ -377,10 +377,10 @@ public class ProductoBO implements IProductoBO {
      * sistema, asegurando que se mantenga la integridad de los datos y que los
      * cambios se reflejen correctamente en la base de datos.
      *
-     * @param nuevoProductoDTO
-     * @param nuevosIngredientesDTO
-     * @return
-     * @throws NegocioException.NegocioException
+     * @param nuevoProductoDTO manda un nuevo producto
+     * @param nuevosIngredientesDTO manda una lista de ingredientes
+     * @return regresa la modificación de productos
+     * @throws NegocioException.NegocioException Error de negocios
      */
     @Override
     public Producto modificarProductoBO(NuevoProductoDTO nuevoProductoDTO, List<NuevoProductoOcupaIngredienteDTO> nuevosIngredientesDTO) throws NegocioException {
@@ -420,8 +420,8 @@ public class ProductoBO implements IProductoBO {
      * Este método es útil para localizar un producto específico en el sistema,
      * facilitando la gestión y consulta de productos.
      *
-     * @param nombre
-     * @return
+     * @param nombre manda el nombre de un producto
+     * @return regresa un producto
      */
     @Override
     public Producto buscarProductoPorNombreBO(String nombre) {
@@ -444,8 +444,8 @@ public class ProductoBO implements IProductoBO {
      * facilitando la localización de artículos por su nombre en aplicaciones de
      * gestión de productos.
      *
-     * @param nombreFiltro
-     * @return
+     * @param nombreFiltro manda un nombre de producto
+     * @return regresa una lista de productos
      */
     @Override
     public List<Producto> filtrarPorNombreProductoTodosBO(String nombreFiltro) {
@@ -468,8 +468,8 @@ public class ProductoBO implements IProductoBO {
      * Este método es útil para agrupar productos por su tipo, facilitando la
      * búsqueda y gestión de productos en aplicaciones de inventario.
      *
-     * @param tipoFiltro
-     * @return
+     * @param tipoFiltro manda un tipo de filtro
+     * @return regresa una lista de productos
      */
     @Override
     public List<Producto> filtrarPorTipoProductoTodosBO(Tipo_Producto tipoFiltro) {
@@ -495,9 +495,9 @@ public class ProductoBO implements IProductoBO {
      * inventario, permitiendo a los usuarios encontrar productos que cumplan
      * con múltiples criterios.
      *
-     * @param nombreFiltro
-     * @param tipoFiltro
-     * @return
+     * @param nombreFiltro manda un nombre
+     * @param tipoFiltro manda un tipo de filtro
+     * @return regresa una lista de productos 
      */
     @Override
     public List<Producto> filtrarPorNombreYTipoProductoTodosBO(String nombreFiltro, Tipo_Producto tipoFiltro) {
@@ -519,7 +519,7 @@ public class ProductoBO implements IProductoBO {
      * Este método es esencial para gestionar el estado de los productos en el
      * sistema, permitiendo reactivar productos que han sido deshabilitados.
      *
-     * @param productoAHabilitar
+     * @param productoAHabilitar manda un producto para habilitar
      */
     @Override
     public void habilitarProductoBO(NuevoProductoDTO productoAHabilitar) {

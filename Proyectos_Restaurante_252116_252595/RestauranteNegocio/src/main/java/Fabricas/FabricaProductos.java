@@ -18,8 +18,8 @@ public class FabricaProductos {
     
     /**
      * 
-     * @return
-     * @throws NegocioException 
+     * @return regresa un Producto BO
+     * @throws NegocioException Error de negocios
      */
     public static ProductoBO crearProductoBO() throws NegocioException{
          ProductosDAO productosDAO = new ProductosDAO();

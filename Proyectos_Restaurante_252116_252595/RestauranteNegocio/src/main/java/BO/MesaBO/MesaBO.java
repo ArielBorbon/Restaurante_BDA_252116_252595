@@ -22,7 +22,7 @@ public class MesaBO implements IMesaBO {
 
     /**
      *
-     * @param mesaDAO
+     * @param mesaDAO manda una mesa DAO
      */
     public MesaBO(MesasDAO mesaDAO) {
         this.mesaDAO = mesaDAO;
@@ -58,8 +58,8 @@ public class MesaBO implements IMesaBO {
      * datos en el sistema y permitiendo la adición de nuevas mesas de manera
      * controlada.
      *
-     * @param nuevaMesaDTO
-     * @return
+     * @param nuevaMesaDTO manda una mesa DTO
+     * @return regresa una nueva mesa
      */
     @Override
     public Mesa crearMesaBO(NuevaMesaDTO nuevaMesaDTO) {
@@ -114,7 +114,7 @@ public class MesaBO implements IMesaBO {
      * controlada. Además, ayuda a evitar intentos de eliminación de mesas que
      * no existen, lo que podría causar inconsistencias en la base de datos.
      *
-     * @param nuevaMesaDTO
+     * @param nuevaMesaDTO manda una mesa DTO
      */
     @Override
     public void eliminarMesaBO(NuevaMesaDTO nuevaMesaDTO) {
@@ -155,8 +155,8 @@ public class MesaBO implements IMesaBO {
      * aplicaciones de restaurantes, bares o cualquier sistema que requiera la
      * administración de espacios de servicio.
      *
-     * @param numeroMesa
-     * @return
+     * @param numeroMesa manda el numero para identificar la mesa
+     * @return regresa el numero de mesa
      */
     @Override
     public Mesa obtenerMesaPorNumMesaBO(int numeroMesa) {
@@ -196,8 +196,8 @@ public class MesaBO implements IMesaBO {
      * ocupar mesas que ya están en uso, lo que podría causar confusiones y
      * problemas en la gestión del servicio.
      *
-     * @param nuevaMesaDTO
-     * @return
+     * @param nuevaMesaDTO manda una mesa DTO
+     * @return regresa la mesa asignada a una comanda
      */
     @Override
     public Mesa ocuparMesaBO(NuevaMesaDTO nuevaMesaDTO) {
@@ -254,8 +254,8 @@ public class MesaBO implements IMesaBO {
      * Además, ayuda a evitar intentos de disponibilizar mesas que ya están
      * libres, lo que podría causar confusiones en la gestión del servicio.
      *
-     * @param nuevaMesaDTO
-     * @return
+     * @param nuevaMesaDTO manda una mesa DTO 
+     * @return regresa la mesa sin comanda asignada
      */
     @Override
     public Mesa disponibilizarMesaBO(NuevaMesaDTO nuevaMesaDTO) {
@@ -306,8 +306,8 @@ public class MesaBO implements IMesaBO {
      * asegura que solo se realicen consultas válidas, promoviendo la integridad
      * de los datos en el sistema.
      *
-     * @param num_mesa
-     * @return
+     * @param num_mesa manda el numero de mesa
+     * @return regresa la relaciones que tiene una mesa
      */
     @Override
     public boolean verRelacionesMesaBO(int num_mesa) {
@@ -342,7 +342,7 @@ public class MesaBO implements IMesaBO {
      * sobre la asignación de mesas a clientes y mejora la eficiencia en la
      * gestión del servicio.
      *
-     * @return
+     * @return regresa una lista de mesas disponibles
      */
     @Override
     public List<Mesa> obtenerListaMesasDisponiblesBO() {
@@ -369,7 +369,7 @@ public class MesaBO implements IMesaBO {
      * administradores y al personal del servicio tomar decisiones informadas
      * sobre la gestión de las mesas.
      *
-     * @return
+     * @return regresa una lista de mesas desocupadas
      */
     @Override
     public List<Mesa> obtenerListaMesasOcupadasBO() {
@@ -396,7 +396,7 @@ public class MesaBO implements IMesaBO {
      * la disponibilidad y el estado de las mesas, facilitando la toma de
      * decisiones sobre la asignación y gestión de las mismas.
      *
-     * @return
+     * @return regresa una lista de todas las mesas
      */
     @Override
     public List<Mesa> obtenerListaMesasTodasBO() {
@@ -421,7 +421,7 @@ public class MesaBO implements IMesaBO {
      * los administradores y al personal del servicio expandir la capacidad del
      * establecimiento al añadir nuevas mesas según sea necesario.
      *
-     * @return
+     * @return regresa una nueva mesa
      */
     @Override
     public Mesa crearMesaEnOrdenBO() {
@@ -446,8 +446,9 @@ public class MesaBO implements IMesaBO {
      * optimizar la lógica de negocio y a evitar errores al interactuar con el
      * sistema de gestión de mesas.
      *
-     * @return
+     * @return regresa la existencia de mesas
      */
+    @Override
     public boolean existenMesasBO() {
         return mesaDAO.existenMesas();
     }

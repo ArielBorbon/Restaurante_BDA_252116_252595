@@ -17,8 +17,8 @@ import NegocioException.NegocioException;
 public class FabricaClientes {
     /**
      * 
-     * @return
-     * @throws NegocioException 
+     * @return regresa un cliente BO
+     * @throws NegocioException error de negocios
      */
     public static ClienteBO crearClienteBO() throws NegocioException{
         ClientesDAO clientesDAO = new ClientesDAO();

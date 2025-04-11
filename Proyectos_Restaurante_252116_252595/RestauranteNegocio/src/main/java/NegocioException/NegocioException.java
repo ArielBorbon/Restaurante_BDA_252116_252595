@@ -17,7 +17,7 @@ public class NegocioException extends Exception {
 
     /**
      *
-     * @param message
+     * @param message mensaje
      */
     public NegocioException(String message) {
         super(message);
@@ -25,8 +25,8 @@ public class NegocioException extends Exception {
 
     /**
      *
-     * @param message
-     * @param cause
+     * @param message mensaje 
+     * @param cause causa
      */
     public NegocioException(String message, Throwable cause) {
         super(message, cause);
@@ -34,7 +34,7 @@ public class NegocioException extends Exception {
 
     /**
      *
-     * @param cause
+     * @param cause causa
      */
     public NegocioException(Throwable cause) {
         super(cause);
@@ -42,10 +42,10 @@ public class NegocioException extends Exception {
 
     /**
      *
-     * @param message
-     * @param cause
-     * @param enableSuppression
-     * @param writableStackTrace
+     * @param message mensaje
+     * @param cause causa
+     * @param enableSuppression supresión de la excepción
+     * @param writableStackTrace Indica si el seguimiento de pila debe ser registrado
      */
     public NegocioException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);

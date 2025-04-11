@@ -23,9 +23,9 @@ public class Encriptador {
     /**
      * Metodo para encriptar
      *
-     * @param texto
-     * @return
-     * @throws Exception
+     * @param texto manda un string
+     * @return regresa un string
+     * @throws Exception error Exception
      */
     public static String encriptar(String texto) throws Exception {
         SecretKey clave = obtenerClaveSecreta();
@@ -45,9 +45,9 @@ public class Encriptador {
      * Metodo para poder desencriptar de manera momentanea y que solo lo muestre
      * en los interfaces gráficos
      *
-     * @param textoEncriptado
-     * @return
-     * @throws Exception
+     * @param textoEncriptado manda un texto encriptado
+     * @return regresa un texto desencriptado
+     * @throws Exception Error exception
      */
     public static String desencriptar(String textoEncriptado) throws Exception {
         SecretKey clave = obtenerClaveSecreta();

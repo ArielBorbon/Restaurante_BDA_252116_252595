@@ -17,8 +17,8 @@ import NegocioException.NegocioException;
 public class FabricaIngredientes {
     /**
      * 
-     * @return
-     * @throws NegocioException 
+     * @return regresa un ingrediente BO
+     * @throws NegocioException error de negocios
      */
     public static IngredienteBO crearIngredienteBO() throws NegocioException{
         IngredientesDAO ingredienteDAO = new IngredientesDAO();

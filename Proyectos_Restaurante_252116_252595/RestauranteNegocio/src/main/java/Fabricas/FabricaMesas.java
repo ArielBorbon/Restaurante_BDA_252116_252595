@@ -17,7 +17,7 @@ public class FabricaMesas {
     
     /**
      * 
-     * @return 
+     * @return regresa una Mesa BO
      */
     public static MesaBO crearMesaBO (){
         MesasDAO mesasDAO = new MesasDAO();

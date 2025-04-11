@@ -19,7 +19,7 @@ import DAO.Productos.ProductosDAO;
 public class FabricaComandas {
     /**
      * 
-     * @return 
+     * @return regresa una Comanda BO
      */
     public static ComandaBO crearComandaBO() {
         ComandasDAO comandasDAO = new ComandasDAO();

@@ -33,8 +33,8 @@ public class ClientesDAO implements IClientesDAO {
     /**
      * Metodo para registrar cliente en la base de datos
      *
-     * @param nuevoClienteDTO
-     * @return
+     * @param nuevoClienteDTO manda un nuevo cliente DTO
+     * @return regresa un nuevo cliente
      */
     @Override
     public Cliente registrarCliente(NuevoClienteDTO nuevoClienteDTO) {
@@ -85,8 +85,8 @@ public class ClientesDAO implements IClientesDAO {
     /**
      * Metodo para filtrar por nombre
      *
-     * @param filtroNombre
-     * @return
+     * @param filtroNombre manda un nombre para filtrar
+     * @return regresa una lista clientes por el filtro
      */
     @Override
     public List<Cliente> filtrarPorNombre(String filtroNombre) {
@@ -106,8 +106,8 @@ public class ClientesDAO implements IClientesDAO {
     /**
      * Filtra clientes cuyo número de teléfono contenga el texto especificado
      *
-     * @param filtroNumero
-     * @return
+     * @param filtroNumero filtro de numero telefonico
+     * @return regresa una lista de clientes
      */
     @Override
     public List<Cliente> filtrarPorTelefono(String filtroNumero) {
@@ -127,8 +127,8 @@ public class ClientesDAO implements IClientesDAO {
     /**
      * Filtra clientes cuyo correo contenga el texto especificado
      *
-     * @param filtroCorreo
-     * @return
+     * @param filtroCorreo filtro de correo
+     * @return regresa una lista de clientes
      */
     @Override
     public List<Cliente> filtrarPorCorreo(String filtroCorreo) {
@@ -147,7 +147,7 @@ public class ClientesDAO implements IClientesDAO {
     /**
      * Metodo para dar una lista de clientes
      *
-     * @return
+     * @return regresa una lista de clientes
      */
     @Override
     public List<Cliente> mostrarListaClientes() {
@@ -164,8 +164,8 @@ public class ClientesDAO implements IClientesDAO {
      * Busca un cliente por su número de teléfono exacto utilizando la API de
      * Criteria
      *
-     * @param filtroNumero
-     * @return
+     * @param filtroNumero filtro de numeros
+     * @return regresa a un solo cliente
      */
     @Override
     public Cliente buscarPorTelefono(String filtroNumero) {
@@ -196,9 +196,9 @@ public class ClientesDAO implements IClientesDAO {
     /**
      * Metodo para filtrar clientes por nombre y correo
      *
-     * @param nombre
-     * @param correo
-     * @return
+     * @param nombre manda el nombre
+     * @param correo manda el correo
+     * @return regresa una lista de clientes con los filtros
      */
     @Override
     public List<Cliente> filtrarClientes(String nombre, String correo) {
@@ -236,10 +236,10 @@ public class ClientesDAO implements IClientesDAO {
      * Actualiza los datos acumulativos (puntos, visitas y total gastado) de un
      * cliente frecuente
      *
-     * @param idCliente
-     * @param puntos
-     * @param visitas
-     * @param totalGastado
+     * @param idCliente id de un cliente
+     * @param puntos manda los puntos
+     * @param visitas visitas del cliente 
+     * @param totalGastado total gastado por el cliente
      */
     @Override
     public void actualizarClienteFrecuente(Long idCliente, int puntos, int visitas, double totalGastado) {
@@ -263,7 +263,7 @@ public class ClientesDAO implements IClientesDAO {
     /**
      * Obtiene todos los clientes frecuentes y los convierte en DTOs para su presentación
      * 
-     * @return
+     * @return regresa un lista de clientes frecuentes
      */
     @Override
     public List<NuevoClienteFrecuenteDTO> obtenerClientesFrecuentes() {
@@ -294,8 +294,8 @@ public class ClientesDAO implements IClientesDAO {
     /**
      * Obtiene un cliente frecuente por su correo exacto
      * 
-     * @param Correo
-     * @return 
+     * @param Correo manda un correo
+     * @return regresa un cliente frecuente por su correo
      */
     @Override
     public ClientesFrecuentes obtenerPorCorreo(String Correo) {
@@ -315,8 +315,8 @@ public class ClientesDAO implements IClientesDAO {
     /**
      * filtra los clientes por correo para el reporte
      * 
-     * @param correo
-     * @return 
+     * @param correo manda un correo
+     * @return regresa una lista de clientes
      */
     @Override
     public List<Cliente> filtrarClientesReporte(String correo) {
@@ -342,8 +342,8 @@ public class ClientesDAO implements IClientesDAO {
     /**
      * Obtiene el ID del primer cliente cuyo nombre contiene el valor proporcionado
      * 
-     * @param nombre
-     * @return 
+     * @param nombre nombre del cliente
+     * @return regresa el id de un cliente
      */
     @Override
     public Long obtenerIdPorNombre(String nombre) {
@@ -361,9 +361,9 @@ public class ClientesDAO implements IClientesDAO {
     /**
      * Obtiene el ID de un cliente frecuente por nombre (coincidencia parcial)
      * 
-     * @param nombreCliente
-     * @return
-     * @throws PersistenciaException 
+     * @param nombreCliente nombre del cliente
+     * @return regresa el id de un cliente frecuente
+     * @throws PersistenciaException Error de persistencias
      */
     @Override
     public Long obtenerIdClienteFrecuentePorNombreCliente(String nombreCliente) throws PersistenciaException {

@@ -28,14 +28,14 @@ import java.util.logging.Logger;
  * @author Alberto Jimenez Garcia 252595
  */
 public class ComandaBO implements IComandaBO {
-    
+
     private ComandasDAO comandasDAO;
     private ProductosDAO productosDAO;
     private ClientesDAO clientesDAO;
     private MesasDAO mesasDAO;
 
     /**
-     * Este es el constructor de la clase `ComandaBO`, que se encarga de
+     * Este es el constructor de la clase {@code ComandaBO}, que se encarga de
      * inicializar una instancia de la clase y establecer las dependencias
      * necesarias para su funcionamiento.
      *
@@ -63,10 +63,10 @@ public class ComandaBO implements IComandaBO {
      * integridad y la robustez del sistema al asegurar que todas las
      * dependencias necesarias estén disponibles.
      *
-     * @param comandasDAO
-     * @param productosDAO
-     * @param clientesDAO
-     * @param mesasDAO
+     * @param comandasDAO DAO de comandas
+     * @param productosDAO DAO de productos
+     * @param clientesDAO DAO de clientes
+     * @param mesasDAO DAO de mesas
      */
     public ComandaBO(ComandasDAO comandasDAO, ProductosDAO productosDAO, ClientesDAO clientesDAO, MesasDAO mesasDAO) {
         this.comandasDAO = comandasDAO;
@@ -79,9 +79,14 @@ public class ComandaBO implements IComandaBO {
      * Registra una comanda y sus detalles, validando previamente si hay stock
      * suficiente.
      *
-     * @param comandaDTO
-     * @param detallesDTO
-     * @return
+     * @param comandaDTO Objeto que contiene la información general de la
+     * comanda.
+     * @param detallesDTO Lista de objetos con los detalles de productos
+     * solicitados.
+     * @return La comanda registrada con sus respectivos detalles y totales.
+     * @throws IllegalArgumentException Si la lista de productos está vacía.
+     * @throws RuntimeException Si no hay stock suficiente para uno o más
+     * productos.
      */
     @Override
     public Comanda registrarComandaBO(NuevaComandaDTO comandaDTO, List<NuevoDetalleComandaDTO> detallesDTO) {
@@ -113,8 +118,11 @@ public class ComandaBO implements IComandaBO {
     /**
      * Calcula el total de un detalle (cantidad x precio del producto).
      *
-     * @param detalleDTO
-     * @return
+     * @param detalleDTO Objeto que contiene el nombre del producto y la
+     * cantidad solicitada.
+     * @return El total calculado para ese detalle de la comanda.
+     * @throws RuntimeException Si no se encuentra el producto en la base de
+     * datos.
      */
     @Override
     public double calcularTotalDetalleComandaBO(NuevoDetalleComandaDTO detalleDTO) {
@@ -125,8 +133,11 @@ public class ComandaBO implements IComandaBO {
     /**
      * Suma los importes totales de todos los detalles.
      *
-     * @param detallesDTO
-     * @return
+     * @param detallesDTO Lista de objetos {@code NuevoDetalleComandaDTO} que
+     * representan los productos incluidos en la comanda.
+     * @return El total acumulado de la comanda.
+     * @throws IllegalArgumentException Si la lista de detalles es nula o está
+     * vacía.
      */
     @Override
     public double calcularTotalComandaBO(List<NuevoDetalleComandaDTO> detallesDTO) {
@@ -149,7 +160,7 @@ public class ComandaBO implements IComandaBO {
      * identificador único, facilitando su seguimiento y gestión dentro del
      * sistema.
      *
-     * @return
+     * @return El folio de comanda
      */
     @Override
     public String generarFolioComandaBO() {
@@ -192,8 +203,8 @@ public class ComandaBO implements IComandaBO {
      * existente, asegurando que se cumplan las condiciones necesarias antes de
      * realizar la actualización en el sistema.
      *
-     * @param comandaDTO
-     * @param detallesDTO
+     * @param comandaDTO Lista de comandas
+     * @param detallesDTO Lista de detalles de comandas
      */
     @Override
     public void modificarComandaBO(NuevaComandaDTO comandaDTO, List<NuevoDetalleComandaDTO> detallesDTO) {
@@ -243,7 +254,7 @@ public class ComandaBO implements IComandaBO {
      * el sistema, asegurando que se proporcione un identificador válido antes
      * de proceder con la operación.
      *
-     * @param comandaDTO
+     * @param comandaDTO Comnada para eliminar
      */
     @Override
     public void eliminarComandaBO(NuevaComandaDTO comandaDTO) {
@@ -275,7 +286,7 @@ public class ComandaBO implements IComandaBO {
      * el sistema, asegurando que se proporcione un identificador válido antes
      * de proceder con la operación.
      *
-     * @param folio
+     * @param folio El folio para cancelar
      */
     @Override
     public void cancelarComandaBO(String folio) {
@@ -307,7 +318,7 @@ public class ComandaBO implements IComandaBO {
      * sistema, asegurando que se proporcione un identificador válido antes de
      * proceder con la operación.
      *
-     * @param folio
+     * @param folio Folio para marcarla como entregada
      */
     @Override
     public void entregarComanda(String folio) {
@@ -343,8 +354,8 @@ public class ComandaBO implements IComandaBO {
      * sin problemas de disponibilidad de stock, ayudando a prevenir errores en
      * el proceso de registro de comandas.
      *
-     * @param detallesDTO
-     * @return
+     * @param detallesDTO Lista de detalles de las comandas
+     * @return regresa un verificador de stock
      */
     @Override
     public boolean verificarStockNecesarioProductosBO(List<NuevoDetalleComandaDTO> detallesDTO) {
@@ -380,7 +391,7 @@ public class ComandaBO implements IComandaBO {
      * asegurando que se actualice correctamente el stock después de que se haya
      * procesado una comanda.
      *
-     * @param detallesDTO
+     * @param detallesDTO Lista de los detalles de una comanda
      */
     @Override
     public void restarStockIngredientesPorProductosComandaBO(List<NuevoDetalleComandaDTO> detallesDTO) {
@@ -420,8 +431,8 @@ public class ComandaBO implements IComandaBO {
      * detalles de las comandas, asegurando que se mantenga la información
      * correcta y actualizada.
      *
-     * @param detalleDTO
-     * @param nuevaNota
+     * @param detalleDTO Lista de los detalles de una comanda
+     * @param nuevaNota crea una nueva nota
      */
     @Override
     public void modificarNotaBO(NuevoDetalleComandaDTO detalleDTO, String nuevaNota) {
@@ -450,7 +461,7 @@ public class ComandaBO implements IComandaBO {
      * Este método es esencial para obtener un listado completo de todas las
      * comandas, permitiendo a los usuarios ver toda la información disponible.
      *
-     * @return
+     * @return regresa todas las comandas
      */
     @Override
     public List<Comanda> mostrarComandasTodasBO() {
@@ -472,7 +483,7 @@ public class ComandaBO implements IComandaBO {
      * no han sido cerradas, permitiendo a los usuarios gestionar las comandas
      * activas.
      *
-     * @return
+     * @return regresa todas las comandas con estado abierta
      */
     @Override
     public List<Comanda> mostrarComandasAbiertasBO() {
@@ -509,9 +520,9 @@ public class ComandaBO implements IComandaBO {
      * de fechas específico, facilitando la gestión y consulta de datos en el
      * sistema.
      *
-     * @param fechaInicio
-     * @param fechaFin
-     * @return
+     * @param fechaInicio manda un fecha para iniciar el filtro
+     * @param fechaFin manda una fecha para terminar el filtro
+     * @return regresa las comandas en ese rango de fechas
      */
     @Override
     public List<Comanda> filtrarPorFecha(Calendar fechaInicio, Calendar fechaFin) {
@@ -553,9 +564,9 @@ public class ComandaBO implements IComandaBO {
      * específica en el sistema, manejando adecuadamente las excepciones que
      * puedan surgir durante el proceso de búsqueda.
      *
-     * @param folio
-     * @return
-     * @throws NegocioException
+     * @param folio para obtener comandas
+     * @return regresa la comanda por el folio
+     * @throws NegocioException Errores de negocio
      */
     @Override
     public Comanda obtenerComandaPorFolioBO(String folio) throws NegocioException {
@@ -589,9 +600,9 @@ public class ComandaBO implements IComandaBO {
      * comanda en el sistema, manejando adecuadamente las excepciones que puedan
      * surgir durante el proceso de recuperación.
      *
-     * @param comanda
-     * @return
-     * @throws NegocioException
+     * @param comanda Obtiene una comanda
+     * @return La lista de detalles de una comanda
+     * @throws NegocioException Errores de negocio
      */
     @Override
     public List<DetalleComanda> obtenerListaDetallesComandaBO(Comanda comanda) throws NegocioException {
@@ -623,9 +634,10 @@ public class ComandaBO implements IComandaBO {
      * Este método es esencial para mantener actualizada la información de los
      * clientes frecuentes, permitiendo gestionar sus puntos y visitas de manera
      * efectiva.
-     * 
-     * @param idCliente
-     * @param totalGastado 
+     *
+     * @param idCliente consigue el id del client
+     * @param totalGastado consigue el total gastado hasta el momento del
+     * cliente
      */
     @Override
     public void actualizarClienteFrecuente(Long idCliente, double totalGastado) {
@@ -635,13 +647,13 @@ public class ComandaBO implements IComandaBO {
         ClientesDAO clientesDAO = new ClientesDAO();
         clientesDAO.actualizarClienteFrecuente(idCliente, puntos, visitas, totalGastado);
     }
-    
+
     /**
      * Este metodo se encarga de calcular el total de todas las comandas
      * existentes, basandose en el total de cada una de las comandas
-     * 
-     * @return
-     * @throws NegocioException 
+     *
+     * @return regresa el total de las comandas precios
+     * @throws NegocioException Errores de negocio
      */
     @Override
     public double calcularTotalDeTodasLasComandas() throws NegocioException {
@@ -651,15 +663,15 @@ public class ComandaBO implements IComandaBO {
             throw new NegocioException("Error al calcular el total de todas las comandas", e);
         }
     }
-    
+
     /**
      * Este metodo se encarga de calcular el total de todas las comandas
      * existentes, basandose en el total de cada una de las comandas
-     * 
-     * @param fechaInicio
-     * @param fechaFin
-     * @return
-     * @throws NegocioException 
+     *
+     * @param fechaInicio consigue la fecha de inicio para el rango
+     * @param fechaFin consigue la fecha de fin para el rango
+     * @return regresa el total calculado en un rango de fechas selecto
+     * @throws NegocioException Errores de negocio
      */
     @Override
     public double calcularTotalDeComandasPorFechas(Date fechaInicio, Date fechaFin) throws NegocioException {

@@ -81,9 +81,9 @@ public class ComandasDAO implements IComandasDAO {
      * asegurando que todos los detalles y relaciones se manejen correctamente,
      * lo que permite un seguimiento adecuado de las órdenes de los clientes.
      *
-     * @param comandaDTO
-     * @param detallesDTO
-     * @return
+     * @param comandaDTO comanda DTO
+     * @param detallesDTO detalles comanda DTO
+     * @return regresa una nueva comanda
      */
     @Override
     public Comanda registrarComanda(NuevaComandaDTO comandaDTO, List<NuevoDetalleComandaDTO> detallesDTO) {
@@ -146,7 +146,7 @@ public class ComandasDAO implements IComandasDAO {
      * formato deseado. 3. Se utiliza el `CriteriaBuilder` para construir una
      * consulta que cuenta cuántas comandas se han registrado en la misma fecha.
      * - Se crea un `CriteriaQuery` que devuelve un valor de tipo `Long`. - Se
-     * define la raíz de la consulta (`Root<Comanda>`) y se establece un
+     * define la raíz de la consulta (`Root Comanda`) y se establece un
      * `Predicate` que compara la fecha de la comanda (`fechaHora`) con la fecha
      * actual, utilizando la función `DATE` para asegurarse de que solo se
      * comparen las fechas sin considerar la hora. 4. Se ejecuta la consulta y
@@ -161,7 +161,7 @@ public class ComandasDAO implements IComandasDAO {
      * fácilmente identificable, lo que facilita el seguimiento y la gestión de
      * las órdenes en el sistema.
      *
-     * @return
+     * @return regresa un folio
      */
     @Override
     public String generarFolioComanda() {
@@ -208,8 +208,8 @@ public class ComandasDAO implements IComandasDAO {
      * productos y que se manejen adecuadamente los casos en los que un producto
      * no se encuentra en el sistema.
      *
-     * @param detalleDTO
-     * @return
+     * @param detalleDTO detalles DTO
+     * @return regresa el total de una comanda
      */
     @Override
     public double calcularTotalDetalleComanda(NuevoDetalleComandaDTO detalleDTO) {
@@ -238,8 +238,8 @@ public class ComandasDAO implements IComandasDAO {
      * asegurando que se consideren todos los detalles y sus respectivos
      * totales, lo que permite una gestión precisa de los costos en el sistema.
      *
-     * @param detallesDTO
-     * @return
+     * @param detallesDTO lista de detalles de una comanda
+     * @return regresa el total de una comanda
      */
     @Override
     public double calcularTotalComanda(List<NuevoDetalleComandaDTO> detallesDTO) {
@@ -292,9 +292,9 @@ public class ComandasDAO implements IComandasDAO {
      * modificar tanto sus detalles como sus propiedades generales, lo que
      * facilita la gestión de las órdenes en el sistema.
      *
-     * @param comandaDTO
-     * @param nuevosDetallesDTO
-     * @return
+     * @param comandaDTO comanda
+     * @param nuevosDetallesDTO lista de los detalles de una comanda
+     * @return regresa una comanda modificada
      */
     @Override
     public Comanda modificarComanda(NuevaComandaDTO comandaDTO, List<NuevoDetalleComandaDTO> nuevosDetallesDTO) {
@@ -376,7 +376,7 @@ public class ComandasDAO implements IComandasDAO {
      * sistema, lo que permite una gestión adecuada de las órdenes y la
      * capacidad de corregir errores o cancelar pedidos según sea necesario.
      *
-     * @param comandaDTO
+     * @param comandaDTO comanda DTO
      */
     @Override
     public void eliminarComanda(NuevaComandaDTO comandaDTO) {
@@ -431,7 +431,7 @@ public class ComandasDAO implements IComandasDAO {
      * marcar una comanda como cancelada, lo que es esencial para el control de
      * pedidos y la atención al cliente en el sistema.
      *
-     * @param folio
+     * @param folio manda un folio
      */
     @Override
     public void cambiarEstadoComandaACancelada(String folio) {
@@ -476,7 +476,7 @@ public class ComandasDAO implements IComandasDAO {
      * marcar una comanda como entregada, lo que es esencial para el control de
      * pedidos y la atención al cliente en el sistema.
      *
-     * @param folio
+     * @param folio manda un folio
      */
     @Override
     public void cambiarEstadoComandaAEntregada(String folio) {
@@ -508,7 +508,7 @@ public class ComandasDAO implements IComandasDAO {
      * 1. Se obtiene un `EntityManager` a través de `ManejadorConexiones` para
      * gestionar la conexión a la base de datos. 2. Se crean instancias de
      * `IngredientesDAO` y `ProductosDAO` para acceder a la información de
-     * ingredientes y productos. 3. Se inicializa un `Map<String, Double>`
+     * ingredientes y productos. 3. Se inicializa un `Map String, Double`
      * llamado `ingredientesNecesarios` para almacenar la cantidad total de cada
      * ingrediente necesario, utilizando una clave que combina el nombre del
      * ingrediente y su unidad de medida. 4. Se itera sobre la lista de detalles
@@ -539,8 +539,8 @@ public class ComandasDAO implements IComandasDAO {
      * necesarios antes de procesar una comanda, lo que ayuda a evitar problemas
      * de falta de stock durante la preparación de los platillos.
      *
-     * @param detallesDTO
-     * @return
+     * @param detallesDTO detalles de una comanda
+     * @return regresa la verificacion si necesita un producto
      */
     @Override
     public boolean verificarStockNecesarioProductos(List<NuevoDetalleComandaDTO> detallesDTO) {
@@ -603,7 +603,7 @@ public class ComandasDAO implements IComandasDAO {
      * gestionar la conexión a la base de datos y se inicia una transacción con
      * `em.getTransaction().begin()`. 2. Se crean instancias de
      * `IngredientesDAO` y `ProductosDAO` para acceder a la información de
-     * ingredientes y productos. 3. Se inicializa un `Map<String, Double>`
+     * ingredientes y productos. 3. Se inicializa un `Map String, Double`
      * llamado `ingredientesPorRestar` para almacenar la cantidad total de cada
      * ingrediente que se debe restar, utilizando una clave que combina el
      * nombre del ingrediente y su unidad de medida. 4. Se itera sobre la lista
@@ -641,7 +641,7 @@ public class ComandasDAO implements IComandasDAO {
      * ingredientes en el sistema, asegurando que se actualice correctamente
      * cada vez que se procesa una comanda.
      *
-     * @param detallesDTO
+     * @param detallesDTO manda los detalles de una comanda
      */
     @Override
     public void restarStockIngredientesPorProductosComanda(List<NuevoDetalleComandaDTO> detallesDTO) {
@@ -710,7 +710,7 @@ public class ComandasDAO implements IComandasDAO {
      * gestiona la conexión a la base de datos. 2. Se define una consulta JPQL
      * (Java Persistence Query Language) que selecciona todas las instancias de
      * la entidad `Comanda` mediante la instrucción `SELECT c FROM Comanda c`.
-     * 3. Se crea un `TypedQuery<Comanda>` utilizando el `EntityManager` y la
+     * 3. Se crea un `TypedQuery Comanda` utilizando el `EntityManager` y la
      * consulta definida. 4. Se ejecuta la consulta con `query.getResultList()`,
      * que devuelve una lista de todas las comandas encontradas en la base de
      * datos. 5. Finalmente, se cierra el `EntityManager` en el bloque `finally`
@@ -721,7 +721,7 @@ public class ComandasDAO implements IComandasDAO {
      * interfaz de usuario o para realizar análisis sobre las órdenes procesadas
      * en el sistema.
      *
-     * @return
+     * @return regresa una lista de comandas
      */
     @Override
     public List<Comanda> mostrarComandasTodas() {
@@ -750,7 +750,7 @@ public class ComandasDAO implements IComandasDAO {
      * buscar el `DetalleComanda` que coincide con el folio de la comanda, el
      * producto, la cantidad y el precio unitario. La consulta se define como un
      * bloque de texto (string multilinea). 5. Se crea un
-     * `TypedQuery<DetalleComanda>` utilizando el `EntityManager` y la consulta
+     * `TypedQuery DetalleComanda` utilizando el `EntityManager` y la consulta
      * definida, y se establecen los parámetros necesarios. 6. Se ejecuta la
      * consulta y se obtiene el primer resultado utilizando
      * `query.getResultStream().findFirst()`. Si no se encuentra el detalle, se
@@ -770,8 +770,8 @@ public class ComandasDAO implements IComandasDAO {
      * comanda, permitiendo a los usuarios realizar cambios en las instrucciones
      * o comentarios asociados a un producto específico en una comanda.
      *
-     * @param detalleDTO
-     * @param nuevaNota
+     * @param detalleDTO manda los detalles de una comanda
+     * @param nuevaNota manda un nueva nota
      */
     @Override
     public void modificarNota(NuevoDetalleComandaDTO detalleDTO, String nuevaNota) {
@@ -822,7 +822,7 @@ public class ComandasDAO implements IComandasDAO {
      * gestiona la conexión a la base de datos. 2. Se define una consulta JPQL
      * (Java Persistence Query Language) que selecciona todas las instancias de
      * la entidad `Comanda` donde el estado es igual a `EstadoComanda.ABIERTA`.
-     * 3. Se crea un `TypedQuery<Comanda>` utilizando el `EntityManager` y la
+     * 3. Se crea un `TypedQuery Comanda` utilizando el `EntityManager` y la
      * consulta definida. 4. Se establece el parámetro `estado` con el valor
      * `EstadoComanda.ABIERTA` para filtrar las comandas que están abiertas. 5.
      * Se ejecuta la consulta con `query.getResultList()`, que devuelve una
@@ -835,7 +835,7 @@ public class ComandasDAO implements IComandasDAO {
      * pedidos en curso y para facilitar el seguimiento de las órdenes en el
      * sistema.
      *
-     * @return
+     * @return regresa una lista de comandas abiertas
      */
     @Override
     public List<Comanda> mostrarComandasAbiertas() {
@@ -860,7 +860,7 @@ public class ComandasDAO implements IComandasDAO {
      * (Java Persistence Query Language) que selecciona todas las instancias de
      * la entidad `Comanda` donde la fecha y hora de la comanda (`fechaHora`) se
      * encuentra entre dos fechas: `fechaInicio` y `fechaFin`. 3. Se crea un
-     * `TypedQuery<Comanda>` utilizando el `EntityManager` y la consulta
+     * `TypedQuery Comanda` utilizando el `EntityManager` y la consulta
      * definida. 4. Se establecen los parámetros `fechaInicio` y `fechaFin` en
      * la consulta para filtrar las comandas según el rango de fechas
      * proporcionado. 5. Se ejecuta la consulta con `query.getResultList()`, que
@@ -871,9 +871,9 @@ public class ComandasDAO implements IComandasDAO {
      * creadas dentro de un rango de fechas determinado, lo que puede ser útil
      * para informes, análisis de ventas o auditorías en el sistema.
      *
-     * @param fechaInicio
-     * @param fechaFin
-     * @return
+     * @param fechaInicio manda una fecha de inicio
+     * @param fechaFin manda una fecha de fin
+     * @return regresa una lista de comandas en ese rango de fechas
      */
     @Override
     public List<Comanda> filtrarPorFecha(Calendar fechaInicio, Calendar fechaFin) {
@@ -895,7 +895,7 @@ public class ComandasDAO implements IComandasDAO {
      * gestiona la conexión a la base de datos. 2. Se define una consulta JPQL
      * (Java Persistence Query Language) que selecciona la instancia de la
      * entidad `Comanda` donde el folio coincide con el folio proporcionado. 3.
-     * Se crea un `TypedQuery<Comanda>` utilizando el `EntityManager` y la
+     * Se crea un `TypedQuery Comanda` utilizando el `EntityManager` y la
      * consulta definida. 4. Se establece el parámetro `folio` en la consulta
      * para filtrar la comanda deseada. 5. Se ejecuta la consulta con
      * `query.getSingleResult()`, que intenta recuperar una única comanda que
@@ -909,9 +909,9 @@ public class ComandasDAO implements IComandasDAO {
      * sistema utilizando su folio, lo que permite acceder a la información de
      * la comanda de manera eficiente.
      *
-     * @param folio
-     * @return
-     * @throws PersistenciaException
+     * @param folio manda un folio
+     * @return regresa una comanda
+     * @throws PersistenciaException Errores de persistencia
      */
     @Override
     public Comanda obtenerComandaPorFolio(String folio) throws PersistenciaException {
@@ -937,7 +937,7 @@ public class ComandasDAO implements IComandasDAO {
      * (Java Persistence Query Language) que selecciona todas las instancias de
      * la entidad `DetalleComanda` donde el ID de la comanda coincide con el ID
      * de la comanda proporcionada como parámetro. 3. Se crea un
-     * `TypedQuery<DetalleComanda>` utilizando el `EntityManager` y la consulta
+     * `TypedQuery DetalleComanda` utilizando el `EntityManager` y la consulta
      * definida. 4. Se establece el parámetro `idComanda` en la consulta
      * utilizando el ID de la comanda proporcionada (`comanda.getId()`). 5. Se
      * ejecuta la consulta con `query.getResultList()`, que devuelve una lista
@@ -950,9 +950,9 @@ public class ComandasDAO implements IComandasDAO {
      * productos y servicios incluidos en una comanda específica, lo que permite
      * gestionar y visualizar los elementos de la comanda de manera efectiva.
      *
-     * @param comanda
-     * @return
-     * @throws PersistenciaException
+     * @param comanda manda una comanda
+     * @return regresa una lista de los detalles de una comanda
+     * @throws PersistenciaException Error persistencias
      */
     @Override
     public List<DetalleComanda> obtenerListaDetallesComanda(Comanda comanda) throws PersistenciaException {
@@ -970,8 +970,8 @@ public class ComandasDAO implements IComandasDAO {
     /**
      * Metodo para calcular el total de todas las comandas
      *
-     * @return
-     * @throws PersistenciaException
+     * @return regresa el total de todas las comandas
+     * @throws PersistenciaException Error persistencias
      */
     @Override
     public double calcularTotalDeTodasLasComandas() throws PersistenciaException {
@@ -990,10 +990,10 @@ public class ComandasDAO implements IComandasDAO {
      * Metodo para calcular el total de las comandas utilizando dos filtros de
      * fechas
      *
-     * @param fechaInicio
-     * @param fechaFin
-     * @return
-     * @throws PersistenciaException
+     * @param fechaInicio fecha de inicio
+     * @param fechaFin fecha de fin
+     * @return regresa el total de las comanda que esten en ese rango de fechas
+     * @throws PersistenciaException Error de persistencias
      */
     @Override
     public double calcularTotalDeComandasPorFechas(Date fechaInicio, Date fechaFin) throws PersistenciaException {
