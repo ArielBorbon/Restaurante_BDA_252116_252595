@@ -15,6 +15,7 @@ import Entidades.Comandas.DetalleComanda;
 import Entidades.Comandas.EstadoComanda;
 import Fabricas.FabricaComandas;
 import Fabricas.FabricaMesas;
+import Menu.MenuModulos;
 import ModuloComandas.AñadirComanda.AñadirComanda;
 import ModuloComandas.ModificarComanda.ModificarComanda;
 import java.awt.Color;
@@ -30,10 +31,21 @@ import javax.swing.JOptionPane;
 public class ModuloPrincipalComandas extends javax.swing.JFrame {
 
     private FormTablaComandas formTablaComanda = new FormTablaComandas();
-
+    
+    private String rol;
+    
     /**
      * Creates new form ModuloPrincipalComandas
+     * @param rol
      */
+    public ModuloPrincipalComandas(String rol) {
+        initComponents();
+        pnlTabla.add(formTablaComanda);
+        formTablaComanda.setVisible(true);
+        getContentPane().setBackground(new Color(0xe71d1d));
+        this.rol = rol;
+    }
+    
     public ModuloPrincipalComandas() {
         initComponents();
         pnlTabla.add(formTablaComanda);
@@ -331,6 +343,8 @@ public class ModuloPrincipalComandas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMarcarComoCompletadaActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        MenuModulos menu = new MenuModulos(rol);
+        menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 

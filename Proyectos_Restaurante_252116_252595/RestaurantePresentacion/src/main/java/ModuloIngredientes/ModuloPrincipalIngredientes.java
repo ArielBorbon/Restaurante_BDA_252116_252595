@@ -7,6 +7,7 @@ package ModuloIngredientes;
 import BO.IngredienteBO.IngredienteBO;
 import DTOS.Ingredientes.NuevoIngredienteDTO;
 import Fabricas.FabricaIngredientes;
+import Menu.MenuModulos;
 import NegocioException.NegocioException;
 import java.awt.Color;
 import java.util.logging.Level;
@@ -22,12 +23,23 @@ import javax.swing.JTable;
 public class ModuloPrincipalIngredientes extends javax.swing.JFrame {
 
     private FormIngredientesTabla formTabla = new FormIngredientesTabla();
-
+    
+    private String rol;
+    
     /**
      * Creates new form Ingredientes
      *
+     * @param rol
      * @throws NegocioException.NegocioException
      */
+    public ModuloPrincipalIngredientes(String rol) throws NegocioException {
+        initComponents();
+        formTabla.setVisible(true);
+        this.pnlFormIngredientes.add(formTabla);
+        getContentPane().setBackground(new Color(0xb8893c));
+        this.rol = rol;
+    }
+    
     public ModuloPrincipalIngredientes() throws NegocioException {
         initComponents();
         formTabla.setVisible(true);
@@ -276,6 +288,8 @@ public class ModuloPrincipalIngredientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarIngredienteActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        MenuModulos menu = new MenuModulos(rol);
+        menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 

@@ -21,7 +21,8 @@ import java.util.logging.Logger;
 public class MenuModulos extends javax.swing.JFrame {
 
     private String rol;
-
+    
+    
     /**
      * Creates new form MenuModulos
      */
@@ -172,7 +173,7 @@ public class MenuModulos extends javax.swing.JFrame {
 
     private void btnIngredientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngredientesActionPerformed
         try {
-            ModuloPrincipalIngredientes moduloIngredientes = new ModuloPrincipalIngredientes();
+            ModuloPrincipalIngredientes moduloIngredientes = new ModuloPrincipalIngredientes(this.rol);
             moduloIngredientes.setVisible(true);
             this.dispose();
         } catch (NegocioException ex) {
@@ -182,8 +183,9 @@ public class MenuModulos extends javax.swing.JFrame {
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
         try {
-            ModuloPrincipalProductos moduloProductos = new ModuloPrincipalProductos();
-            moduloProductos.setVisible(rootPaneCheckingEnabled);
+            ModuloPrincipalProductos moduloProductos = new ModuloPrincipalProductos(this.rol);
+            moduloProductos.setVisible(true);
+            dispose();
         } catch (NegocioException ex) {
             Logger.getLogger(MenuModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -192,16 +194,18 @@ public class MenuModulos extends javax.swing.JFrame {
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         try {
-            ModuloPrincipalClientes moduloClientes = new ModuloPrincipalClientes();
+            ModuloPrincipalClientes moduloClientes = new ModuloPrincipalClientes(this.rol);
             moduloClientes.setVisible(true);
+            dispose();
         } catch (NegocioException ex) {
         }
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnComandasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComandasActionPerformed
 
-        ModuloPrincipalComandas moduloComanda = new ModuloPrincipalComandas();
+        ModuloPrincipalComandas moduloComanda = new ModuloPrincipalComandas(this.rol);
         moduloComanda.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnComandasActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed

@@ -8,6 +8,7 @@ import BO.ClienteBO.ClienteBO;
 import DAO.Clientes.Encriptador;
 import Entidades.Clientes.Cliente;
 import Fabricas.FabricaClientes;
+import Menu.MenuModulos;
 import NegocioException.NegocioException;
 import java.awt.Color;
 import java.awt.Font;
@@ -24,6 +25,17 @@ import java.util.logging.Logger;
 public class ModuloPrincipalClientes extends javax.swing.JFrame {
 
     private final FormClientesTabla formClientesTabla = new FormClientesTabla();
+
+    private String rol;
+
+    public ModuloPrincipalClientes(String rol) throws NegocioException {
+        initComponents();
+        formClientesTabla.setVisible(true);
+        this.pnlFormClientes.add(formClientesTabla);
+        getContentPane().setBackground(new Color(0x4dd3e0));
+        this.rol = rol;
+
+    }
 
     public ModuloPrincipalClientes() throws NegocioException {
         initComponents();
@@ -185,6 +197,8 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarClienteActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        MenuModulos menu = new MenuModulos(rol);
+        menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
@@ -211,7 +225,7 @@ public class ModuloPrincipalClientes extends javax.swing.JFrame {
                 try {
                     telefonoDesencriptado = Encriptador.desencriptar(cliente.getNumTelefono());
                 } catch (Exception e) {
-                    e.printStackTrace(); 
+                    e.printStackTrace();
                 }
 
                 if (telefonoFiltro.isEmpty() || telefonoDesencriptado.contains(telefonoFiltro)) {

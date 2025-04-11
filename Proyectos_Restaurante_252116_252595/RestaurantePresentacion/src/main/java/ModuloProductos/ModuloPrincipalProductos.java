@@ -10,6 +10,7 @@ import DTOS.Productos.NuevoProductoDTO;
 import Entidades.Productos.Producto;
 import Entidades.Productos.Tipo_Producto;
 import Fabricas.FabricaProductos;
+import Menu.MenuModulos;
 import ModuloProductos.ModificarProducto.ModificarProducto;
 import NegocioException.NegocioException;
 import java.awt.Color;
@@ -26,20 +27,29 @@ import javax.swing.JOptionPane;
 public class ModuloPrincipalProductos extends javax.swing.JFrame {
 
     private FormProductosTablaTodos formTabla = new FormProductosTablaTodos();
-
+    
+    private String rol;
+    
     /**
      * Creates new form ModuloPrincipalProductos
      *
+     * @param rol
      * @throws NegocioException.NegocioException
      */
+    public ModuloPrincipalProductos(String rol) throws NegocioException {
+        initComponents();
+        formTabla.setVisible(true);
+        this.jPanel1.add(formTabla);
+        getContentPane().setBackground(new Color(0x78f332));
+        this.rol = rol;
+    }
+    
     public ModuloPrincipalProductos() throws NegocioException {
         initComponents();
         formTabla.setVisible(true);
         this.jPanel1.add(formTabla);
         getContentPane().setBackground(new Color(0x78f332));
-
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -352,6 +362,8 @@ public class ModuloPrincipalProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeshabilitarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        MenuModulos menu = new MenuModulos(rol);
+        menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
