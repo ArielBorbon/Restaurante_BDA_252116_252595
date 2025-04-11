@@ -295,7 +295,11 @@ public class AñadirProducto extends javax.swing.JFrame {
             DefaultTableModel modelo = (DefaultTableModel) tblTablaIngredientesHastaElMomento.getModel();
 
             if (modelo.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this, "Debes agregar al menos un ingrediente.");
+                JOptionPane.showMessageDialog(this, "Producto Agregado Correctamente.");
+                ProductoBO productoBO = FabricaProductos.crearProductoBO();
+                productoBO.registrarProductoBO(productoDTO);
+                formProductosTablaTodos.cargarProductosEnTablaTodosExterno();
+                dispose();
                 return;
             }
 
