@@ -31,6 +31,12 @@ import javax.persistence.criteria.Root;
 public class ClientesDAO implements IClientesDAO {
 
     /**
+     * Constructo de clientes DAO
+     */
+    public ClientesDAO() {
+    }
+    
+    /**
      * Metodo para registrar cliente en la base de datos
      *
      * @param nuevoClienteDTO manda un nuevo cliente DTO

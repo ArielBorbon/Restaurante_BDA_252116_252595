@@ -172,7 +172,7 @@ public class ComandaBO implements IComandaBO {
      * actualizando su información y detalles.
      *
      * 1. **Método**: `modificarComandaBO(NuevaComandaDTO comandaDTO,
-     * List<NuevoDetalleComandaDTO> detallesDTO)` 2. **Parámetros**: -
+     * List NuevoDetalleComandaDTO detallesDTO)` 2. **Parámetros**: -
      * `comandaDTO`: Un objeto de tipo `NuevaComandaDTO` que contiene la
      * información de la comanda a modificar, incluyendo su folio. -
      * `detallesDTO`: Una lista de objetos de tipo `NuevoDetalleComandaDTO` que
@@ -335,7 +335,7 @@ public class ComandaBO implements IComandaBO {
      * para los productos incluidos en los detalles de una comanda.
      *
      * 1. **Método**:
-     * `verificarStockNecesarioProductosBO(List<NuevoDetalleComandaDTO>
+     * `verificarStockNecesarioProductosBO(List NuevoDetalleComandaDTO
      * detallesDTO)` 2. **Parámetro**: - `detallesDTO`: Una lista de objetos de
      * tipo `NuevoDetalleComandaDTO` que representan los detalles de los
      * productos cuya disponibilidad de stock se desea verificar. 3. **Tipo de
@@ -372,7 +372,7 @@ public class ComandaBO implements IComandaBO {
      * para los productos incluidos en los detalles de una comanda.
      *
      * 1. **Método**:
-     * `restarStockIngredientesPorProductosComandaBO(List<NuevoDetalleComandaDTO>
+     * `restarStockIngredientesPorProductosComandaBO(List NuevoDetalleComandaDTO
      * detallesDTO)` 2. **Parámetro**: - `detallesDTO`: Una lista de objetos de
      * tipo `NuevoDetalleComandaDTO` que representan los detalles de los
      * productos para los cuales se desea restar el stock de ingredientes. 3.
@@ -453,7 +453,7 @@ public class ComandaBO implements IComandaBO {
      * existentes en el sistema.
      *
      * 1. **Método**: `mostrarComandasTodasBO()` 2. **Tipo de retorno**:
-     * `List<Comanda>` 3. **Funcionalidad**: - Se crea una instancia de
+     * `List Comanda` 3. **Funcionalidad**: - Se crea una instancia de
      * `ComandasDAO`. - Se llama al método `mostrarComandasTodas` del
      * `comandasDAO`, que devuelve una lista de todas las comandas registradas
      * en el sistema.
@@ -474,7 +474,7 @@ public class ComandaBO implements IComandaBO {
      * están actualmente abiertas en el sistema.
      *
      * 1. **Método**: `mostrarComandasAbiertasBO()` 2. **Tipo de retorno**:
-     * `List<Comanda>` 3. **Funcionalidad**: - Se crea una instancia de
+     * `List Comanda` 3. **Funcionalidad**: - Se crea una instancia de
      * `ComandasDAO`. - Se llama al método `mostrarComandasAbiertas` del
      * `comandasDAO`, que devuelve una lista de todas las comandas que están en
      * estado abierto.
@@ -500,7 +500,7 @@ public class ComandaBO implements IComandaBO {
      * representa la fecha de inicio del rango para filtrar las comandas. -
      * `fechaFin`: Un objeto de tipo `Calendar` que representa la fecha de fin
      * del rango para filtrar las comandas. 3. **Tipo de retorno**:
-     * `List<Comanda>` 4. **Excepciones**: - Lanza `IllegalArgumentException` si
+     * `List Comanda` 4. **Excepciones**: - Lanza `IllegalArgumentException` si
      * `fechaInicio` o `fechaFin` son `null`, indicando que ambas fechas son
      * necesarias para realizar el filtrado. - Lanza `IllegalArgumentException`
      * si `fechaInicio` es posterior a `fechaFin`, indicando que el rango de
@@ -584,7 +584,7 @@ public class ComandaBO implements IComandaBO {
      * 1. **Método**: `obtenerListaDetallesComandaBO(Comanda comanda)` 2.
      * **Parámetro**: - `comanda`: Un objeto de tipo `Comanda` que representa la
      * comanda de la cual se desea obtener la lista de detalles. 3. **Tipo de
-     * retorno**: `List<DetalleComanda>` 4. **Excepciones**: - Lanza
+     * retorno**: `List DetalleComanda` 4. **Excepciones**: - Lanza
      * `NegocioException` si ocurre un error al recuperar los detalles de la
      * comanda, específicamente si se produce una `PersistenciaException`
      * durante la operación de recuperación.

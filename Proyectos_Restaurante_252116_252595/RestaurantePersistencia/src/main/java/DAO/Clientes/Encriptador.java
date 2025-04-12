@@ -21,6 +21,13 @@ public class Encriptador {
     private static final String ALGORITMO = "AES";
 
     /**
+     * Costructor de encriptador
+     *
+     */
+    public Encriptador() {
+    }
+
+    /**
      * Metodo para encriptar
      *
      * @param texto manda un string

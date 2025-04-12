@@ -26,6 +26,12 @@ import javax.persistence.criteria.Root;
 public class MesasDAO implements IMesasDAO {
 
     /**
+     * Constructor de mesas DAO
+     */
+    public MesasDAO() {
+    }
+
+    /**
      * Este método permite crear una nueva mesa en el sistema utilizando la
      * información proporcionada en un objeto `NuevaMesaDTO`.1.Se obtiene un
      * `EntityManager` a través de `ManejadorConexiones`, que gestiona la
@@ -84,7 +90,7 @@ public class MesasDAO implements IMesasDAO {
      * el `CriteriaBuilder` para construir una consulta que busca una mesa
      * (`Mesa`) en la base de datos cuyo número de mesa coincida con el valor
      * proporcionado en el objeto `nuevaMesaDTO`. - Se crea un `CriteriaQuery`
-     * para la entidad `Mesa`. - Se define la raíz de la consulta (`Root<Mesa>`)
+     * para la entidad `Mesa`. - Se define la raíz de la consulta (`Root Mesa`)
      * y se establece la condición de búsqueda utilizando `cb.equal()`. 4. Se
      * ejecuta la consulta y se obtiene la mesa correspondiente utilizando
      * `entityManager.createQuery(cq).getSingleResult()`. 5. Se elimina la mesa
@@ -136,7 +142,7 @@ public class MesasDAO implements IMesasDAO {
      * `CriteriaBuilder` para construir una consulta que busca una mesa (`Mesa`)
      * en la base de datos cuyo número de mesa coincida con el valor
      * proporcionado en el objeto `nuevaMesaDTO`. - Se crea un `CriteriaQuery`
-     * para la entidad `Mesa`. - Se define la raíz de la consulta (`Root<Mesa>`)
+     * para la entidad `Mesa`. - Se define la raíz de la consulta (`Root Mesa `)
      * y se establece la condición de búsqueda utilizando `cb.equal()`. 4. Se
      * ejecuta la consulta y se obtiene la mesa correspondiente utilizando
      * `entityManager.createQuery(cq).getSingleResult()`. 5. Se cambia el estado
@@ -193,7 +199,7 @@ public class MesasDAO implements IMesasDAO {
      * `CriteriaBuilder` para construir una consulta que busca una mesa (`Mesa`)
      * en la base de datos cuyo número de mesa coincida con el valor
      * proporcionado en el objeto `nuevaMesaDTO`. - Se crea un `CriteriaQuery`
-     * para la entidad `Mesa`. - Se define la raíz de la consulta (`Root<Mesa>`)
+     * para la entidad `Mesa`. - Se define la raíz de la consulta (`Root Mesa`)
      * y se establece la condición de búsqueda utilizando `cb.equal()`. 4. Se
      * ejecuta la consulta y se obtiene la mesa correspondiente utilizando
      * `entityManager.createQuery(cq).getSingleResult()`. 5. Se cambia el estado
@@ -248,7 +254,7 @@ public class MesasDAO implements IMesasDAO {
      * el número de comandas (`Comanda`) asociadas a la mesa cuyo número
      * coincide con el valor proporcionado en el parámetro `num_mesa`. - Se crea
      * un `CriteriaQuery` que devuelve un valor de tipo `Long`. - Se define la
-     * raíz de la consulta (`Root<Comanda>`) y se establece la condición de
+     * raíz de la consulta (`Root Comanda`) y se establece la condición de
      * búsqueda utilizando `cb.equal()`, que compara el número de mesa de la
      * comanda con el número de mesa proporcionado. 3. Se ejecuta la consulta y
      * se obtiene el conteo de comandas asociadas a la mesa utilizando
@@ -294,8 +300,8 @@ public class MesasDAO implements IMesasDAO {
      * una mesa (`Mesa`) en la base de datos cuyo número de mesa coincida con el
      * valor proporcionado en el parámetro `numMesa`. - Se crea un
      * `CriteriaQuery` para la entidad `Mesa`. - Se define la raíz de la
-     * consulta (`Root<Mesa>`) y se establece la condición de búsqueda
-     * utilizando `cb.equal()`. 3. Se ejecuta la consulta y se obtiene la mesa
+     * consulta (`Root Mesa`) y se establece la condición de búsqueda utilizando
+     * `cb.equal()`. 3. Se ejecuta la consulta y se obtiene la mesa
      * correspondiente utilizando
      * `entityManager.createQuery(cq).getSingleResult()`. 4. Si se encuentra la
      * mesa, se devuelve. Si no se encuentra, se lanza una excepción
@@ -339,8 +345,8 @@ public class MesasDAO implements IMesasDAO {
      * `CriteriaBuilder` para construir una consulta que busca todas las mesas
      * (`Mesa`) en la base de datos cuyo estado sea `DISPONIBLE`. - Se crea un
      * `CriteriaQuery` para la entidad `Mesa`. - Se define la raíz de la
-     * consulta (`Root<Mesa>`) y se establece la condición de búsqueda
-     * utilizando `cb.equal()`, que compara el estado de la mesa con
+     * consulta (`Root Mesa`) y se establece la condición de búsqueda utilizando
+     * `cb.equal()`, que compara el estado de la mesa con
      * `EstadoMesa.DISPONIBLE`. 3. Se ejecuta la consulta y se obtiene la lista
      * de mesas disponibles utilizando
      * `entityManager.createQuery(cq).getResultList()`. 4. Finalmente, se cierra
@@ -376,12 +382,11 @@ public class MesasDAO implements IMesasDAO {
      * `CriteriaBuilder` para construir una consulta que busca todas las mesas
      * (`Mesa`) en la base de datos cuyo estado sea `OCUPADA`. - Se crea un
      * `CriteriaQuery` para la entidad `Mesa`. - Se define la raíz de la
-     * consulta (`Root<Mesa>`) y se establece la condición de búsqueda
-     * utilizando `cb.equal()`, que compara el estado de la mesa con
-     * `EstadoMesa.OCUPADA`. 3. Se ejecuta la consulta y se obtiene la lista de
-     * mesas ocupadas utilizando `em.createQuery(cq).getResultList()`. 4.
-     * Finalmente, se cierra el `EntityManager` en el bloque `finally` para
-     * liberar recursos.
+     * consulta (`Root Mesa`) y se establece la condición de búsqueda utilizando
+     * `cb.equal()`, que compara el estado de la mesa con `EstadoMesa.OCUPADA`.
+     * 3. Se ejecuta la consulta y se obtiene la lista de mesas ocupadas
+     * utilizando `em.createQuery(cq).getResultList()`. 4. Finalmente, se cierra
+     * el `EntityManager` en el bloque `finally` para liberar recursos.
      *
      * Este método es útil para que los administradores y el personal puedan ver
      * rápidamente qué mesas están ocupadas, facilitando la gestión del espacio
@@ -412,7 +417,7 @@ public class MesasDAO implements IMesasDAO {
      * gestiona la conexión a la base de datos. 2. Se utiliza el
      * `CriteriaBuilder` para construir una consulta que busca todas las mesas
      * (`Mesa`) en la base de datos. - Se crea un `CriteriaQuery` para la
-     * entidad `Mesa`. - Se define la raíz de la consulta (`Root<Mesa>`) y se
+     * entidad `Mesa`. - Se define la raíz de la consulta (`Root Mesa`) y se
      * seleccionan todas las mesas sin aplicar ningún filtro. 3. Se ejecuta la
      * consulta y se obtiene la lista de todas las mesas utilizando
      * `entityManager.createQuery(cq).getResultList()`. 4. Finalmente, se cierra
@@ -449,19 +454,19 @@ public class MesasDAO implements IMesasDAO {
      * de datos que se realizarán. 3. Se utiliza el `CriteriaBuilder` para
      * construir una consulta que obtiene el número máximo de mesa (`num_mesa`)
      * existente en la base de datos. - Se crea un `CriteriaQuery` que devuelve
-     * un valor de tipo `Integer`. - Se define la raíz de la consulta
-     * (`Root<Mesa>`) y se selecciona el valor máximo del campo `num_mesa`
-     * utilizando `cb.max()`. 4. Se ejecuta la consulta y se obtiene el número
-     * máximo de mesa. Si no hay mesas existentes, se establece `maxNumMesa`
-     * como `null`, y se asigna `nuevoNumMesa` como 1 (o el siguiente número
-     * disponible). 5. Se crea una nueva instancia de `Mesa` y se le asigna el
-     * número de mesa (`nuevoNumMesa`) y el estado `DISPONIBLE`. 6. Se persiste
-     * la nueva mesa en la base de datos utilizando `em.persist(nuevaMesa)`. 7.
-     * Se confirma la transacción con `tx.commit()`, asegurando que los cambios
-     * se guarden de manera permanente. 8. Si ocurre cualquier excepción durante
-     * el proceso, se verifica si la transacción está activa y se realiza un
-     * rollback. Luego, se lanza la excepción original. 9. Finalmente, se cierra
-     * el `EntityManager` en el bloque `finally` para liberar recursos.
+     * un valor de tipo `Integer`. - Se define la raíz de la consulta (`Root
+     * Mesa`) y se selecciona el valor máximo del campo `num_mesa` utilizando
+     * `cb.max()`. 4. Se ejecuta la consulta y se obtiene el número máximo de
+     * mesa. Si no hay mesas existentes, se establece `maxNumMesa` como `null`,
+     * y se asigna `nuevoNumMesa` como 1 (o el siguiente número disponible). 5.
+     * Se crea una nueva instancia de `Mesa` y se le asigna el número de mesa
+     * (`nuevoNumMesa`) y el estado `DISPONIBLE`. 6. Se persiste la nueva mesa
+     * en la base de datos utilizando `em.persist(nuevaMesa)`. 7. Se confirma la
+     * transacción con `tx.commit()`, asegurando que los cambios se guarden de
+     * manera permanente. 8. Si ocurre cualquier excepción durante el proceso,
+     * se verifica si la transacción está activa y se realiza un rollback.
+     * Luego, se lanza la excepción original. 9. Finalmente, se cierra el
+     * `EntityManager` en el bloque `finally` para liberar recursos.
      *
      * Este método es útil para agregar nuevas mesas al sistema de manera
      * ordenada, asegurando que cada mesa tenga un número único y que su estado

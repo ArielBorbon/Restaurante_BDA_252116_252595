@@ -45,6 +45,10 @@ import javax.persistence.criteria.Root;
  */
 public class ComandasDAO implements IComandasDAO {
 
+    /**
+     * Constructor de comandas DAO
+     * 
+     */
     public ComandasDAO() {
     }
 

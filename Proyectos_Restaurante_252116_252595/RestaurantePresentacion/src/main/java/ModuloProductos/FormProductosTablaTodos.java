@@ -116,8 +116,8 @@ public class FormProductosTablaTodos extends javax.swing.JPanel {
      * productos, mostrando su nombre, precio, tipo y estado de
      * disponibilidad.1.
      *
-     * **Método**: `llenarTablaFiltrada(List<Producto> productos)` 2. **Tipo de
-     * retorno**: `void` 3. **Parámetros**: - `List<Producto> productos`: Lista
+     * **Método**: `llenarTablaFiltrada(List Producto productos)` 2. **Tipo de
+     * retorno**: `void` 3. **Parámetros**: - `List Producto productos`: Lista
      * de productos que se utilizará para llenar la tabla.
      *
      * 4. **Funcionalidad**: - Se define un arreglo de `String` llamado

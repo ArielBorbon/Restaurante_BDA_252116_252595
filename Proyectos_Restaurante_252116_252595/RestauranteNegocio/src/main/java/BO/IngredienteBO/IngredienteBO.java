@@ -189,7 +189,7 @@ public class IngredienteBO implements IIngredienteBO {
      * sistema, utilizando el objeto `ingredienteDAO`.1.
      *
      * **Método**: `obtenerListaIngredientesBO()` 2. **Tipo de retorno**:
-     * `List<Ingrediente>` 3. **Funcionalidad**: - Llama al método
+     * `List Ingrediente` 3. **Funcionalidad**: - Llama al método
      * `mostrarListaIngredientes()` del `ingredienteDAO`, que se espera que
      * devuelva una lista de objetos `Ingrediente` que representan todos los
      * ingredientes almacenados en la base de datos. - No se realizan
@@ -395,7 +395,7 @@ public class IngredienteBO implements IIngredienteBO {
      *
      * **Parámetro**: - `nombreProducto`: Un `String` que representa el nombre
      * del producto del cual se desean obtener los ingredientes. 3. **Tipo de
-     * retorno**: `List<Ingrediente>` 4. **Funcionalidad**: - Llama al método
+     * retorno**: `List Ingrediente` 4. **Funcionalidad**: - Llama al método
      * `obtenerIngredientesPorNombreProducto` del `ingredienteDAO`, que se
      * espera que devuelva una lista de objetos `Ingrediente` asociados al
      * producto especificado por `nombreProducto`. - Este método no incluye
@@ -428,7 +428,7 @@ public class IngredienteBO implements IIngredienteBO {
      * **Parámetro**: - `nombreProducto`: Un `String` que representa el nombre
      * del producto del cual se desean obtener los ingredientes y sus cantidades
      * necesarias. 3. **Tipo de retorno**:
-     * `List<IngredienteConCantidadNecesariaDTO>` 4. **Funcionalidad**: - Llama
+     * `List IngredienteConCantidadNecesariaDTO` 4. **Funcionalidad**: - Llama
      * al método `obtenerIngredientesConCantidadPorProducto` del
      * `ingredienteDAO`, que se espera que devuelva una lista de objetos
      * `IngredienteConCantidadNecesariaDTO` asociados al producto especificado

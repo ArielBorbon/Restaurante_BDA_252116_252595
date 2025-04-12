@@ -41,7 +41,7 @@ public class ProductoBO implements IProductoBO {
      * disponibles en el sistema.1.
      *
      * **Método**: `mostrarListaProductosDisponiblesBO()` 2. **Tipo de
-     * retorno**: `List<Producto>` 3. **Funcionalidad**: - Llama al método
+     * retorno**: `List Producto` 3. **Funcionalidad**: - Llama al método
      * `mostrarListaProductosDisponibles` del `productoDAO`, que se espera que
      * devuelva una lista de objetos `Producto` que están actualmente
      * disponibles. - Este método no incluye validaciones ni manejo de
@@ -67,7 +67,7 @@ public class ProductoBO implements IProductoBO {
      *
      * **Parámetro**: - `nombreFiltro`: Un `String` que representa el nombre o
      * parte del nombre del producto que se desea filtrar. 3. **Tipo de
-     * retorno**: `List<Producto>` 4. **Funcionalidad**: - Llama al método
+     * retorno**: `List Producto` 4. **Funcionalidad**: - Llama al método
      * `filtrarPorNombreProductoDisponibles` del `productoDAO`, pasando el
      * `nombreFiltro` para obtener una lista de productos que coincidan con el
      * filtro. - Este método no incluye validaciones ni manejo de excepciones.
@@ -91,7 +91,7 @@ public class ProductoBO implements IProductoBO {
      *
      * **Parámetro**: - `tipoFiltro`: Un objeto de tipo `Tipo_Producto` que
      * representa el tipo de producto que se desea filtrar. 3. **Tipo de
-     * retorno**: `List<Producto>` 4. **Funcionalidad**: - Llama al método
+     * retorno**: `List Producto` 4. **Funcionalidad**: - Llama al método
      * `filtrarPorTipoProductoDisponibles` del `productoDAO`, pasando el
      * `tipoFiltro` para obtener una lista de productos que coincidan con el
      * tipo especificado. - Este método no incluye validaciones ni manejo de
@@ -116,7 +116,7 @@ public class ProductoBO implements IProductoBO {
      * `String` que representa el nombre o parte del nombre del producto.
      *
      * - `tipoFiltro`: Un objeto de tipo `Tipo_Producto` que representa el tipo
-     * de producto. 3. **Tipo de retorno**: `List<Producto>` 4.
+     * de producto. 3. **Tipo de retorno**: `List Producto` 4.
      * **Funcionalidad**: - Llama al método
      * `filtrarPorNombreYTipoProductoDisponibles` del `productoDAO`, pasando
      * ambos filtros para obtener una lista de productos que coincidan con los
@@ -141,7 +141,7 @@ public class ProductoBO implements IProductoBO {
      * el sistema, independientemente de su estado.1.
      *
      * **Método**: `mostrarListaProductosTodosBO()` 2. **Tipo de retorno**:
-     * `List<Producto>` 3. **Funcionalidad**: - Llama al método
+     * `List Producto` 3. **Funcionalidad**: - Llama al método
      * `mostrarListaProductosTodos` del `productoDAO`, que se espera que
      * devuelva una lista de todos los objetos `Producto` registrados en el
      * sistema. - Este método no incluye validaciones ni manejo de excepciones.
@@ -277,7 +277,7 @@ public class ProductoBO implements IProductoBO {
      * Este método se encarga de registrar un nuevo producto junto con sus
      * ingredientes en el sistema.1.**Método**:
      * `registrarProductoConIngredientesBO(NuevoProductoDTO nuevoProducto,
-     * List<NuevoProductoOcupaIngredienteDTO>
+     * List NuevoProductoOcupaIngredienteDTO
      * listaProductoIngrediente)` 2.**Parámetros**: - `nuevoProducto`: Un objeto
      * de tipo `NuevoProductoDTO` que contiene la información del nuevo producto
      * a registrar.- `listaProductoIngrediente`: Una lista de objetos de tipo
@@ -351,7 +351,7 @@ public class ProductoBO implements IProductoBO {
      * Este método se encarga de modificar un producto existente en el sistema,
      * así como sus ingredientes asociados.1.**Método**:
      * `modificarProductoBO(NuevoProductoDTO nuevoProductoDTO,
-     * List<NuevoProductoOcupaIngredienteDTO> nuevosIngredientesDTO)`
+     * List NuevoProductoOcupaIngredienteDTO nuevosIngredientesDTO)`
      * 2.**Parámetros**: - `nuevoProductoDTO`: Un objeto de tipo
      * `NuevoProductoDTO` que contiene la información actualizada del producto a
      * modificar.- `nuevosIngredientesDTO`: Una lista de objetos de tipo
@@ -435,7 +435,7 @@ public class ProductoBO implements IProductoBO {
      *
      * Parámetro**: - `nombreFiltro`: Un `String` que representa el nombre o
      * parte del nombre del producto que se desea filtrar. 3. **Tipo de
-     * retorno**: `List<Producto>` 4. **Funcionalidad**: - Llama al método
+     * retorno**: `List Producto` 4. **Funcionalidad**: - Llama al método
      * `filtrarPorNombreProductoTodos` del `productoDAO`, pasando el
      * `nombreFiltro` para obtener una lista de productos que coincidan con el
      * filtro. - Este método no incluye validaciones ni manejo de excepciones.
@@ -459,7 +459,7 @@ public class ProductoBO implements IProductoBO {
      *
      * **Parámetro**: - `tipoFiltro`: Un objeto de tipo `Tipo_Producto` que
      * representa el tipo de producto que se desea filtrar. 3. **Tipo de
-     * retorno**: `List<Producto>` 4. **Funcionalidad**: - Llama al método
+     * retorno**: `List Producto` 4. **Funcionalidad**: - Llama al método
      * `filtrarPorTipoProductoTodos` del `productoDAO`, pasando el `tipoFiltro`
      * para obtener una lista de productos que coincidan con el tipo
      * especificado. - Este método no incluye validaciones ni manejo de
@@ -485,7 +485,7 @@ public class ProductoBO implements IProductoBO {
      *
      * -
      * `tipoFiltro`: Un objeto de tipo `Tipo_Producto` que representa el tipo de
-     * producto. 3. **Tipo de retorno**: `List<Producto>` 4. **Funcionalidad**:
+     * producto. 3. **Tipo de retorno**: `List Producto` 4. **Funcionalidad**:
      * - Llama al método `filtrarPorNombreYTipoProductoTodos` del `productoDAO`,
      * pasando ambos filtros para obtener una lista de productos que coincidan
      * con los criterios especificados. - Este método no incluye validaciones ni

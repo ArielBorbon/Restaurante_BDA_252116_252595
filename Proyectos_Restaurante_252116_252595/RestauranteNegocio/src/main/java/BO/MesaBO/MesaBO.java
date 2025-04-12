@@ -328,7 +328,7 @@ public class MesaBO implements IMesaBO {
      * disponibles en el sistema.
      *
      * 1. **Método**: `obtenerListaMesasDisponiblesBO()` 2. **Tipo de retorno**:
-     * `List<Mesa>` 3. **Funcionalidad**: - Llama al método
+     * `List Mesa` 3. **Funcionalidad**: - Llama al método
      * `obtenerListaMesasDisponibles` del `mesaDAO`, que se espera que devuelva
      * una lista de objetos `Mesa` que están actualmente disponibles para ser
      * ocupadas. - Este método no incluye validaciones ni manejo de excepciones,
@@ -354,7 +354,7 @@ public class MesaBO implements IMesaBO {
      * en el sistema.
      *
      * 1. **Método**: `obtenerListaMesasOcupadasBO()` 2. **Tipo de retorno**:
-     * `List<Mesa>` 3. **Funcionalidad**: - Llama al método
+     * `List Mesa` 3. **Funcionalidad**: - Llama al método
      * `obtenerListaMesasOcupadas` del `mesaDAO`, que se espera que devuelva una
      * lista de objetos `Mesa` que están actualmente ocupadas. - Este método no
      * incluye validaciones ni manejo de excepciones, lo que implica que se
@@ -381,7 +381,7 @@ public class MesaBO implements IMesaBO {
      * sistema, independientemente de su estado (disponibles, ocupadas, etc.).
      *
      * 1. **Método**: `obtenerListaMesasTodasBO()` 2. **Tipo de retorno**:
-     * `List<Mesa>` 3. **Funcionalidad**: - Llama al método
+     * `List Mesa` 3. **Funcionalidad**: - Llama al método
      * `obtenerListaMesasTodas` del `mesaDAO`, que se espera que devuelva una
      * lista de objetos `Mesa` que incluye todas las mesas registradas en el
      * sistema. - Este método no incluye validaciones ni manejo de excepciones,

@@ -25,7 +25,7 @@ public class NegocioException extends Exception {
 
     /**
      *
-     * @param message mensaje 
+     * @param message mensaje
      * @param cause causa
      */
     public NegocioException(String message, Throwable cause) {
@@ -41,11 +41,13 @@ public class NegocioException extends Exception {
     }
 
     /**
+     * 
      *
      * @param message mensaje
      * @param cause causa
      * @param enableSuppression supresión de la excepción
-     * @param writableStackTrace Indica si el seguimiento de pila debe ser registrado
+     * @param writableStackTrace Indica si el seguimiento de pila debe ser
+     * registrado
      */
     public NegocioException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);

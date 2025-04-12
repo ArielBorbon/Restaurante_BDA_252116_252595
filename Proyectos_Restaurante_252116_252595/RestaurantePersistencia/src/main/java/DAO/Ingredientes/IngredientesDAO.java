@@ -30,6 +30,12 @@ import javax.persistence.criteria.Root;
 public class IngredientesDAO implements IIngredientesDAO {
 
     /**
+     * Constructor default de Ingredientes DAO
+     */
+    public IngredientesDAO() {
+    }
+
+    /**
      * Método que implementa la funcionalidad para registrar un nuevo
      * ingrediente en el sistema.
      *
